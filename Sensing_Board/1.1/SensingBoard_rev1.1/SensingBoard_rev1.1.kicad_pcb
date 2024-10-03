@@ -1752,7 +1752,7 @@
       (net 19 "unconnected-(U2-VDDIO-Pad28)") (pinfunction "VDDIO") (pintype "power_in") (solder_mask_margin 0.102) (tstamp 87682e67-adfd-4385-a0b3-c8e76f207c0f))
   )
 
-  (gr_circle (center 127.60902 71.0692) (end 147.62422 71.2216)
+  (gr_circle (center 127.60902 71.0692) (end 147.60902 71.0692)
     (stroke (width 0.1) (type default)) (fill none) (layer "Edge.Cuts") (tstamp be11c469-1213-431a-8da0-1c066f5f6cf3))
 
 )
