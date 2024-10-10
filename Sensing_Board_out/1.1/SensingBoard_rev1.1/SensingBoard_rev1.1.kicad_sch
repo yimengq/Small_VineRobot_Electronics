@@ -6075,37 +6075,6 @@
     )
   )
 
-  (symbol (lib_id "Device:R_US") (at 0 285.75 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid 19284d79-c8c7-46fa-b226-34946062c5cf)
-    (property "Reference" "R14" (at -5.08 282.448 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "10k" (at -5.08 284.988 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Resistor_SMD:R_0201_0603Metric" (at 1.016 286.004 90)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 0 285.75 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 68f1199a-8178-4187-81db-4c4874d2514b))
-    (pin "2" (uuid 12d8f82e-96d2-4ae4-be16-775219e6701a))
-    (instances
-      (project "MachGen1B"
-        (path "/a8d93769-5183-4e19-8aae-3bec0e5cb94a"
-          (reference "R14") (unit 1)
-        )
-      )
-      (project "SensingBoard_rev1.1"
-        (path "/b61d80ec-963d-4516-bd15-8e7f6f5207da"
-          (reference "R26") (unit 1)
-        )
-      )
-    )
-  )
-
   (symbol (lib_id "power:GND") (at 47.244 305.308 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 196a0c28-7ae2-4c37-a0f0-241fadcd6f39)
