@@ -1,7 +1,7 @@
 {
   "board": {
     "active_layer": 0,
-    "active_layer_preset": "",
+    "active_layer_preset": "All Layers",
     "auto_track_width": true,
     "hidden_netclasses": [],
     "hidden_nets": [],
@@ -34,15 +34,15 @@
       3,
       4,
       5,
-      6,
+      8,
       9,
       10,
       11,
       12,
       13,
-      14,
       15,
       16,
+      17,
       18,
       19,
       20,
@@ -64,11 +64,11 @@
       39,
       40
     ],
-    "visible_layers": "00010f0_80000007",
+    "visible_layers": "fffffff_ffffffff",
     "zone_display_mode": 0
   },
   "meta": {
-    "filename": "ESP32-PoE_Rev_L1_v1.2.kicad_prl",
+    "filename": "ESP32_POE_rev1.3b.kicad_prl",
     "version": 3
   },
   "project": {
