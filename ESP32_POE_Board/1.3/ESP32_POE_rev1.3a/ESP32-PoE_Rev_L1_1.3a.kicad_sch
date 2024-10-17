@@ -3951,7 +3951,7 @@
     (fill (type none))
     (uuid 9ac13221-3a66-4854-a2d8-7f265dbb047a)
   )
-  (rectangle (start 466.852 345.948) (end 562.61 371.094)
+  (rectangle (start 466.852 345.948) (end 517.398 371.094)
     (stroke (width 0) (type default))
     (fill (type none))
     (uuid a99458cf-4e5a-46f9-82ac-92f6213d1377)
@@ -8035,30 +8035,6 @@
     )
   )
 
-  (symbol (lib_id "Mechanical:MountingHole") (at 538.734 356.87 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid c37d9ff4-f4ef-4a91-b1e8-246c8304620b)
-    (property "Reference" "H4" (at 541.528 355.6 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "MountingHole" (at 541.528 358.14 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "MountingHole:MountingHole_2.1mm" (at 538.734 356.87 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 538.734 356.87 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "ESP32-PoE_Rev_L1_1.3a"
-        (path "/2ac5de54-6fdf-4ad0-b1b6-0eb3ccc9b17e"
-          (reference "H4") (unit 1)
-        )
-      )
-    )
-  )
-
   (symbol (lib_id "ESP32-PoE_Rev_L1-rescue:GND-ESP32-PoE_Rev_L1") (at 540.258 70.358 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid c4ee3670-3e6e-4206-9386-852c8ef3d1b8)
@@ -8142,30 +8118,6 @@
       (project "ESP32-PoE_Rev_L1_v1.2"
         (path "/f7e675cc-b879-42e5-9180-68a0d131320e"
           (reference "SW1") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Mechanical:MountingHole") (at 519.684 357.124 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid cb72ce6f-b392-4325-b564-5e806964e97f)
-    (property "Reference" "H3" (at 522.478 355.854 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "MountingHole" (at 522.478 358.394 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "MountingHole:MountingHole_2.1mm" (at 519.684 357.124 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 519.684 357.124 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "ESP32-PoE_Rev_L1_1.3a"
-        (path "/2ac5de54-6fdf-4ad0-b1b6-0eb3ccc9b17e"
-          (reference "H3") (unit 1)
         )
       )
     )
