@@ -3150,7 +3150,7 @@
     (property "Value" "10uF" (at 239.268 108.458 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Capacitor_SMD:C_0805_2012Metric" (at 236.1692 110.998 0)
+    (property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm" (at 236.1692 110.998 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 235.204 107.188 0)
