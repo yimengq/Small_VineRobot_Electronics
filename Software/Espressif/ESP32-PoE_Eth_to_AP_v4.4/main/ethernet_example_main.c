@@ -43,6 +43,18 @@ typedef struct {
 // Forward packets from Wi-Fi to Ethernet
 static esp_err_t pkt_wifi2eth(void *buffer, uint16_t len, void *eb)
 {
+    static int64_t last_frame_time = 0;
+    int64_t current_frame_time = esp_timer_get_time();  // Get the current time in microseconds
+    if (last_frame_time != 0) {
+        int64_t frame_duration = current_frame_time - last_frame_time;
+        float frame_rate = 1000000.0 / frame_duration;  // Convert to frames per second
+        ESP_LOGI(TAG, "Frame rate: %.2f fps", frame_rate);
+    }
+    last_frame_time = current_frame_time;
+    
+    // delay 0.5s
+    // vTaskDelay(pdMS_TO_TICKS(1));
+
     if (s_ethernet_is_connected) {
         if (esp_eth_transmit(s_eth_handle, buffer, len) != ESP_OK) {
             ESP_LOGE(TAG, "Ethernet send packet failed");
