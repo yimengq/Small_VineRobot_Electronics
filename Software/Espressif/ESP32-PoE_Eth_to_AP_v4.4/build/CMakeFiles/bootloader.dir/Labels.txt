@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/CMakeFiles/bootloader
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/CMakeFiles/bootloader.rule
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/CMakeFiles/bootloader-complete.rule
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
