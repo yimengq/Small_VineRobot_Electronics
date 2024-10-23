@@ -11,12 +11,17 @@ C25,12pF/50V/5%/COG/C0402,OLIMEX_RLC-FP:C_0402_5MIL_DWS,,Samsung Electro-Mechani
 C26,470uF/10V/20%/Low_ESR/RM2.5/6.0x11mm,OLIMEX_RLC-FP:CPOL-RM2.5mm_6.3x11mm_PTH,,CX(Dongguan Chengxing Elec),GR477M016E12RR0EH4FP0,0.0285,https://www.lcsc.com/product-detail/Aluminum-Electrolytic-Capacitors-Leaded_CX-Dongguan-Chengxing-Elec-GR477M016E12RR0EH4FP0_C3039776.html,LCSC,C3039776,,1
 C27,15uF/100V/20%/RM2.5/6.3x11mm(Farnell:1281844),OLIMEX_RLC-FP:CPOL-RM2.5mm_6.3x11mm_PTH,,Yunxing,EG22GM150F16OTMO,0.0995,https://www.lcsc.com/product-detail/Aluminum-Electrolytic-Capacitors-Leaded_Yunxing-EG22GM150F16OTMO_C2841644.html,LCSC,C2841644,,1
 D5,SS510/100V/5A/0.85V/DO214AB(SMC),OLIMEX_Diodes-FP:DO214AB(SMC)_1(K)-2(A),,Yangzhou Yangjie Elec Tech,SS510,0.0875,https://www.lcsc.com/product-detail/Schottky-Diodes_Yangzhou-Yangjie-Elec-Tech-SS510_C5339843.html,LCSC,C5339843,,1
+D8,NA(SMBJ6.0A),OLIMEX_Diodes-FP:DO214AA_1(K)-2(A),,,,,,,,,1
 D10,SMAJ58A/SMA,OLIMEX_Diodes-FP:SMA-KA,,STMicroelectronics,SMAJ58A-TR,0.145,https://www.lcsc.com/product-detail/ESD-and-Surge-Protection-TVS-ESD_STMicroelectronics-SMAJ58A-TR_C132936.html,LCSC,C132936,,1
 DCDC1,F0505S-2WR2(SIP-7),OLIMEX_Regulators-FP:SIP-7_Universal,,EVISUN,EVISUN F0505S-3WR2,1.7214,https://www.lcsc.com/product-detail/Isolated-Power-Modules_EVISUN-F0505S-3WR2_C7598643.html,LCSC,C7598643,,1
 FET3,WPM2015-3/TR,OLIMEX_Transistors-FP:SOT23,,KUU,WPM2015-3/TR,0.036,https://www.lcsc.com/product-detail/MOSFETs_span-style-background-color-ff0-KUU-span-WPM2015-3-TR_C6562215.html,LCSC,C6562215,,1
+"FID1-FID3, FID5",Fiducial,Fiducial:Fiducial_0.5mm_Mask1.5mm,~,,,,,,,,4
+"H1, H2",MountingHole,MountingHole:MountingHole_2.1mm,~,,,,,,,,2
+J2,SI-46020-F,SI-46020-F:BEL_SI-46020-F,,Bel Fuse Inc.,SI-46020-F,6.4,https://www.digikey.com/en/products/detail/bel-fuse-inc/SI-46020-F/12091603?s=N4IgTCBcDaIMoEkC0AWAbABjBpAxEAugL5A,Digikey,507-SI-46020-F-ND,,1
 J3,HMTSW-102-X-X-S-X,HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X,,MOLEX,22284020,0.0526,https://www.lcsc.com/product-detail/Pin-Headers_MOLEX-22284020_C234182.html,LCSC,C234182,,1
 "J4, J6",C3324132,CONN_20021111-XX012XXLF_AMP,20021111-00012T4LF,DEALON,DZ127R-11-09-25,0.0343,https://www.lcsc.com/product-detail/Pin-Headers_DEALON-DZ127R-11-09-25_C2935949.html,LCSC,C3324132,,2
 L1,FB0805/600R/2A,OLIMEX_RLC-FP:L_0805_5MIL_DWS,,Murata Electronics,BLM21SP601SZ1D,0.2178,https://www.lcsc.com/product-detail/span-style-background-color-ff0-Ferrite-span-Beads_Murata-Electronics-BLM21SP601SZ1D_C2661781.html,LCSC,C2661781,the max current is 1A here,1
+L4,33uH/2.1A/DCR=0.1R/20%/DBS135(PD3316MT330),SRR1240-330M:IND_BOURNS_SRR1240,,Bourns Inc.,SRR1240-330M,1.15,https://www.digikey.com/en/products/detail/bourns-inc/SRR1240-330M/1969944,Digikey,118-SRR1240-330MCT-ND,i changed to a diff,1
 LNK1,LED/GREEN/0603,OLIMEX_LEDs-FP:LED_0603_KA,,Everlight Elec,18-225/R6G6C-A01/3T,0.0772,https://www.lcsc.com/product-detail/LED-Indication-Discrete_Everlight-Elec-18-225-R6G6C-A01-3T_C172883.html,LCSC,C172883,,1
 "R2, R25, R44",10k/R0402,OLIMEX_RLC-FP:R_0402_5MIL_DWS,,YAGEO,RC0402FR-0710KL,0.0005,https://www.lcsc.com/product-detail/Chip-span-style-background-color-ff0-Resistor-span-Surface-Mount_YAGEO-RC0402FR-0710KL_C60490.html,LCSC,C60490,,3
 R3,1k/R0402,OLIMEX_RLC-FP:R_0402_5MIL_DWS,,YAGEO,RC0402FR-071KL,0.0006,https://www.lcsc.com/product-detail/Chip-span-style-background-color-ff0-Resistor-span-Surface-Mount_YAGEO-RC0402FR-071KL_C106235.html,LCSC,C106235,,1
@@ -35,6 +40,7 @@ R43,130k/R0402,OLIMEX_RLC-FP:R_0402_5MIL_DWS,,YAGEO,RT0402BRD07130KL,0.0195,http
 "RM1, RM2",RA1206_(4X0603)_4B8_2.2k,OLIMEX_RLC-FP:R_MATRIX_4,,UNI-ROYAL(Uniroyal Elec),4D03WGJ0222T5E,0.0049,https://www.lcsc.com/product-detail/Resistor-Networks-Arrays_UNI-ROYAL-Uniroyal-Elec-4D03WGJ0222T5E_C12001.html,LCSC,C12001,,2
 T1,LMUN2211LT1G(SOT-23),OLIMEX_Transistors-FP:SOT23,,LRC,LMUN2211LT1G,0.0153,https://www.lcsc.com/product-detail/Digital-Transistors_LRC-LMUN2211LT1G_C12775.html,LCSC,C12775,,1
 TVS1,ESDS314DBVR(SOT-23-5),OLIMEX_Diodes-FP:SOT-23-5,https://www.ti.com/lit/gpn/esds314,Texas Instruments,ESDS314DBVR,0.2597,https://www.lcsc.com/product-detail/span-style-background-color-ff0-ESD-span-and-Surge-Protection-TVS-span-style-background-color-ff0-ESD-span_Texas-Instruments-ESDS314DBVR_C1847859.html,LCSC,C1847859,,1
+"TVS2, TVS3",NA(GG0402052R542P),OLIMEX_Diodes-FP:D_0402_5MIL_DWS,,,,,,,,,2
 U2,TPS2376PW(TSSOP-8),OLIMEX_IC-FP:TSSOP-8_Pitch-0.65mm_Dimensions-4.40x3.00x1.20mm,https://www.ti.com/lit/gpn/tps2375,Texas Instruments,TPS2376DDAR-H,0.6501,https://www.lcsc.com/product-detail/Power-Over-Ethernet-PoE-Controllers_Texas-Instruments-TPS2376DDAR-H_C544899.html,LCSC,C544899,we use the thermal pad version,1
 U4,LAN8710A-EZC(QFN32),OLIMEX_IC-FP:QFN32_EP(33)_5.00x5.00x0.90mm_Pitch_0.50mm,,Microchip Tech,LAN8710A-EZC-TR,0.8993,https://www.lcsc.com/product-detail/Ethernet-Transceivers_Microchip-Tech-LAN8710A-EZC-TR_C46185.html,LCSC,C46185,,1
 U5,TX4138(ESOIC-8),OLIMEX_Regulators-FP:ESOIC-8,https://datasheet.lcsc.com/lcsc/1811141153_XDS-TX4138_C329267.pdf,XDS,TX4138,0.7668,https://www.lcsc.com/product-detail/DC-DC-Converters_XDS-TX4138_C329267.html,LCSC,C329267,,1
