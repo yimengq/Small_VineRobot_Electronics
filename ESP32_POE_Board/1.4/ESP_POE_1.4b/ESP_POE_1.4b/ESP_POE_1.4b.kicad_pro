@@ -997,7 +997,7 @@
     "last_paths": {
       "gencad": "",
       "idf": "",
-      "netlist": "ESP32-PoE-ISO_Rev_K.net",
+      "netlist": "ESP_POE_1.4b.net",
       "specctra_dsn": "",
       "step": "",
       "vrml": ""
