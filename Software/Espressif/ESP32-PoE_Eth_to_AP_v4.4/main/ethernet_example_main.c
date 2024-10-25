@@ -51,11 +51,12 @@ static esp_err_t pkt_wifi2eth(void *buffer, uint16_t len, void *eb)
     // esp_wifi_internal_free_rx_buffer(eb);
     // return ESP_OK;
     // Get the current time in ticks
-    TickType_t start_time = xTaskGetTickCount();
+    // TickType_t start_time = xTaskGetTickCount();
 
     if (s_ethernet_is_connected) {
         // Print the packet length
-        ESP_LOGI(TAG, "Received packet length: %d", len);
+        // ESP_LOGI(TAG, "Received packet length: %d", len);
+        vTaskDelay(pdMS_TO_TICKS(2));
 
         // Optionally print the packet data (up to a certain length)
         // if (len > 0) {
@@ -70,14 +71,13 @@ static esp_err_t pkt_wifi2eth(void *buffer, uint16_t len, void *eb)
             ESP_LOGE(TAG, "Ethernet send packet failed");
         }
     }
-
-    // Calculate elapsed time
-    TickType_t elapsed_time = xTaskGetTickCount() - start_time;
-    ESP_LOGI(TAG, "Elapsed time for processing: %d ms", pdTICKS_TO_MS(elapsed_time));
-
+    vTaskDelay(pdMS_TO_TICKS(2));
     // Free the received buffer
     esp_wifi_internal_free_rx_buffer(eb);
-    vTaskDelay(pdMS_TO_TICKS(10));
+    vTaskDelay(pdMS_TO_TICKS(2));
+    // Calculate elapsed time
+    // TickType_t elapsed_time = xTaskGetTickCount() - start_time;
+    // ESP_LOGI(TAG, "Elapsed time for processing: %d ms", pdTICKS_TO_MS(elapsed_time));
     return ESP_OK;
 }
 
