@@ -32,7 +32,7 @@ static bool s_ethernet_is_connected = false;
 static uint8_t s_eth_mac[6];
 
 #define FLOW_CONTROL_QUEUE_TIMEOUT_MS (100)
-#define FLOW_CONTROL_QUEUE_LENGTH (40)
+#define FLOW_CONTROL_QUEUE_LENGTH (200)
 #define FLOW_CONTROL_WIFI_SEND_TIMEOUT_MS (100)
 
 typedef struct {
@@ -43,24 +43,41 @@ typedef struct {
 // Forward packets from Wi-Fi to Ethernet
 static esp_err_t pkt_wifi2eth(void *buffer, uint16_t len, void *eb)
 {
-    static int64_t last_frame_time = 0;
-    int64_t current_frame_time = esp_timer_get_time();  // Get the current time in microseconds
-    if (last_frame_time != 0) {
-        int64_t frame_duration = current_frame_time - last_frame_time;
-        float frame_rate = 1000000.0 / frame_duration;  // Convert to frames per second
-        ESP_LOGI(TAG, "Frame rate: %.2f fps", frame_rate);
-    }
-    last_frame_time = current_frame_time;
-    
-    // delay 0.5s
-    // vTaskDelay(pdMS_TO_TICKS(1));
+    // if (s_ethernet_is_connected) {
+    //     if (esp_eth_transmit(s_eth_handle, buffer, len) != ESP_OK) {
+    //         ESP_LOGE(TAG, "Ethernet send packet failed");
+    //     }
+    // }
+    // esp_wifi_internal_free_rx_buffer(eb);
+    // return ESP_OK;
+    // Get the current time in ticks
+    // TickType_t start_time = xTaskGetTickCount();
 
     if (s_ethernet_is_connected) {
+        // Print the packet length
+        // ESP_LOGI(TAG, "Received packet length: %d", len);
+        vTaskDelay(pdMS_TO_TICKS(2));
+
+        // Optionally print the packet data (up to a certain length)
+        // if (len > 0) {
+        //     ESP_LOGI(TAG, "Packet data: ");
+        //     for (int i = 0; i < len && i < 16; i++) { // Print up to 16 bytes
+        //         ESP_LOGI(TAG, "%02x ", ((uint8_t *)buffer)[i]);
+        //     }
+        // }
+
+        // Send the packet over Ethernet
         if (esp_eth_transmit(s_eth_handle, buffer, len) != ESP_OK) {
             ESP_LOGE(TAG, "Ethernet send packet failed");
         }
     }
+    vTaskDelay(pdMS_TO_TICKS(2));
+    // Free the received buffer
     esp_wifi_internal_free_rx_buffer(eb);
+    vTaskDelay(pdMS_TO_TICKS(2));
+    // Calculate elapsed time
+    // TickType_t elapsed_time = xTaskGetTickCount() - start_time;
+    // ESP_LOGI(TAG, "Elapsed time for processing: %d ms", pdTICKS_TO_MS(elapsed_time));
     return ESP_OK;
 }
 

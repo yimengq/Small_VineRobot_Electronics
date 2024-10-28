@@ -1,6 +1,0 @@
-source "/Users/yimengq/esp-idf-v4.4.8/components/app_update/Kconfig.projbuild"
-source "/Users/yimengq/esp-idf-v4.4.8/components/bootloader/Kconfig.projbuild"
-source "/Users/yimengq/esp-idf-v4.4.8/components/esp_rom/Kconfig.projbuild"
-source "/Users/yimengq/esp-idf-v4.4.8/components/esptool_py/Kconfig.projbuild"
-source "/Users/yimengq/esp-idf-v4.4.8/components/partition_table/Kconfig.projbuild"
-source "/Users/yimengq/Desktop/Small_VineRobot_Electronics/Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/main/Kconfig.projbuild"
