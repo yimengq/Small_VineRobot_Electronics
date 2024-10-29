@@ -1,7 +1,7 @@
 {
   "board": {
     "active_layer": 0,
-    "active_layer_preset": "All Layers",
+    "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_netclasses": [],
     "hidden_nets": [],
@@ -64,11 +64,7 @@
       39,
       40
     ],
-<<<<<<< HEAD:Sensing_Board_out/1.1/SensingBoard_rev1.1/SensingBoard_rev1.1.kicad_prl
-    "visible_layers": "fffffff_fffffff8",
-=======
     "visible_layers": "fffffff_ffffffff",
->>>>>>> d2f80b3cc85f59d04fe1dc4605c70ba978f1ee1c:Hardware/Gen1/Sensing_Board_out/1.1/SensingBoard_rev1.1/SensingBoard_rev1.1.kicad_prl
     "zone_display_mode": 0
   },
   "meta": {
