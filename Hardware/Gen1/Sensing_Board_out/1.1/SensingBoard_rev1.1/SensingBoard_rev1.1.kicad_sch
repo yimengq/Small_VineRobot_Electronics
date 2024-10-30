@@ -12428,7 +12428,7 @@
     (property "Value" "2nH" (at 367.284 165.1 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "Inductor_SMD:L_01005_0402Metric" (at 365.252 167.132 0)
+    (property "Footprint" "Inductor_SMD:L_0201_0603Metric" (at 365.252 167.132 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 365.252 167.132 0)
