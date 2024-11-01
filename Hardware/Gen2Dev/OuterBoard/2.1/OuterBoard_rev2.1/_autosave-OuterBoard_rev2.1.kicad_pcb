@@ -322,7 +322,7 @@
 
   (footprint "TestPoint:TestPoint_Pad_D2.0mm" (layer "F.Cu")
     (tstamp 00803d9c-5de1-4962-b891-fa60802d88cc)
-    (at 187.0456 121.158)
+    (at 169.6212 127.508)
     (descr "SMD pad as test Point, diameter 2.0mm")
     (tags "test point SMD pad")
     (property "Sheetfile" "OuterBoard_rev2.1.kicad_sch")
@@ -6588,7 +6588,7 @@
 
   (footprint "TestPoint:TestPoint_Pad_D2.0mm" (layer "F.Cu")
     (tstamp 50c472c6-2870-4520-bba7-534c7242a3f2)
-    (at 194.31 116.4844)
+    (at 178.9684 133.604)
     (descr "SMD pad as test Point, diameter 2.0mm")
     (tags "test point SMD pad")
     (property "Sheetfile" "OuterBoard_rev2.1.kicad_sch")
@@ -9207,7 +9207,7 @@
 
   (footprint "TestPoint:TestPoint_Pad_D2.0mm" (layer "F.Cu")
     (tstamp 89828b5b-82bc-48fd-a5b3-e3961e3daa03)
-    (at 187.452 116.1796)
+    (at 178.5112 108.9152)
     (descr "SMD pad as test Point, diameter 2.0mm")
     (tags "test point SMD pad")
     (property "Sheetfile" "OuterBoard_rev2.1.kicad_sch")
