@@ -7010,7 +7010,8 @@
     (effects (font (size 4 4)) (justify left bottom))
     (uuid bd40c470-316a-411c-b571-d0b18953cc4c)
   )
-  (text "Updates:\nBattery Status\nMounting Holes" (at 862.838 110.744 0)
+  (text "Updates:\nBattery Status\nMounting Holes\nneeds 5V to 9V boost for charging rail"
+    (at 862.838 110.744 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid df60496a-a127-491e-ac8a-932f46297073)
   )
