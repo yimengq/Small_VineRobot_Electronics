@@ -57,6 +57,7 @@ static esp_err_t pkt_wifi2eth(void *buffer, uint16_t len, void *eb)
         // Print the packet length
         // ESP_LOGI(TAG, "Received packet length: %d", len);
         vTaskDelay(pdMS_TO_TICKS(2));
+        // taskYIELD();
 
         // Optionally print the packet data (up to a certain length)
         // if (len > 0) {
@@ -72,9 +73,11 @@ static esp_err_t pkt_wifi2eth(void *buffer, uint16_t len, void *eb)
         }
     }
     vTaskDelay(pdMS_TO_TICKS(2));
+    // taskYIELD();
     // Free the received buffer
     esp_wifi_internal_free_rx_buffer(eb);
     vTaskDelay(pdMS_TO_TICKS(2));
+    // taskYIELD();
     // Calculate elapsed time
     // TickType_t elapsed_time = xTaskGetTickCount() - start_time;
     // ESP_LOGI(TAG, "Elapsed time for processing: %d ms", pdTICKS_TO_MS(elapsed_time));
@@ -112,6 +115,7 @@ static void eth2wifi_flow_control_task(void *args)
             if (s_sta_is_connected && msg.length) {
                 do {
                     vTaskDelay(pdMS_TO_TICKS(timeout));
+                    // ESP_LOGI(TAG, "Flow control delay");
                     timeout += 2;
                     res = esp_wifi_internal_tx(WIFI_IF_AP, msg.packet, msg.length);
                 } while (res && timeout < FLOW_CONTROL_WIFI_SEND_TIMEOUT_MS);
@@ -136,6 +140,16 @@ static void eth_event_handler(void *arg, esp_event_base_t event_base,
         esp_eth_ioctl(s_eth_handle, ETH_CMD_G_MAC_ADDR, s_eth_mac);
         esp_wifi_set_mac(WIFI_IF_AP, s_eth_mac);
         ESP_ERROR_CHECK(esp_wifi_start());
+        // tcpip_adapter_ip_info_t ip_info;
+
+        // // Get Ethernet IP Address
+        // if (tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_ETH, &ip_info) == ESP_OK) {
+        //     ESP_LOGI(TAG, "Ethernet IP Address: " IPSTR, IP2STR(&ip_info.ip));
+        //     ESP_LOGI(TAG, "Ethernet Netmask: " IPSTR, IP2STR(&ip_info.netmask));
+        //     ESP_LOGI(TAG, "Ethernet Gateway: " IPSTR, IP2STR(&ip_info.gw));
+        // } else {
+        //     ESP_LOGE(TAG, "Failed to get Ethernet IP info");
+        // }
         break;
     case ETHERNET_EVENT_DISCONNECTED:
         ESP_LOGI(TAG, "Ethernet Link Down");
@@ -166,6 +180,25 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base,
             esp_wifi_internal_reg_rxcb(WIFI_IF_AP, pkt_wifi2eth);
         }
         s_con_cnt++;
+
+        // tcpip_adapter_ip_info_t ip_info;
+        // // Get Wi-Fi IP Address
+        // if (tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_AP, &ip_info) == ESP_OK) {
+        //     ESP_LOGI(TAG, "Wi-Fi IP Address: " IPSTR, IP2STR(&ip_info.ip));
+        //     ESP_LOGI(TAG, "Wi-Fi Netmask: " IPSTR, IP2STR(&ip_info.netmask));
+        //     ESP_LOGI(TAG, "Wi-Fi Gateway: " IPSTR, IP2STR(&ip_info.gw));
+        // } else {
+        //     ESP_LOGE(TAG, "Failed to get Wi-Fi IP info");
+        // }
+
+        // // Get Wi-Fi IP Address (STA)
+        // if (tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ip_info) == ESP_OK) {
+        //     ESP_LOGI(TAG, "STA IP Address: " IPSTR, IP2STR(&ip_info.ip));
+        //     ESP_LOGI(TAG, "STA Netmask: " IPSTR, IP2STR(&ip_info.netmask));
+        //     ESP_LOGI(TAG, "STA Gateway: " IPSTR, IP2STR(&ip_info.gw));
+        // } else {
+        //     ESP_LOGE(TAG, "Failed to get STA IP info");
+        // }
         break;
     case WIFI_EVENT_AP_STADISCONNECTED:
         ESP_LOGI(TAG, "Wi-Fi AP got a station disconnected");
@@ -279,6 +312,19 @@ static void initialize_ethernet(void)
     bool eth_promiscuous = true;
     esp_eth_ioctl(s_eth_handle, ETH_CMD_S_PROMISCUOUS, &eth_promiscuous);
     esp_eth_start(s_eth_handle);
+
+    esp_err_t ret;
+    eth_speed_t speed;
+
+    // Get Ethernet speed
+    ret = esp_eth_ioctl(s_eth_handle, ETH_CMD_G_SPEED, &speed);
+    if (ret == ESP_OK) {
+        const char *speed_str = (speed == ETH_SPEED_10M) ? "10 Mbps" :
+                                 (speed == ETH_SPEED_100M) ? "100 Mbps" : "Unknown";
+        ESP_LOGI(TAG, "Ethernet Speed: %s", speed_str);
+    } else {
+        ESP_LOGE(TAG, "Failed to get Ethernet speed: %s", esp_err_to_name(ret));
+    }
 }
 
 static void initialize_wifi(void)
