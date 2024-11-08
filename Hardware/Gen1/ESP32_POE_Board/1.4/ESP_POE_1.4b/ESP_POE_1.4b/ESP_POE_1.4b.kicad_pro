@@ -999,7 +999,7 @@
       "idf": "",
       "netlist": "ESP_POE_1.4b.net",
       "specctra_dsn": "",
-      "step": "",
+      "step": "ESP_POE_1.4b.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
