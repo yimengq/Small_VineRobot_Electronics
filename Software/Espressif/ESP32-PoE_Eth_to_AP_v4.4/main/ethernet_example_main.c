@@ -56,7 +56,7 @@ static esp_err_t pkt_wifi2eth(void *buffer, uint16_t len, void *eb)
     if (s_ethernet_is_connected) {
         // Print the packet length
         // ESP_LOGI(TAG, "Received packet length: %d", len);
-        vTaskDelay(pdMS_TO_TICKS(2));
+        // vTaskDelay(pdMS_TO_TICKS(2));
         // taskYIELD();
 
         // Optionally print the packet data (up to a certain length)
@@ -72,11 +72,11 @@ static esp_err_t pkt_wifi2eth(void *buffer, uint16_t len, void *eb)
             ESP_LOGE(TAG, "Ethernet send packet failed");
         }
     }
-    vTaskDelay(pdMS_TO_TICKS(2));
+    // vTaskDelay(pdMS_TO_TICKS(2));
     // taskYIELD();
     // Free the received buffer
     esp_wifi_internal_free_rx_buffer(eb);
-    vTaskDelay(pdMS_TO_TICKS(2));
+    // vTaskDelay(pdMS_TO_TICKS(2));
     // taskYIELD();
     // Calculate elapsed time
     // TickType_t elapsed_time = xTaskGetTickCount() - start_time;
