@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 31,
+    "active_layer": 0,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_netclasses": [],
@@ -34,15 +34,15 @@
       3,
       4,
       5,
-      6,
+      8,
       9,
       10,
       11,
       12,
       13,
-      14,
       15,
       16,
+      17,
       18,
       19,
       20,
@@ -64,11 +64,11 @@
       39,
       40
     ],
-    "visible_layers": "003ffff_80000000",
+    "visible_layers": "fffffff_ffffffff",
     "zone_display_mode": 0
   },
   "meta": {
-    "filename": "ESP_POE_1.4b.kicad_prl",
+    "filename": "ESP32-EVB_Rev_K1.kicad_prl",
     "version": 3
   },
   "project": {
