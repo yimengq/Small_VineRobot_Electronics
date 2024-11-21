@@ -47,6 +47,16 @@ void setup() {
   Serial.setDebugOutput(true);
   Serial.println();
 
+  WiFi.begin(ssid, password);
+  WiFi.setSleep(false);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.println("WiFi connected");
+
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -132,16 +142,6 @@ void setup() {
 #if defined(LED_GPIO_NUM)
   setupLedFlash(LED_GPIO_NUM);
 #endif
-
-  WiFi.begin(ssid, password);
-  WiFi.setSleep(false);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi connected");
 
   startCameraServer();
 
