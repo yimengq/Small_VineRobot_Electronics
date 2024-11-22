@@ -1,4 +1,4 @@
-22112826234390525
+22119755347928905
 402F2501XIAR
 XTAL_402F2501XIAR
 
@@ -6523,6 +6523,13 @@ capacitor tantalum
 0
 2
 2
+CharmLabLogo
+Charm
+
+
+0
+0
+0
 Connector
 Banana_Cliff_FCR7350x_S16N-PC_Horizontal
 Cliff single 4mm shrouded banana panel socket, through-hole, horizontal, https://www.cliffuk.co.uk/products/testleads/sockets/S16NPC.pdf
@@ -54844,6 +54851,27 @@ Fuse Fuseholder TR5 Littelfuse/Wickmann No. 460 No560
 0
 2
 2
+GD25Q64CSIGR
+SOP8_208MIL_GDV
+
+GD25Q64CSIGR 
+0
+8
+8
+GD25Q64CSIGR
+SOP8_208MIL_GDV-L
+
+GD25Q64CSIGR 
+0
+8
+8
+GD25Q64CSIGR
+SOP8_208MIL_GDV-M
+
+GD25Q64CSIGR 
+0
+8
+8
 GRPB052VWQP-RC
 GRPB052VWQPRC
 <b>GRPB052VWQP-RC-2</b><br>
