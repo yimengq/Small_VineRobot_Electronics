@@ -34,11 +34,12 @@ uint16_t BNO055_SAMPLERATE_DELAY_MS = 100;
 //                                   id, address
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28, &Wire);
 
-const int ledPin = D0;
+const int ledPin = 21;
 int ledState = 0;
 
 void setup(void)
 {
+  Wire.begin(33, 34);
   Serial.begin(115200);
 
   while (!Serial) delay(10);  // wait for serial port to open!
