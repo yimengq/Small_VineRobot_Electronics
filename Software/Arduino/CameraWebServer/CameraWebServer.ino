@@ -49,6 +49,7 @@ void startCameraServer();
 void setupLedFlash(int pin);
 
 void setup() {
+  // Wire.begin(33, 34); //Comment out if using XIAO sense, diff SDA/SCL pins
   Serial.begin(115200);
   while (!Serial) delay(10);  // Wait for serial
   Serial.setDebugOutput(true);
