@@ -36,8 +36,8 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-const char *ssid = "Vcc-AP";
-const char *password = "12345678";
+const char *ssid = "NETGEAR70";
+const char *password = "excitedtree153";
 
 void startCameraServer();
 void setupLedFlash(int pin);
