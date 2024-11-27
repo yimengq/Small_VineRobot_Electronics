@@ -1,5 +1,6 @@
 #include "esp_camera.h"
 #include <WiFi.h>
+#include "imu_function.h"
 
 //
 // WARNING!!! PSRAM IC required for UXGA resolution and high JPEG quality
@@ -39,13 +40,29 @@
 const char *ssid = "NETGEAR70";
 const char *password = "excitedtree153";
 
+const int ledPin = 21; // On-board LED on GPIO21
+int ledState = 0;
+
+imu_function imu_func;
+
 void startCameraServer();
 void setupLedFlash(int pin);
 
 void setup() {
+  // Wire.begin(33, 34); //Comment out if using XIAO sense, diff SDA/SCL pins
   Serial.begin(115200);
+  while (!Serial) delay(10);  // Wait for serial
   Serial.setDebugOutput(true);
   Serial.println();
+
+  Serial.println("-- Full Sense Board Test --"); Serial.println("");
+
+  imu_func.init();
+  Serial.println("IMU init done");
+
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
 
   WiFi.begin(ssid, password);
   WiFi.setSleep(false);
@@ -165,8 +182,12 @@ void setup() {
 }
 
 void loop() {
-  // Do nothing. Everything is done in another task by the web server
-  delay(10000);
+  imu_func.update();
+  delay(500);
+  digitalWrite(ledPin, ledState);  // turn the LED on (HIGH is the voltage level)
+  ledState = ~ledState;
+
+  // delay(10000);
   Serial.print("Camera Ready! Use 'http://");
   Serial.print(WiFi.localIP());
   Serial.println("' to connect");
