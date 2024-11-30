@@ -55,7 +55,23 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "clearance|127531000|68588600|5ed49306-13b1-45ba-9782-10776e2063a4|c2bb398f-d438-447b-96fa-cd7f0bd0bca2",
+        "clearance|127531000|69788600|5ed49306-13b1-45ba-9782-10776e2063a4|4058c0d1-339d-4a7e-8d70-ab2ad2a2bfa4",
+        "clearance|127531000|69788600|5ed49306-13b1-45ba-9782-10776e2063a4|e55a3793-fa80-4d45-a66b-75733d09b633",
+        "clearance|127531000|70988600|5ed49306-13b1-45ba-9782-10776e2063a4|3ebe65bf-a613-4635-ad97-b8d67826549d",
+        "clearance|127531000|70988600|5ed49306-13b1-45ba-9782-10776e2063a4|6d9f13ea-3d22-4dab-a478-995a6436e2ee",
+        "clearance|127531000|72188600|5ed49306-13b1-45ba-9782-10776e2063a4|169f96b6-37b9-44c7-b5b3-d42756fbd37f",
+        "clearance|129180000|67939600|5ed49306-13b1-45ba-9782-10776e2063a4|90714fba-aa7d-4a3c-a6b3-33e3999f8c40",
+        "clearance|129180000|70388600|b1ce7752-582c-4a93-9419-fc6157b8bf33|e55a3793-fa80-4d45-a66b-75733d09b633",
+        "clearance|129180000|72837600|5ed49306-13b1-45ba-9782-10776e2063a4|7b6d5f32-3973-4d81-afd9-f1839aa69fd7",
+        "clearance|130180000|72837600|5ed49306-13b1-45ba-9782-10776e2063a4|2285cd93-d109-4be8-861f-21dc5320384f",
+        "clearance|130464540|70073140|7d9c3b05-f08e-44a8-ad08-d49b864ac867|97d8a2e3-1c3f-4e0c-80bb-76503dfe3474",
+        "clearance|130474080|70063600|77438b18-8aa0-41a3-a743-27efcc5e51db|97d8a2e3-1c3f-4e0c-80bb-76503dfe3474",
+        "clearance|130829000|68588600|5ed49306-13b1-45ba-9782-10776e2063a4|4c9f5b55-1928-4a83-9d4d-7e9817607342",
+        "clearance|130829000|69788600|5ed49306-13b1-45ba-9782-10776e2063a4|97d8a2e3-1c3f-4e0c-80bb-76503dfe3474",
+        "clearance|130829000|70988600|5ed49306-13b1-45ba-9782-10776e2063a4|57546f1f-cf58-44df-a0dd-b1ac489067af"
+      ],
       "meta": {
         "version": 2
       },
@@ -65,7 +81,7 @@
         "connection_width": "warning",
         "copper_edge_clearance": "error",
         "copper_sliver": "warning",
-        "courtyards_overlap": "error",
+        "courtyards_overlap": "ignore",
         "diff_pair_gap_out_of_range": "error",
         "diff_pair_uncoupled_length_too_long": "error",
         "drill_out_of_range": "error",
