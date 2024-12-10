@@ -9,6 +9,13 @@ class imu_function{
     void update();
 };
 
+typedef struct 
+{
+    motor_type //replace with events
+
+}motor_event_t;
+
+
 #endif /* __IMU_FUNCTION_H__ */
 
 
