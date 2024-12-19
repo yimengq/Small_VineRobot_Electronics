@@ -28,7 +28,7 @@ const char *password = "12345678";
 NetworkServer server(80);
 
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
+  // pinMode(LED_BUILTIN, OUTPUT);
 
   Serial.begin(115200);
   Serial.println();

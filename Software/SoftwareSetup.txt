@@ -3,6 +3,7 @@ How to setup Arduino (for external sensing board):
 - Follow instructions from https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/#software-preparation
 - Open the FullSingleTest.ino (software for external sensing board, includes WIFI CAM IMU LED)
 - May have to manually add file in Arduino for imu_function.h and imu_function.cpp (I created these because the BNO055 library conflicts with the esp_camera library in sensor_t definition, so they must be isolated in different cpp files with no definition exposed in the h file)
+-Go to Library Manager, search for "BNO055", and install the "Adafruit BNO055" library
 - Compile and flash using XIAO ESP32S3 devices and whichever COM it uses
 - Open the serial monitor to check IMU data or the http://192.168.137.* that the camera stream will be hosted on
 - Maybe need to press the RST button on the ESP board
