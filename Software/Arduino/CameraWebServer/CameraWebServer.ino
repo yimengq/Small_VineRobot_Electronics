@@ -1,3 +1,4 @@
+#include <Wire.h>
 #include "esp_camera.h"
 #include <WiFi.h>
 #include "imu_function.h"
@@ -37,8 +38,8 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-const char *ssid = "NETGEAR70";
-const char *password = "excitedtree153";
+const char *ssid = "Vcc-AP";
+const char *password = "12345678";
 
 const int ledPin = 21; // On-board LED on GPIO21
 int ledState = 0;
