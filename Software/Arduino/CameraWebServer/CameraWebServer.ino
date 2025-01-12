@@ -41,6 +41,9 @@
 const char *ssid = "Vcc-AP";
 const char *password = "12345678";
 
+// const char *ssid = "NETGEAR42";
+// const char *password = "cleverroad877";
+
 const int ledPin = 21; // On-board LED on GPIO21
 int ledState = 0;
 
@@ -48,6 +51,29 @@ imu_function imu_func;
 
 void startCameraServer();
 void setupLedFlash(int pin);
+
+
+// Function to handle WiFi events
+void WiFiEvent(WiFiEvent_t event) {
+  switch (event) {
+    case ARDUINO_EVENT_WIFI_STA_DISCONNECTED:
+      Serial.println("WiFi disconnected! Attempting reconnection...");
+      WiFi.begin(ssid, password);
+      break;
+
+    case ARDUINO_EVENT_WIFI_STA_CONNECTED:
+      Serial.println("WiFi connected!");
+      break;
+
+    case ARDUINO_EVENT_WIFI_STA_GOT_IP:
+      Serial.print("WiFi reconnected! New IP address: ");
+      Serial.println(WiFi.localIP());
+      break;
+
+    default:
+      break;
+  }
+}
 
 void setup() {
   // Wire.begin(33, 34); //Comment out if using XIAO sense, diff SDA/SCL pins
@@ -65,6 +91,7 @@ void setup() {
   digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(1000);
 
+  
   WiFi.begin(ssid, password);
   WiFi.setSleep(false);
 
@@ -72,8 +99,11 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
+  WiFi.onEvent(WiFiEvent);
   Serial.println("");
   Serial.println("WiFi connected");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
