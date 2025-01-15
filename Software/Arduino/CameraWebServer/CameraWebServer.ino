@@ -76,7 +76,7 @@ void WiFiEvent(WiFiEvent_t event) {
 }
 
 void setup() {
-  // Wire.begin(33, 34); //Comment out if using XIAO sense, diff SDA/SCL pins
+  Wire.begin(33, 34); //Comment out if using XIAO sense, diff SDA/SCL pins
   Serial.begin(115200);
   while (!Serial) delay(10);  // Wait for serial
   Serial.setDebugOutput(true);
@@ -92,18 +92,6 @@ void setup() {
   delay(1000);
 
   
-  WiFi.begin(ssid, password);
-  WiFi.setSleep(false);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  WiFi.onEvent(WiFiEvent);
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -176,7 +164,8 @@ void setup() {
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
     Serial.printf("Camera init failed with error 0x%x", err);
-    return;
+    // return;
+    delay(1000);
   }
 
   sensor_t *s = esp_camera_sensor_get();
@@ -204,6 +193,19 @@ void setup() {
 #if defined(LED_GPIO_NUM)
   setupLedFlash(LED_GPIO_NUM);
 #endif
+
+  WiFi.begin(ssid, password);
+  WiFi.setSleep(false);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  WiFi.onEvent(WiFiEvent);
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
 
   startCameraServer();
 
