@@ -69,6 +69,28 @@ CONFIG_EXAMPLE_WIFI_PASSWORD="12345678"
 CONFIG_EXAMPLE_WIFI_CHANNEL=1
 CONFIG_EXAMPLE_MAX_STA_CONN=4
 - May need to turn on CONFIG_FREERTOS_ENABLE_BACKWARD_COMPATIBILITY
+
+WITH EXTERNAL OSCILLATOR:
+- Serial flasher config -> Flash Size (8 MB)
+- Example Configuration -> Ethernet Type (Internal EMAC)
+			-> Ethernet PHY Device (LAN87xx)
+			-> (23) SMI MDC GPIO number
+			-> (18) SMI MDIO GPIO number
+			-> (-1) PHY Reset GPIO number
+			-> (0) PHY Address
+			-> (Vcc-AP) Wi-Fi SSID
+			-> (12345678) Wi-Fi Password
+			-> (1) WiFi channel
+			-> (4) Maximum STA connections
+- Component config 	-> ESP32-specific -> CPU frequency (240 MHz)
+			-> Ethernet -> Support ESP32 internal EMAC controller	-> PHY interface (Reduced Media Independent Interface (RMII))
+										-> RMII clock mode (Input RMII clock from external)
+										-> (1536) Ethernet DMA buffer size (Byte)
+										-> (10) Amount of Ethernet DMA Rx buffers
+										-> (10) Amount of Ethernet DMA Tx buffers
+			-> HTTP Server -> [*] WebSocket server support
+			-> FreeRTOS -> (1000) Tick rate (Hz)
+
 - However I have already changed and pushed these values in the sdkconfig file, so no changes should be necessary if you pulled the sdkconfig file, where the menuconfigs are saved
 - Connect the ESP-POE
 - Run "idf.py -p COM* build flash monitor" to build, flash, and open the serial monitor, with COM* replaced with whichever COM the ESP-POE is connected to, like COM7
