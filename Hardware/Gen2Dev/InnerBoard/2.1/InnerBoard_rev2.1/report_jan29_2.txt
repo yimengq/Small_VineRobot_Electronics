@@ -1,0 +1,418 @@
+Info: Processing symbol 'C1:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C2:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C3:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C4:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C5:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C6:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C7:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C8:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C20:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C21:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C22:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C23:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C24:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C25:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C26:'.
+Info: Processing symbol 'Y1:ABLS2-12.000MHZ-D4Y-T:XTAL_ABLS2-12.000MHZ-D4Y-T'.
+Info: Processing symbol 'C27:'.
+Info: Processing symbol 'U25:'.
+Info: Processing symbol 'C29:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C31:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C32:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C59:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C60:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C61:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C62:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C63:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C64:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C65:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C66:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C67:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C68:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C69:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C70:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C71:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'C72:Capacitor_SMD:C_0805_2012Metric'.
+Info: Processing symbol 'D4:LED_SMD:LED_0603_1608Metric'.
+Info: Processing symbol 'D5:LED_SMD:LED_0603_1608Metric'.
+Info: Processing symbol 'D6:Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal'.
+Info: Processing symbol 'D7:LED_SMD:LED_0603_1608Metric'.
+Info: Processing symbol 'D10:Diode_SMD:D_SOD-323'.
+Info: Processing symbol 'D11:LED_SMD:LED_0603_1608Metric'.
+Info: Processing symbol 'D13:Diode_SMD:D_SOD-323'.
+Info: Processing symbol 'D14:Diode_SMD:D_SOD-323'.
+Info: Processing symbol 'D15:Package_TO_SOT_SMD:SOT-23'.
+Info: Processing symbol 'D23:Diode_SMD:D_SMA'.
+Info: Processing symbol 'D24:Package_TO_SOT_SMD:SOT-23'.
+Info: Processing symbol 'FID1:Fiducial:Fiducial_0.5mm_Mask1.5mm'.
+Info: Processing symbol 'FID2:Fiducial:Fiducial_0.5mm_Mask1.5mm'.
+Info: Processing symbol 'FID3:Fiducial:Fiducial_0.5mm_Mask1.5mm'.
+Info: Processing symbol 'FID4:Fiducial:Fiducial_0.5mm_Mask1.5mm'.
+Info: Processing symbol 'H1:MountingHole:MountingHole_2.1mm'.
+Info: Processing symbol 'H2:MountingHole:MountingHole_2.1mm'.
+Info: Processing symbol 'H3:MountingHole:MountingHole_2.1mm'.
+Info: Processing symbol 'H4:MountingHole:MountingHole_2.1mm'.
+Info: Processing symbol 'J1:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'U23:DBV0005A_N'.
+Info: Processing symbol 'J2:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'J3:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'J4:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'J5:UJ31-CH-G2-SMT-TR:CUI_UJ31-CH-G2-SMT-TR'.
+Info: Processing symbol 'J6:SI-46020-F:BEL_SI-46020-F'.
+Info: Processing symbol 'U12:PW8'.
+Info: Processing symbol 'J7:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'U11:QFN32_5X5MC_MCH'.
+Info: Processing symbol 'J8:CONN10_3221-10-0300-00_CNC'.
+Info: Processing symbol 'U10:ESP32_WROOM_32E_N8:ESP32­WROOM­32E_EXP'.
+Info: Processing symbol 'J9:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'J10:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'U9:FT232RQ:QFN50P500X500X90-33N'.
+Info: Processing symbol 'J11:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'U7:Package_TO_SOT_SMD:SOT-223-3_TabPin2'.
+Info: Processing symbol 'J12:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'U6:Package_TO_SOT_SMD:SOT-23-5'.
+Info: Processing symbol 'J13:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'U4:Package_TO_SOT_SMD:SOT-23-5'.
+Info: Processing symbol 'J14:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'U1:DSS0012B'.
+Info: Processing symbol 'J15:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'TP30:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'J16:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'TP29:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'J17:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'TP28:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'J18:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'TP27:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'J19:HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X'.
+Info: Processing symbol 'TP26:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'JP1:'.
+Info: Processing symbol 'TP25:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'L8:Inductor_SMD:L_0805_2012Metric'.
+Info: Processing symbol 'L9:Inductor_SMD:L_0805_2012Metric'.
+Info: Processing symbol 'MH1:OLIMEX_Other-FP:Mounting_hole_Shield_3.3mm'.
+Info: Processing symbol 'TP24:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'MH2:OLIMEX_Other-FP:Mounting_hole_Shield_3.3mm'.
+Info: Processing symbol 'TP23:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'Q1:SI2323DS-T1-GE3:SOT23'.
+Info: Processing symbol 'Q4:Package_TO_SOT_SMD:SOT-23'.
+Info: Processing symbol 'Q5:Package_TO_SOT_SMD:SOT-23'.
+Info: Processing symbol 'Q9:SI2323DS-T1-GE3:SOT23'.
+Info: Processing symbol 'Q10:Package_TO_SOT_SMD:SOT-23'.
+Info: Processing symbol 'R1:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R2:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R3:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R4:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R5:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R6:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R7:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R8:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R21:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R22:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R23:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R24:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R25:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R26:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R27:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R28:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R29:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R30:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R31:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R32:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R33:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R34:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R35:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R41:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R42:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R43:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R45:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R46:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R47:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R49:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R50:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R51:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R52:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R81:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R82:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R83:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R84:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R89:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R90:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R93:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R94:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R97:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R99:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R100:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R101:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R104:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R105:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R106:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R107:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R108:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'R109:Resistor_SMD:R_0805_2012Metric'.
+Info: Processing symbol 'SW1:SW4_PTS815 SJM 250 SMTR LFS_CNK'.
+Info: Processing symbol 'TP22:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'SW2:SW4_PTS815 SJM 250 SMTR LFS_CNK'.
+Info: Processing symbol 'TP21:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP1:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP2:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP3:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP4:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP5:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP6:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP8:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP20:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP19:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP18:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP17:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP16:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP15:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP14:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP13:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'Y3:ASV-50.000MHZ-LCS-T:XTAL_ASV-50.000MHZ-LCS-T'.
+Info: Processing symbol 'TP9:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP12:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP11:TestPoint:TestPoint_Pad_D2.0mm'.
+Info: Processing symbol 'TP10:TestPoint:TestPoint_Pad_D2.0mm'.
+Updated TP9 symbol association from  to /6baada33-aa96-4fe6-9113-43f1f558f684.
+Updated TP9 sheetname to 'Root'.
+Updated TP9 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP9 footprint filters to 'Pin* Test*'.
+Removed TP9 'exclude from BOM' fabrication attribute.
+Connected TP9 pin 1 to Net-(C71-Pad2).
+Changed TP9 value from TestPoint_Pad_D2.0mm to TestPoint.
+Added TP10 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP10.
+Changed TP10 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP10 symbol association from  to /1567f1c0-5a2b-43b6-96a9-7105be66c10c.
+Updated TP10 sheetname to 'Root'.
+Updated TP10 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP10 footprint filters to 'Pin* Test*'.
+Removed TP10 'exclude from BOM' fabrication attribute.
+Connected TP10 pin 1 to Spare2.
+Changed REF** reference designator to TP9.
+Added TP11 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP11.
+Changed TP11 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP11 symbol association from  to /7062de12-79e4-4118-8f8d-67129581fe5f.
+Updated TP11 sheetname to 'Root'.
+Updated TP11 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP11 footprint filters to 'Pin* Test*'.
+Removed TP11 'exclude from BOM' fabrication attribute.
+Connected TP11 pin 1 to Spare1.
+Added TP9 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Added TP12 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP12.
+Changed TP12 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP12 symbol association from  to /c7cb2f0c-1bdc-45d0-a05b-4f7ba0fc8c7b.
+Updated TP12 sheetname to 'Root'.
+Connected TP8 pin 1 to OSC_DIS.
+Updated TP12 footprint filters to 'Pin* Test*'.
+Removed TP12 'exclude from BOM' fabrication attribute.
+Connected TP12 pin 1 to Net-(U11-EPAD).
+Removed TP8 'exclude from BOM' fabrication attribute.
+Added TP13 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP13.
+Changed TP13 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP13 symbol association from  to /bcef1eed-9b2b-4c54-8e5d-db2f056f6c87.
+Updated TP13 sheetname to 'Root'.
+Updated TP13 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP13 footprint filters to 'Pin* Test*'.
+Removed TP13 'exclude from BOM' fabrication attribute.
+Connected TP13 pin 1 to D_Com.
+Updated TP8 footprint filters to 'Pin* Test*'.
+Added TP14 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP14.
+Changed TP14 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP14 symbol association from  to /e5ea63ed-f4e0-403f-a414-85737eb8aaad.
+Updated TP14 sheetname to 'Root'.
+Updated TP14 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP14 footprint filters to 'Pin* Test*'.
+Removed TP14 'exclude from BOM' fabrication attribute.
+Connected TP14 pin 1 to VDDA1/2.
+Updated TP8 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Added TP15 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP15.
+Changed TP15 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP15 symbol association from  to /d527ba62-d9ac-45c6-8199-df9451cb6658.
+Updated TP15 sheetname to 'Root'.
+Updated TP15 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP15 footprint filters to 'Pin* Test*'.
+Removed TP15 'exclude from BOM' fabrication attribute.
+Connected TP15 pin 1 to ESP_EN.
+Updated TP8 sheetname to 'Root'.
+Added TP16 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP16.
+Changed TP16 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP16 symbol association from  to /d1f3ed2d-daec-4c6f-8942-47c1e0745468.
+Updated TP16 sheetname to 'Root'.
+Updated TP16 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP16 footprint filters to 'Pin* Test*'.
+Removed TP16 'exclude from BOM' fabrication attribute.
+Connected TP16 pin 1 to +3.3VLAN.
+Updated TP8 symbol association from  to /023d3b54-558e-41d1-8a4c-ee0ba2b6aaef.
+Added TP17 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP17.
+Changed TP17 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP17 symbol association from  to /6c0a5c35-ba72-4d07-862e-1288580fff16.
+Updated TP17 sheetname to 'Root'.
+Updated TP17 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP17 footprint filters to 'Pin* Test*'.
+Removed TP17 'exclude from BOM' fabrication attribute.
+Connected TP17 pin 1 to Spare2.
+Changed TP8 value from TestPoint_Pad_D2.0mm to TestPoint.
+Added TP18 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP18.
+Changed TP18 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP18 symbol association from  to /b75fff0e-efaa-4a0c-94cb-2920aa34688c.
+Updated TP18 sheetname to 'Root'.
+Updated TP18 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP18 footprint filters to 'Pin* Test*'.
+Removed TP18 'exclude from BOM' fabrication attribute.
+Connected TP18 pin 1 to Net-(U12-UVLO).
+Changed REF** reference designator to TP8.
+Added TP19 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP19.
+Changed TP19 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP19 symbol association from  to /e3ad6083-1446-41eb-9340-d69c70b52fe2.
+Updated TP19 sheetname to 'Root'.
+Updated TP19 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP19 footprint filters to 'Pin* Test*'.
+Removed TP19 'exclude from BOM' fabrication attribute.
+Connected TP19 pin 1 to +5VP.
+Added TP8 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Added TP20 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP20.
+Changed TP20 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP20 symbol association from  to /f5299f5d-6878-4394-902a-5c750fa8e632.
+Updated TP20 sheetname to 'Root'.
+Updated TP20 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP20 footprint filters to 'Pin* Test*'.
+Removed TP20 'exclude from BOM' fabrication attribute.
+Connected TP20 pin 1 to VBUS.
+Updated TP12 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Added TP21 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP21.
+Changed TP21 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP21 symbol association from  to /23b50038-7e48-425d-869d-8ebaa74cc40e.
+Updated TP21 sheetname to 'Root'.
+Updated TP21 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP21 footprint filters to 'Pin* Test*'.
+Removed TP21 'exclude from BOM' fabrication attribute.
+Connected TP21 pin 1 to +5V.
+Connected TP30 pin 1 to GPIO5/SPI_CS.
+Added TP22 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP22.
+Changed TP22 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP22 symbol association from  to /d2a7ec64-73a1-4d8d-a047-477f0932a324.
+Updated TP22 sheetname to 'Root'.
+Updated TP22 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP22 footprint filters to 'Pin* Test*'.
+Removed TP22 'exclude from BOM' fabrication attribute.
+Connected TP22 pin 1 to +9V.
+Removed TP30 'exclude from BOM' fabrication attribute.
+Added TP23 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP23.
+Changed TP23 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP23 symbol association from  to /2898ca49-4c4a-4b33-8b86-257164c50673.
+Updated TP23 sheetname to 'Root'.
+Updated TP23 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP23 footprint filters to 'Pin* Test*'.
+Removed TP23 'exclude from BOM' fabrication attribute.
+Connected TP23 pin 1 to +3.3V.
+Updated TP30 footprint filters to 'Pin* Test*'.
+Added TP24 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP24.
+Changed TP24 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP24 symbol association from  to /db690d6d-3832-4922-8787-71b01d960507.
+Updated TP24 sheetname to 'Root'.
+Updated TP24 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP24 footprint filters to 'Pin* Test*'.
+Removed TP24 'exclude from BOM' fabrication attribute.
+Connected TP24 pin 1 to RMIISEL.
+Updated TP30 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Added TP25 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP25.
+Changed TP25 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP25 symbol association from  to /ea5cd51e-44af-4205-83e0-52a23ab58acc.
+Updated TP25 sheetname to 'Root'.
+Updated TP25 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP25 footprint filters to 'Pin* Test*'.
+Removed TP25 'exclude from BOM' fabrication attribute.
+Connected TP25 pin 1 to Net-(U25-VDD).
+Updated TP30 sheetname to 'Root'.
+Added TP26 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP26.
+Changed TP26 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP26 symbol association from  to /f6c930f7-10bf-4e56-a248-4fd9497e862e.
+Updated TP26 sheetname to 'Root'.
+Updated TP26 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP26 footprint filters to 'Pin* Test*'.
+Removed TP26 'exclude from BOM' fabrication attribute.
+Connected TP26 pin 1 to GPIO12/PHY_PWR.
+Updated TP30 symbol association from  to /597af5c2-880d-4a95-b62b-8e9e5aa765af.
+Added TP27 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP27.
+Changed TP27 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP27 symbol association from  to /2d84ceed-f113-43e0-9ed7-c3a5eb137c14.
+Updated TP27 sheetname to 'Root'.
+Updated TP27 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP27 footprint filters to 'Pin* Test*'.
+Removed TP27 'exclude from BOM' fabrication attribute.
+Connected TP27 pin 1 to GPIO15/HS2_CMD.
+Changed TP30 value from TestPoint_Pad_D2.0mm to TestPoint.
+Added TP28 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP28.
+Changed TP28 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP28 symbol association from  to /e172e45f-28b6-43ed-a104-899f7bb8fd20.
+Updated TP28 sheetname to 'Root'.
+Updated TP28 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP28 footprint filters to 'Pin* Test*'.
+Removed TP28 'exclude from BOM' fabrication attribute.
+Connected TP28 pin 1 to GPIO2/HS2_DATA0.
+Changed REF** reference designator to TP30.
+Added TP29 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Changed REF** reference designator to TP29.
+Changed TP29 value from TestPoint_Pad_D2.0mm to TestPoint.
+Updated TP29 symbol association from  to /03b79476-c9ff-44dc-b22a-21540050c368.
+Updated TP29 sheetname to 'Root'.
+Updated TP29 sheetfile to 'InnerBoard_rev2.1.kicad_sch'.
+Updated TP29 footprint filters to 'Pin* Test*'.
+Removed TP29 'exclude from BOM' fabrication attribute.
+Connected TP29 pin 1 to GPIO0.
+Added TP30 (footprint 'TestPoint:TestPoint_Pad_D2.0mm').
+Warning: No net found for component U9 pad 23 (no pin 23 in symbol).
+Warning: No net found for component J6 pad 8 (no pin 8 in symbol).
+Warning: No net found for component U9 pad 5 (no pin 5 in symbol).
+Warning: No net found for component U9 pad 12 (no pin 12 in symbol).
+Warning: No net found for component U9 pad 25 (no pin 25 in symbol).
+Warning: No net found for component U9 pad 29 (no pin 29 in symbol).
+Warning: No net found for component U9 pad 13 (no pin 13 in symbol).
+Warning: No net found for component U6 pad 1 (no pin 1 in symbol).
+Error: Cannot update SW1 (footprint 'SW4_PTS815 SJM 250 SMTR LFS_CNK' not found).
+Error: Cannot add J14 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot update U1 (footprint 'DSS0012B' not found).
+Error: Cannot add J13 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot add J12 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot add MH2 (footprint 'OLIMEX_Other-FP:Mounting_hole_Shield_3.3mm' not found).
+Error: Cannot add J11 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot add J10 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot add J15 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot add MH1 (footprint 'OLIMEX_Other-FP:Mounting_hole_Shield_3.3mm' not found).
+Error: Cannot add JP1 (no footprint assigned).
+Error: Cannot add J19 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot add J18 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot add J17 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot update J8 (footprint 'CONN10_3221-10-0300-00_CNC' not found).
+Error: Cannot add J7 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot update U11 (footprint 'QFN32_5X5MC_MCH' not found).
+Error: Cannot add J16 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot update U12 (footprint 'PW8' not found).
+Error: Cannot add J1 (footprint 'HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X' not found).
+Error: Cannot update U23 (footprint 'DBV0005A_N' not found).
+Error: Cannot add C27 (no footprint assigned).
+Error: Cannot add U25 (no footprint assigned).
+Error: Cannot add C26 (no footprint assigned).
+Error: Cannot update SW2 (footprint 'SW4_PTS815 SJM 250 SMTR LFS_CNK' not found).
+
+
+Info: Total warnings: 8, errors: 25.
