@@ -25924,7 +25924,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 349.25 120.65 0)
 			(effects
 				(font
@@ -26161,7 +26161,7 @@
 				)
 			)
 		)
-		(property "Footprint" "DBV0005A_N"
+		(property "Footprint" "ESDS314DBVR:DBV0005A_N"
 			(at 292.608 82.042 0)
 			(effects
 				(font
@@ -29319,7 +29319,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 699.516 223.52 0)
 			(effects
 				(font
@@ -30660,7 +30660,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 60.96 86.36 0)
 			(effects
 				(font
@@ -33342,7 +33342,7 @@
 				)
 			)
 		)
-		(property "Footprint" "SW4_PTS815 SJM 250 SMTR LFS_CNK"
+		(property "Footprint" "PTS815:SW4_PTS815 SJM 250 SMTR LFS_CNK"
 			(at 38.862 550.418 0)
 			(effects
 				(font
@@ -33495,7 +33495,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PW8"
+		(property "Footprint" "TPS2376PW:PW8"
 			(at 545.084 98.806 0)
 			(effects
 				(font
@@ -33832,7 +33832,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 187.96 105.41 0)
 			(effects
 				(font
@@ -35303,7 +35303,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 668.782 220.726 0)
 			(effects
 				(font
@@ -36049,7 +36049,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 106.68 133.35 0)
 			(effects
 				(font
@@ -37654,7 +37654,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 265.43 427.99 0)
 			(effects
 				(font
@@ -39374,7 +39374,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 341.63 102.87 0)
 			(effects
 				(font
@@ -39693,7 +39693,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 311.15 113.03 0)
 			(effects
 				(font
@@ -40934,7 +40934,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 77.47 236.982 0)
 			(effects
 				(font
@@ -42265,7 +42265,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 322.58 110.49 0)
 			(effects
 				(font
@@ -42506,7 +42506,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 270.51 414.02 0)
 			(effects
 				(font
@@ -43553,7 +43553,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 322.58 135.89 0)
 			(effects
 				(font
@@ -44730,7 +44730,7 @@
 				)
 			)
 		)
-		(property "Footprint" "CONN10_3221-10-0300-00_CNC"
+		(property "Footprint" "CONN10_3221-10-0300-00_CNC:CONN10_3221-10-0300-00_CNC"
 			(at 257.556 552.704 0)
 			(effects
 				(font
@@ -46063,7 +46063,7 @@
 				)
 			)
 		)
-		(property "Footprint" "SW4_PTS815 SJM 250 SMTR LFS_CNK"
+		(property "Footprint" "PTS815:SW4_PTS815 SJM 250 SMTR LFS_CNK"
 			(at 38.608 525.018 0)
 			(effects
 				(font
@@ -46652,7 +46652,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 69.85 80.01 0)
 			(effects
 				(font
@@ -49747,7 +49747,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 78.74 73.66 0)
 			(effects
 				(font
@@ -50273,7 +50273,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "HMTSW-102-X-X-S-X:SAMTEC_HMTSW-102-X-X-S-X"
 			(at 277.114 393.7 0)
 			(effects
 				(font
