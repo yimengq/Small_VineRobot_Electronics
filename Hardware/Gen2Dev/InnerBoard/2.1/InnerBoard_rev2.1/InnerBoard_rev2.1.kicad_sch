@@ -25691,7 +25691,7 @@
 				)
 			)
 		)
-		(property "Footprint" "QFN32_5X5MC_MCH"
+		(property "Footprint" "LAN8710A-EZC:QFN32_5X5MC_MCH"
 			(at 195.58 115.57 0)
 			(effects
 				(font
