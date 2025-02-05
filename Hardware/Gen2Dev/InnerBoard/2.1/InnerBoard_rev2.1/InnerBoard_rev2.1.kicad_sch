@@ -12807,12 +12807,6 @@
 		(uuid "a38c0a74-fe7b-42ce-a923-74018810cc6b")
 	)
 	(junction
-		(at 557.53 415.29)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "a395a586-55fa-49a5-9dcc-0723426c778a")
-	)
-	(junction
 		(at 341.63 89.662)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -15528,7 +15522,7 @@
 	)
 	(wire
 		(pts
-			(xy 557.53 415.29) (xy 557.53 416.56)
+			(xy 557.53 414.274) (xy 557.53 416.56)
 		)
 		(stroke
 			(width 0)
@@ -15795,16 +15789,6 @@
 			(type default)
 		)
 		(uuid "6d15fdbf-8549-4514-a917-aafe42e326cf")
-	)
-	(wire
-		(pts
-			(xy 557.53 414.274) (xy 557.53 415.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6da7acc3-9159-4619-8031-e273ea42dd27")
 	)
 	(wire
 		(pts
@@ -27497,7 +27481,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "MCP100-270D:TO127P254X495-3"
 			(at 216.408 74.168 0)
 			(effects
 				(font
@@ -27696,8 +27680,8 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board yes)
-		(dnp no)
+		(on_board no)
+		(dnp yes)
 		(uuid "2c50582c-329e-40b6-aa65-b304892b211c")
 		(property "Reference" "MH2"
 			(at 765.2512 627.38 0)
@@ -27718,7 +27702,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "OLIMEX_Other-FP:Mounting_hole_Shield_3.3mm"
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
 			(at 755.904 629.285 0)
 			(effects
 				(font
@@ -27768,6 +27752,96 @@
 			(effects
 				(font
 					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr P/N" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 P/N" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Unit Price" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Price @ Qty" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 P/N" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Unit Price" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Price @ Qty" ""
+			(at 762 627.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
@@ -30959,7 +31033,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "4e7ef8b7-469e-4dff-87e0-0f954be7b12c")
 		(property "Reference" "R24"
 			(at 136.398 532.13 90)
@@ -31010,6 +31084,96 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "Mfr" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr P/N" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 P/N" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Unit Price" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Price @ Qty" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 P/N" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Unit Price" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Price @ Qty" ""
+			(at 136.398 530.098 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -34544,73 +34708,6 @@
 			(project "OuterBoard_rev2.1"
 				(path "/e0487af4-02df-420a-a23b-b16cb445dead"
 					(reference "R26")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 557.53 415.29 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "6c0a5c35-ba72-4d07-862e-1288580fff16")
-		(property "Reference" "TP17"
-			(at 563.118 413.258 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 561.594 416.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 557.53 420.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 557.53 420.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 557.53 415.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4fafc6b4-5017-47b1-a85d-197b4a473a9a")
-		)
-		(instances
-			(project "InnerBoard_rev2.1"
-				(path "/5675e374-4d13-4550-a947-518e8da4d5de"
-					(reference "TP17")
 					(unit 1)
 				)
 			)
@@ -48327,8 +48424,8 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board yes)
-		(dnp no)
+		(on_board no)
+		(dnp yes)
 		(uuid "e7c2eed1-b890-4c61-8e80-17af70586380")
 		(property "Reference" "MH3"
 			(at 765.2512 632.46 0)
@@ -48349,7 +48446,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "OLIMEX_Other-FP:Mounting_hole_Shield_3.3mm"
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
 			(at 755.904 634.365 0)
 			(effects
 				(font
@@ -48399,6 +48496,96 @@
 			(effects
 				(font
 					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr P/N" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 P/N" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Unit Price" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Price @ Qty" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 P/N" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Unit Price" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Price @ Qty" ""
+			(at 762 632.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
