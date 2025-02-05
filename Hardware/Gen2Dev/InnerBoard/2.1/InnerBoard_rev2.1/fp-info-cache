@@ -1,4 +1,4 @@
-23850126418025593
+23884665600727189
 5156
 DSS0012B
 
@@ -6,6 +6,20 @@ LM5156DSSR
 0
 16
 16
+ABLS2-12.000MHZ-D4Y-T
+XTAL_ABLS2-12.000MHZ-D4Y-T
+
+
+0
+2
+2
+ASV-50.000MHZ-LCS-T
+XTAL_ASV-50.000MHZ-LCS-T
+
+
+0
+4
+4
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -2575,6 +2589,13 @@ speaker CUI
 0
 2
 2
+CONN10_3221-10-0300-00_CNC
+CONN10_3221-10-0300-00_CNC
+
+3221-10-0300-00 
+0
+10
+10
 Calibration_Scale
 Gauge_10mm_Type1_CopperTop
 Gauge, Massstab, 10mm, CopperTop, Type 1,
@@ -56699,6 +56720,41 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 0
 10
 10
+ESDS314DBVR
+DBV0005A_L
+
+ESDS314DBVR 
+0
+5
+5
+ESDS314DBVR
+DBV0005A_M
+
+ESDS314DBVR 
+0
+5
+5
+ESDS314DBVR
+DBV0005A_N
+
+ESDS314DBVR 
+0
+5
+5
+ESP32_WROOM_32E_N8
+ESP32­WROOM­32E_EXP
+
+ESP32-WROOM-32E-N8 
+0
+47
+47
+FT232RQ
+QFN50P500X500X90-33N
+
+
+0
+33
+33
 Ferrite_THT
 LairdTech_28C0236-0JW-10
 Ferrite, vertical, LairdTech 28C0236-0JW-10, https://assets.lairdtech.com/home/brandworld/files/28C0236-0JW-10.pdf, JW Miller core https://www.bourns.com/products/magnetic-products/j.w.-miller-through-hole-ferrite-beads-emi-filters
@@ -57732,6 +57788,13 @@ Fuse
 Fuseholder_TR5_Littelfuse_No560_No460
 Fuse, Fuseholder, TR5, Littelfuse/Wickmann, No. 460, No560, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_holders/littelfuse_fuse_holder_559_560_datasheet.pdf.pdf
 Fuse Fuseholder TR5 Littelfuse/Wickmann No. 460 No560 
+0
+2
+2
+HMTSW-102-X-X-S-X
+SAMTEC_HMTSW-102-X-X-S-X
+
+
 0
 2
 2
@@ -63503,6 +63566,27 @@ solder jumper open
 0
 5
 3
+LAN8710A-EZC
+QFN32_5X5MC_MCH
+
+LAN8710A-EZC 
+0
+33
+33
+LAN8710A-EZC
+QFN32_5X5MC_MCH-L
+
+LAN8710A-EZC 
+0
+33
+33
+LAN8710A-EZC
+QFN32_5X5MC_MCH-M
+
+LAN8710A-EZC 
+0
+33
+33
 LED_SMD
 LED-APA102-2020
 http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf
@@ -64700,6 +64784,13 @@ Yellow 5381 Series LED
 0
 2
 2
+MCP100-270D
+TO127P254X495-3
+
+
+0
+3
+3
 Module
 A20_OLINUXINO_LIME2
 A20 Olinuxino LIME2, 1.2GHz, 512-1024MB RAM, Micro-SD, NAND or eMMC, 1000Mbit Ethernet
@@ -68526,6 +68617,13 @@ Oscillator
 Oscillator_SeikoEpson_SG-8002DC
 8-lead dip package, row spacing 7.62 mm (300 mils)
 DIL DIP PDIP 2.54mm 7.62mm 300mil
+0
+4
+4
+PTS815
+SW4_PTS815 SJM 250 SMTR LFS_CNK
+
+PTS815 SJM 250 SMTR LFS 
 0
 4
 4
@@ -88983,6 +89081,20 @@ rotary encoder illuminated switch vertical
 0
 9
 8
+SI-46020-F
+BEL_SI-46020-F
+
+
+0
+16
+16
+SI2323DS-T1-GE3
+SOT23
+<b>SMALL OUTLINE TRANSISTOR</b><p>reflow soldering
+
+0
+3
+3
 Sensor
 ASAIR_AM2302_P2.54mm_Lead2.75mm_TabDown
 Temperature and humidity module, http://akizukidenshi.com/download/ds/aosong/AM2302.pdf
@@ -90649,6 +90761,27 @@ Logo WEEE
 0
 0
 0
+TPS2376PW
+PW8
+
+TPS2376PW 
+0
+8
+8
+TPS2376PW
+PW8-L
+
+TPS2376PW 
+0
+8
+8
+TPS2376PW
+PW8-M
+
+TPS2376PW 
+0
+8
+8
 TerminalBlock
 TerminalBlock_Altech_AK300-2_P5.00mm
 Altech AK300 terminal block, pitch 5.0mm, 45 degree angled, see http://www.mouser.com/ds/2/16/PCBMETRC-24178.pdf
@@ -95962,6 +96095,13 @@ igbt diode module
 0
 25
 25
+UJ31-CH-G2-SMT-TR
+CUI_UJ31-CH-G2-SMT-TR
+
+
+0
+28
+28
 Valve
 Valve_ECC-83-1
 Valve ECC-83-1 round pins
