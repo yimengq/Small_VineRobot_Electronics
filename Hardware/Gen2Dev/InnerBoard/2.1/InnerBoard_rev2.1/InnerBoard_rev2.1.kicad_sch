@@ -14212,6 +14212,16 @@
 	)
 	(wire
 		(pts
+			(xy 720.09 229.87) (xy 712.47 229.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "33108eb9-2644-4b96-9dad-14b9bfbf6f52")
+	)
+	(wire
+		(pts
 			(xy 661.416 84.328) (xy 649.478 84.328)
 		)
 		(stroke
@@ -14399,6 +14409,16 @@
 			(type default)
 		)
 		(uuid "3a1d8eb4-480c-4cfb-9393-b5079dcc43a3")
+	)
+	(wire
+		(pts
+			(xy 712.47 229.87) (xy 712.47 226.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a94a7c5-be67-4406-b392-792c85e6962c")
 	)
 	(wire
 		(pts
@@ -40411,6 +40431,72 @@
 			(project "InnerBoard_rev2.1"
 				(path "/5675e374-4d13-4550-a947-518e8da4d5de"
 					(reference "Y3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 712.47 226.06 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a63153e7-6100-4651-82ac-cfb64856c941")
+		(property "Reference" "#PWR016"
+			(at 712.47 229.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 712.47 221.742 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 712.47 226.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 712.47 226.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 712.47 226.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d7d47022-cf37-44d2-bf2c-a0f3a500fe4f")
+		)
+		(instances
+			(project "InnerBoard_rev2.1"
+				(path "/5675e374-4d13-4550-a947-518e8da4d5de"
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
