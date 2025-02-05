@@ -21368,6 +21368,16 @@
 		)
 		(uuid "c7d10bae-a511-4a9f-acf4-cf61e963af4f")
 	)
+	(text "// update ethernet"
+		(exclude_from_sim no)
+		(at 400.304 65.786 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "c97ea947-a9e9-4f42-8c57-baf680859570")
+	)
 	(text "I2CEXT0_SCL_out"
 		(exclude_from_sim no)
 		(at 697.865 648.335 0)
