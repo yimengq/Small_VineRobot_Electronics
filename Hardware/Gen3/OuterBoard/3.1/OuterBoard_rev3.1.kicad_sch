@@ -419,13 +419,14 @@
 					(justify right bottom)
 				)
 			)
-			(property "Value" "6130XX11121_61300611121"
-				(at -7.62 -5.08 0)
+			(property "Value" "61300611121"
+				(at 0 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify right bottom)
+					(justify bottom)
+					(hide yes)
 				)
 			)
 			(property "Footprint" "6130XX11121_61300611121:61300611121"
@@ -487,16 +488,6 @@
 				)
 			)
 			(property "IR" "3A"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "VALUE" "61300611121"
 				(at 0 0 0)
 				(effects
 					(font
@@ -13595,6 +13586,18 @@
 			(type none)
 		)
 		(uuid b2b5f71b-8281-4032-88f5-16844d3ed06e)
+	)
+	(rectangle
+		(start 648.335 312.42)
+		(end 1010.793 430.022)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid c0b56b20-4b52-45ec-ace8-6377f7b857b1)
 	)
 	(rectangle
 		(start 232.664 78.232)
