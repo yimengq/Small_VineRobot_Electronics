@@ -1,4 +1,32 @@
-24649198523019889
+24668294103482131
+53047-0210
+CON_530470210_MOL
+
+530470210 
+0
+2
+2
+61300611121
+61300611121
+<B>WR-PHD </B><BR> 2.54mm Pin Header, 6 Pin
+
+0
+6
+6
+ABM8G_40_000MHZ_18_D2Y_T
+CRYSTAL_ABM8G_ABR
+
+ABM8G-40.000MHZ-18-D2Y-T 
+0
+4
+4
+ABS07-32.768KHZ-7-T
+XTAL_ABS07-32.768KHZ-7-T
+
+
+0
+2
+2
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -58260,6 +58288,27 @@ Fuse Fuseholder TR5 Littelfuse/Wickmann No. 460 No560
 0
 2
 2
+GD25Q64CSIGR
+SOP8_208MIL_GDV
+
+GD25Q64CSIGR 
+0
+8
+8
+GD25Q64CSIGR
+SOP8_208MIL_GDV-L
+
+GD25Q64CSIGR 
+0
+8
+8
+GD25Q64CSIGR
+SOP8_208MIL_GDV-M
+
+GD25Q64CSIGR 
+0
+8
+8
 Heatsink
 Heatsink_35x26mm_1xFixation3mm_Fischer-SK486-35
 Heatsink, 35mm x 26mm, 1x Fixation 3mm, Fischer SK486-35
@@ -68473,6 +68522,27 @@ threaded screw
 0
 4
 1
+NANOSMDC110F-2
+FUS_NANO_TYCO_TYC
+
+NANOSMDC110F-2 
+0
+2
+2
+NANOSMDC110F-2
+FUS_NANO_TYCO_TYC-L
+
+NANOSMDC110F-2 
+0
+2
+2
+NANOSMDC110F-2
+FUS_NANO_TYCO_TYC-M
+
+NANOSMDC110F-2 
+0
+2
+2
 NetTie
 NetTie-2_SMD_Pad0.5mm
 Net tie, 2 pin, 0.5mm square SMD pads
@@ -69751,6 +69821,13 @@ Oscillator
 Oscillator_SeikoEpson_SG-8002DC
 8-lead dip package, row spacing 7.62 mm (300 mils)
 DIL DIP PDIP 2.54mm 7.62mm 300mil
+0
+4
+4
+PTS815
+SW4_PTS815 SJM 250 SMTR LFS_CNK
+
+PTS815 SJM 250 SMTR LFS 
 0
 4
 4
