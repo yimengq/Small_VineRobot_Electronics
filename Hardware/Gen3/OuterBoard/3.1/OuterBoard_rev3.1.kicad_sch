@@ -14038,8 +14038,25 @@
 		(uuid b2b5f71b-8281-4032-88f5-16844d3ed06e)
 	)
 	(rectangle
+<<<<<<< HEAD
+		(start 648.335 312.42)
+		(end 1010.793 430.022)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid c0b56b20-4b52-45ec-ace8-6377f7b857b1)
+	)
+	(rectangle
+		(start 232.664 78.232)
+		(end 330.454 139.446)
+=======
 		(start 216.916 86.614)
 		(end 297.942 138.938)
+>>>>>>> 1641d345b65707cdc5b219de7075dabe5fb6c5e8
 		(stroke
 			(width 0)
 			(type default)
