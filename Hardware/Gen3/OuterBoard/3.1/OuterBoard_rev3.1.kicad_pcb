@@ -955,6 +955,17 @@
 			(solder_mask_margin 0.102)
 			(uuid "1f0ff5bb-11d9-4746-a857-2155a3491e2b")
 		)
+		(model "/Users/rohankarunaratne/Documents/GitHub/Small_VineRobot_Electronics/Hardware/Gen3/OuterBoard/3.1b/3D Models/6130XX11121_61300611121.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 90 180 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0201_0603Metric"
 		(layer "F.Cu")
@@ -21947,6 +21958,17 @@
 			(pintype "passive")
 			(solder_mask_margin 0.102)
 			(uuid "8d72aa48-72a9-43f0-8b78-8401abd5e572")
+		)
+		(model "/Users/rohankarunaratne/Documents/GitHub/Small_VineRobot_Electronics/Hardware/Gen3/OuterBoard/3.1b/3D Models/6130XX11121_61300611121.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 90 180 0)
+			)
 		)
 	)
 	(footprint "Package_DFN_QFN:QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm"
