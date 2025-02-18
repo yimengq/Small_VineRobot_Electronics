@@ -505,10 +505,10 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "Gerber/",
+      "plot": "/Users/rohankarunaratne/Documents/GitHub/Small_VineRobot_Electronics/Hardware/Gen3/OuterBoard/3.1b/Gerber/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "OuterBoard_rev3.1.step",
       "svg": "",
       "vrml": ""
     },

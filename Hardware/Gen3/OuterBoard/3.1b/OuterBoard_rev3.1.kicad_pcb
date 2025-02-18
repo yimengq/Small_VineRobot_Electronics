@@ -163,7 +163,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "Gerber/")
+			(outputdirectory "/Users/rohankarunaratne/Documents/GitHub/Small_VineRobot_Electronics/Hardware/Gen3/OuterBoard/3.1b/Gerber/")
 		)
 	)
 	(net 0 "")
