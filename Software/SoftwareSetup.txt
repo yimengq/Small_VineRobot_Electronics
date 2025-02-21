@@ -71,7 +71,7 @@ CONFIG_EXAMPLE_MAX_STA_CONN=4
 - May need to turn on CONFIG_FREERTOS_ENABLE_BACKWARD_COMPATIBILITY
 
 WITH EXTERNAL OSCILLATOR:
-- Serial flasher config -> Flash Size (8 MB)
+- Serial flasher config -> Flash Size (8 MB) // Maybe should be 4 MB for EVB
 - Example Configuration -> Ethernet Type (Internal EMAC)
 			-> Ethernet PHY Device (LAN87xx)
 			-> (23) SMI MDC GPIO number

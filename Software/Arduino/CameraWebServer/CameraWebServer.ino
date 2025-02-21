@@ -2,6 +2,7 @@
 #include "esp_camera.h"
 #include <WiFi.h>
 #include "imu_function.h"
+#include <ESP32Servo.h>
 
 //
 // WARNING!!! PSRAM IC required for UXGA resolution and high JPEG quality
@@ -38,16 +39,21 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-// const char *ssid = "Vcc-AP";
-// const char *password = "12345678";
+const char *ssid = "Vcc-AP";
+const char *password = "12345678";
 
-const char *ssid = "NETGEAR42";
-const char *password = "cleverroad877";
+// const char *ssid = "NETGEAR42";
+// const char *password = "cleverroad877";
 
 const int ledPin = 21; // On-board LED on GPIO21
 int ledState = 0;
 
 imu_function imu_func;
+
+extern Servo myServo;  // Create servo object
+const int servoPin = 7;  // GPIO pin for the servo signal (adjust as needed)
+int servoAngle = 0; // 0 for right, 1 for left
+int servoCounter = 0;
 
 void startCameraServer();
 void setupLedFlash(int pin);
@@ -76,7 +82,7 @@ void WiFiEvent(WiFiEvent_t event) {
 }
 
 void setup() {
-  Wire.begin(33, 34); //Comment out if using XIAO sense, diff SDA/SCL pins
+  // Wire.begin(33, 34); //Comment out if using XIAO sense, diff SDA/SCL pins
   Serial.begin(115200);
   while (!Serial) delay(10);  // Wait for serial
   Serial.setDebugOutput(true);
@@ -90,6 +96,23 @@ void setup() {
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(1000);
+
+  myServo.attach(servoPin, 750, 2250);  // Attach the servo to the specified pin
+
+  Serial.println( "   Heap: " );
+  Serial.print( "      Total: " );
+  Serial.println( ESP.getHeapSize() );
+  Serial.print( "      Used: " );
+  Serial.println( ESP.getHeapSize() - ESP.getFreeHeap() );
+  Serial.print( "      Free: " );
+  Serial.println( ESP.getFreeHeap() );
+  Serial.println( "   PSRAM: " );
+  Serial.print( "      Total: " );
+  Serial.println( ESP.getPsramSize() );
+  Serial.print( "      Used: " );
+  Serial.println( ESP.getPsramSize() - ESP.getFreePsram() );
+  Serial.print( "      Free: " );
+  Serial.println( ESP.getFreePsram() );
 
   
 
@@ -145,20 +168,7 @@ void setup() {
   pinMode(13, INPUT_PULLUP);
   pinMode(14, INPUT_PULLUP);
 #endif
-  Serial.println( "   Heap: " );
-  Serial.print( "      Total: " );
-  Serial.println( ESP.getHeapSize() );
-  Serial.print( "      Used: " );
-  Serial.println( ESP.getHeapSize() - ESP.getFreeHeap() );
-  Serial.print( "      Free: " );
-  Serial.println( ESP.getFreeHeap() );
-  Serial.println( "   PSRAM: " );
-  Serial.print( "      Total: " );
-  Serial.println( ESP.getPsramSize() );
-  Serial.print( "      Used: " );
-  Serial.println( ESP.getPsramSize() - ESP.getFreePsram() );
-  Serial.print( "      Free: " );
-  Serial.println( ESP.getFreePsram() );
+  
 
   // camera init
   esp_err_t err = esp_camera_init(&config);
@@ -216,10 +226,28 @@ void setup() {
 
 void loop() {
   imu_func.update();
-  delay(500);
+  delay(1000);
   digitalWrite(ledPin, ledState);  // turn the LED on (HIGH is the voltage level)
   ledState = ~ledState;
-
+  // if(servoCounter == 5){
+  //   servoCounter = 0;
+  //   if(servoAngle == 0){
+  //     Serial.println("Moving right...");
+  //     myServo.write(servoAngle);
+  //     servoAngle = 180;
+  //   }
+  //   else if(servoAngle == 180){
+  //     Serial.println("Moving left...");
+  //     myServo.write(servoAngle);
+  //     servoAngle = 0;
+  //   }
+  //   else{
+  //     servoAngle = 0;
+  //   }
+  // }
+  // else{
+  //   servoCounter += 1;
+  // }
   // delay(10000);
   Serial.print("Camera Ready! Use 'http://");
   Serial.print(WiFi.localIP());
