@@ -1,11 +1,19 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,8.0.8*%
+<<<<<<< HEAD:Hardware/Gen3/OuterBoard/3.1b/gerbers/OuterBoard_rev3.1-Edge_Cuts.gbr
 %TF.CreationDate,2025-02-18T00:45:43-08:00*%
+=======
+%TF.CreationDate,2025-02-18T14:14:41-08:00*%
+>>>>>>> 7a9fc26abfc888efe23978d172648197ae3e78b4:Hardware/Gen3/OuterBoard/3.1b/Gerber/OuterBoard_rev3.1-Edge_Cuts.gbr
 %TF.ProjectId,OuterBoard_rev3.1,4f757465-7242-46f6-9172-645f72657633,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Profile,NP*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+<<<<<<< HEAD:Hardware/Gen3/OuterBoard/3.1b/gerbers/OuterBoard_rev3.1-Edge_Cuts.gbr
 G04 Created by KiCad (PCBNEW 8.0.8) date 2025-02-18 00:45:43*
+=======
+G04 Created by KiCad (PCBNEW 8.0.8) date 2025-02-18 14:14:41*
+>>>>>>> 7a9fc26abfc888efe23978d172648197ae3e78b4:Hardware/Gen3/OuterBoard/3.1b/Gerber/OuterBoard_rev3.1-Edge_Cuts.gbr
 %MOMM*%
 %LPD*%
 G01*

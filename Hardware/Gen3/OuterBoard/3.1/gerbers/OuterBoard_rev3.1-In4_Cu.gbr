@@ -1,12 +1,20 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,8.0.8*%
+<<<<<<< HEAD:Hardware/Gen3/OuterBoard/3.1/gerbers/OuterBoard_rev3.1-In4_Cu.gbr
 %TF.CreationDate,2025-02-18T00:43:55-08:00*%
+=======
+%TF.CreationDate,2025-02-18T14:14:41-08:00*%
+>>>>>>> 7a9fc26abfc888efe23978d172648197ae3e78b4:Hardware/Gen3/OuterBoard/3.1b/Gerber/OuterBoard_rev3.1-In4_Cu.gbr
 %TF.ProjectId,OuterBoard_rev3.1,4f757465-7242-46f6-9172-645f72657633,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Copper,L5,Inr*%
 %TF.FilePolarity,Positive*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+<<<<<<< HEAD:Hardware/Gen3/OuterBoard/3.1/gerbers/OuterBoard_rev3.1-In4_Cu.gbr
 G04 Created by KiCad (PCBNEW 8.0.8) date 2025-02-18 00:43:55*
+=======
+G04 Created by KiCad (PCBNEW 8.0.8) date 2025-02-18 14:14:41*
+>>>>>>> 7a9fc26abfc888efe23978d172648197ae3e78b4:Hardware/Gen3/OuterBoard/3.1b/Gerber/OuterBoard_rev3.1-In4_Cu.gbr
 %MOMM*%
 %LPD*%
 G01*
@@ -150,6 +158,10 @@ X111749000Y-84037600D03*
 X139238800Y-88206400D03*
 X122047000Y-85648800D03*
 X128652394Y-99384806D03*
+X135485000Y-78335000D03*
+X132535000Y-78335000D03*
+X134970000Y-80990000D03*
+X134970000Y-83510000D03*
 X114681000Y-96926400D03*
 X125196600Y-96164400D03*
 X122351800Y-99034600D03*
