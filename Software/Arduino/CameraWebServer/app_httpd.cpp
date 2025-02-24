@@ -19,6 +19,7 @@
 #include "esp32-hal-ledc.h"
 #include "sdkconfig.h"
 #include "camera_index.h"
+#include <ESP32Servo.h>
 
 #if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
 #include "esp32-hal-log.h"
@@ -84,6 +85,7 @@
 
 int led_duty = 0;
 bool isStreaming = false;
+Servo myServo;
 
 #endif
 
@@ -277,6 +279,19 @@ void enable_led(bool en) {  // Turn LED On or Off
   log_i("Set LED intensity to %d", duty);
 }
 #endif
+
+void move_servo(int raw_val){
+  int val = raw_val*180/255;
+  if(val > 180){
+    myServo.write(180);
+  }
+  else if(val < 0){
+    myServo.write(0);
+  }
+  else{
+    myServo.write(val);
+  }
+}
 
 static esp_err_t bmp_handler(httpd_req_t *req) {
   camera_fb_t *fb = NULL;
@@ -834,14 +849,17 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
   } else if (!strcmp(variable, "ae_level")) {
     res = s->set_ae_level(s, val);
   }
-#if CONFIG_LED_ILLUMINATOR_ENABLED
   else if (!strcmp(variable, "led_intensity")) {
-    led_duty = val;
-    if (isStreaming) {
-      enable_led(true);
-    }
+    move_servo(val);
   }
-#endif
+// #if CONFIG_LED_ILLUMINATOR_ENABLED
+//   else if (!strcmp(variable, "led_intensity")) {
+//     led_duty = val;
+//     if (isStreaming) {
+//       enable_led(true);
+//     }
+//   }
+// #endif
 
 #if CONFIG_ESP_FACE_DETECT_ENABLED
   else if (!strcmp(variable, "face_detect")) {
