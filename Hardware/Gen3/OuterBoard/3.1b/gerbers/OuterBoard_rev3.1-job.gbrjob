@@ -5,7 +5,11 @@
       "Application": "Pcbnew",
       "Version": "8.0.8"
     },
+<<<<<<< HEAD:Hardware/Gen3/OuterBoard/3.1b/gerbers/OuterBoard_rev3.1-job.gbrjob
     "CreationDate": "2025-02-18T00:45:43-08:00"
+=======
+    "CreationDate": "2025-02-18T14:14:41-08:00"
+>>>>>>> 7a9fc26abfc888efe23978d172648197ae3e78b4:Hardware/Gen3/OuterBoard/3.1b/Gerber/OuterBoard_rev3.1-job.gbrjob
   },
   "GeneralSpecs": {
     "ProjectId": {

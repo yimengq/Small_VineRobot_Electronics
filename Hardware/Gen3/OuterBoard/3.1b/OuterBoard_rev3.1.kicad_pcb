@@ -163,7 +163,11 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
+<<<<<<< HEAD
 			(outputdirectory "gerbers/")
+=======
+			(outputdirectory "/Users/rohankarunaratne/Documents/GitHub/Small_VineRobot_Electronics/Hardware/Gen3/OuterBoard/3.1b/Gerber/")
+>>>>>>> 7a9fc26abfc888efe23978d172648197ae3e78b4
 		)
 	)
 	(net 0 "")
