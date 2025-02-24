@@ -506,7 +506,7 @@
       "idf": "",
       "netlist": "",
       "plot": "/Users/rohankarunaratne/Documents/GitHub/Small_VineRobot_Electronics/Hardware/Gen3/OuterBoard/3.1b/Gerber/",
-      "pos_files": "",
+      "pos_files": "../../../FabQuotes/JLCGen3/",
       "specctra_dsn": "",
       "step": "OuterBoard_rev3.1.step",
       "svg": "",
