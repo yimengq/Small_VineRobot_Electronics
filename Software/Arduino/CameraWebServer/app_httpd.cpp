@@ -280,8 +280,7 @@ void enable_led(bool en) {  // Turn LED On or Off
 }
 #endif
 
-void move_servo(int raw_val){
-  int val = raw_val*180/255;
+void move_servo(int val){
   if(val > 180){
     myServo.write(180);
   }
