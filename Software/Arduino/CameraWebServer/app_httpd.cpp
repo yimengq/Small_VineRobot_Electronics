@@ -804,7 +804,12 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
   } else if (!strcmp(variable, "quality")) {
     res = s->set_quality(s, val);
   } else if (!strcmp(variable, "contrast")) {
-    res = s->set_contrast(s, val);
+    if (s->id.PID == OV5640_PID) {
+      move_servo(val);
+      res = s->set_contrast(s, 0);
+    } else {
+      res = s->set_contrast(s, val);
+    }
   } else if (!strcmp(variable, "brightness")) {
     res = s->set_brightness(s, val);
   } else if (!strcmp(variable, "saturation")) {
