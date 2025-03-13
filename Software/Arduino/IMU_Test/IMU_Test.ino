@@ -39,7 +39,7 @@ int ledState = 0;
 
 void setup(void)
 {
-  Wire.begin(33, 34);
+  Wire.begin(3, 4);
   Serial.begin(115200);
 
   while (!Serial) delay(10);  // wait for serial port to open!
