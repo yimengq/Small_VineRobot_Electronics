@@ -1,7 +1,7 @@
 How to setup Arduino (for external sensing board):
 - Download from Arduino website
 - Follow instructions from https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/#software-preparation
-- Open the FullSingleTest.ino (software for external sensing board, includes WIFI CAM IMU LED)
+- Open the CameraWebServer.ino (software for external sensing board, includes WIFI CAM IMU LED)
 - May have to manually add file in Arduino for imu_function.h and imu_function.cpp (I created these because the BNO055 library conflicts with the esp_camera library in sensor_t definition, so they must be isolated in different cpp files with no definition exposed in the h file)
 -Go to Library Manager, search for "BNO055", and install the "Adafruit BNO055" library
 - Compile and flash using XIAO ESP32S3 devices and whichever COM it uses
@@ -35,6 +35,7 @@ cd esp-idf-v4.4.8/)
 - Run idf.py set-target esp32
 - To config settings, run "idf.py menuconfig"
 - in Ethernet, change the following settings
+WITH INTERNAL OSCILLATOR (Olimex POE):
 CONFIG_ETH_ENABLED=y
 CONFIG_ETH_USE_ESP32_EMAC=y
 CONFIG_ETH_PHY_INTERFACE_RMII=y
@@ -70,7 +71,7 @@ CONFIG_EXAMPLE_WIFI_CHANNEL=1
 CONFIG_EXAMPLE_MAX_STA_CONN=4
 - May need to turn on CONFIG_FREERTOS_ENABLE_BACKWARD_COMPATIBILITY
 
-WITH EXTERNAL OSCILLATOR:
+WITH EXTERNAL OSCILLATOR (Olimex EVB):
 - Serial flasher config -> Flash Size (8 MB) // Maybe should be 4 MB for EVB
 - Example Configuration -> Ethernet Type (Internal EMAC)
 			-> Ethernet PHY Device (LAN87xx)
