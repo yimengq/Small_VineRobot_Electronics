@@ -18458,6 +18458,33 @@
 				(hide yes)
 			)
 		)
+		(property "Supplier 2" ""
+			(at 180.34 49.022 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 P/N" ""
+			(at 180.34 49.022 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Untitled Field" ""
+			(at 180.34 49.022 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "17f1f5a5-4979-43c6-9385-d1f080960423")
 		)
