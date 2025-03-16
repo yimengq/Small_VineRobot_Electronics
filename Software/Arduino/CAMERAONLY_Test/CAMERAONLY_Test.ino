@@ -51,7 +51,7 @@ int ledState = 0;
 imu_function imu_func;
 
 extern Servo myServo;  // Create servo object
-const int servoPin = 2;  // GPIO pin for the servo signal (adjust as needed)
+const int servoPin = 7;  // GPIO pin for the servo signal (adjust as needed)
 int servoAngle = 0; // 0 for right, 1 for left
 int servoCounter = 0;
 
@@ -82,22 +82,22 @@ void WiFiEvent(WiFiEvent_t event) {
 }
 
 void setup() {
-  Wire.begin(3, 4); //Comment out if using XIAO sense, diff SDA/SCL pins
+  // Wire.begin(3, 4); //Comment out if using XIAO sense, diff SDA/SCL pins
   Serial.begin(115200);
   while (!Serial) delay(10);  // Wait for serial
   Serial.setDebugOutput(true);
   Serial.println();
 
-  Serial.println("-- Full Sense Board Test --"); Serial.println("");
+  Serial.println("-- CAMERA ONLY Sense Board Test --"); Serial.println("");
 
-  imu_func.init();
-  Serial.println("IMU init done");
+  // imu_func.init();
+  // Serial.println("IMU init done");
 
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
+  // pinMode(ledPin, OUTPUT);
+  // digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(1000);
 
-  myServo.attach(servoPin, 750, 2250);  // Attach the servo to the specified pin
+  // myServo.attach(servoPin, 750, 2250);  // Attach the servo to the specified pin
 
   Serial.println( "   Heap: " );
   Serial.print( "      Total: " );
@@ -113,6 +113,8 @@ void setup() {
   Serial.println( ESP.getPsramSize() - ESP.getFreePsram() );
   Serial.print( "      Free: " );
   Serial.println( ESP.getFreePsram() );
+
+  
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -202,20 +204,20 @@ void setup() {
   setupLedFlash(LED_GPIO_NUM);
 #endif
 
-  WiFi.begin(ssid, password);
-  WiFi.setSleep(false);
+  // WiFi.begin(ssid, password);
+  // WiFi.setSleep(false);
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  WiFi.onEvent(WiFiEvent);
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
+  // while (WiFi.status() != WL_CONNECTED) {
+  //   delay(500);
+  //   Serial.print(".");
+  // }
+  // WiFi.onEvent(WiFiEvent);
+  // Serial.println("");
+  // Serial.println("WiFi connected");
+  // Serial.print("IP Address: ");
+  // Serial.println(WiFi.localIP());
 
-  startCameraServer();
+  // startCameraServer();
 
   Serial.print("Camera Ready! Use 'http://");
   Serial.print(WiFi.localIP());
@@ -223,10 +225,10 @@ void setup() {
 }
 
 void loop() {
-  imu_func.update();
+  // imu_func.update();
   delay(1000);
-  digitalWrite(ledPin, ledState);  // turn the LED on (HIGH is the voltage level)
-  ledState = ~ledState;
+  // digitalWrite(ledPin, ledState);  // turn the LED on (HIGH is the voltage level)
+  // ledState = ~ledState;
   // if(servoCounter == 5){
   //   servoCounter = 0;
   //   if(servoAngle == 0){
