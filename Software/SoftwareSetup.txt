@@ -1,0 +1,110 @@
+How to setup Arduino (for external sensing board):
+- Download from Arduino website
+- Follow instructions from https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/#software-preparation
+- Open the CameraWebServer.ino (software for external sensing board, includes WIFI CAM IMU LED)
+- May have to manually add file in Arduino for imu_function.h and imu_function.cpp (I created these because the BNO055 library conflicts with the esp_camera library in sensor_t definition, so they must be isolated in different cpp files with no definition exposed in the h file)
+-Go to Library Manager, search for "BNO055", and install the "Adafruit BNO055" library
+- Compile and flash using XIAO ESP32S3 devices and whichever COM it uses
+- Open the serial monitor to check IMU data or the http://192.168.137.* that the camera stream will be hosted on
+- Maybe need to press the RST button on the ESP board
+
+
+How to setup ESP-IDF v4.4 (for internal POE board):
+- Some things to note about the POE board:
+	- Uses LAN8710A ethernet chip (compatible with LAN8720 code)
+	- This chip uses RMII (Reduced media independent interface) rather than SPI like other ethernet chips
+	- Does not seem like the POE board has Auto-MDIX, so a crossover cable must be used
+
+- Since the eth2ap example code provided by Olimex is incompatible with new versions of ESP-IDF due to differing libraries and refactoring, we must install v4.4 of ESP-IDF. However, Espressif only supports the newest versions v5.*. Therefore, the installer will not work, and we must source the v4.4 framework from the Github repo.
+- https://espressif-docs.readthedocs-hosted.com/projects/esp-idf/en/stable/get-started/windows-setup-scratch.html
+- git clone the ESP-IDF v4.4.8 (git clone -b v4.4.8 --recursive https://github.com/espressif/esp-idf.git esp-idf-v4.4.8
+cd esp-idf-v4.4.8/)
+- Install latest Cmake stable release
+- Install latest ninja stable release
+- Add ninja.exe to env variable "Path" (C:\Program Files\ninja.exe if under Program Files)
+- Install Python (some dependencies are incompatible with the latest version of Python, so you may have to downgrade to Python 3.12 or lower)
+- Run "pip install --user pyserial"
+- Download precompiled toolchain (https://dl.espressif.com/dl/xtensa-esp32-elf-gcc8_2_0-esp-2020r2-win32.zip) and unzip to any location
+- Add the file location of the bin folder in toolchain to system environment variables under "Path" (I unzipped the toolchain in Program Files, so add C:\Program Files\xtensa-esp32-elf\bin under "Path"
+- May also need to add new env variables IDF_PATH and IDF_TOOLS_PATH with value C:\Espressif\frameworks\esp-idf-v4.4.8 or wherever you git cloned the ESP-IDF repo
+- Then add %IDF_PATH%\tools under "Path"
+- Open command prompt and go to directory of esp-idf-v4.4.8
+- Run install.bat
+- Run export.bat (this must be run every time command prompt is opened to set environment)
+- Go to ESP32-PoE_Eth_to_AP_v4.4 in command prompt
+- Run idf.py set-target esp32
+- To config settings, run "idf.py menuconfig"
+- in Ethernet, change the following settings
+WITH INTERNAL OSCILLATOR (Olimex POE):
+CONFIG_ETH_ENABLED=y
+CONFIG_ETH_USE_ESP32_EMAC=y
+CONFIG_ETH_PHY_INTERFACE_RMII=y
+# CONFIG_ETH_RMII_CLK_INPUT is not set
+CONFIG_ETH_RMII_CLK_OUTPUT=y
+# CONFIG_ETH_RMII_CLK_OUTPUT_GPIO0 is not set
+CONFIG_ETH_RMII_CLK_OUT_GPIO=17
+CONFIG_ETH_DMA_BUFFER_SIZE=1536
+CONFIG_ETH_DMA_RX_BUFFER_NUM=10
+CONFIG_ETH_DMA_TX_BUFFER_NUM=10
+# CONFIG_ETH_USE_SPI_ETHERNET is not set
+# CONFIG_ETH_USE_OPENETH is not set
+- In EXAMPLE CONFIGURATION, change the following settings
+CONFIG_EXAMPLE_GPIO_RANGE_MIN=0
+CONFIG_EXAMPLE_GPIO_RANGE_MAX=33
+CONFIG_EXAMPLE_USE_INTERNAL_ETHERNET=y
+# CONFIG_EXAMPLE_USE_DM9051 is not set
+# CONFIG_EXAMPLE_USE_W5500 is not set
+# CONFIG_EXAMPLE_USE_KSZ8851SNL is not set
+# CONFIG_EXAMPLE_ETH_PHY_IP101 is not set
+# CONFIG_EXAMPLE_ETH_PHY_RTL8201 is not set
+CONFIG_EXAMPLE_ETH_PHY_LAN87XX=y
+# CONFIG_EXAMPLE_ETH_PHY_DP83848 is not set
+# CONFIG_EXAMPLE_ETH_PHY_KSZ8041 is not set
+# CONFIG_EXAMPLE_ETH_PHY_KSZ8081 is not set
+CONFIG_EXAMPLE_ETH_MDC_GPIO=23
+CONFIG_EXAMPLE_ETH_MDIO_GPIO=18
+CONFIG_EXAMPLE_ETH_PHY_RST_GPIO=-1
+CONFIG_EXAMPLE_ETH_PHY_ADDR=0
+CONFIG_EXAMPLE_WIFI_SSID="Vcc-AP"
+CONFIG_EXAMPLE_WIFI_PASSWORD="12345678"
+CONFIG_EXAMPLE_WIFI_CHANNEL=1
+CONFIG_EXAMPLE_MAX_STA_CONN=4
+- May need to turn on CONFIG_FREERTOS_ENABLE_BACKWARD_COMPATIBILITY
+
+WITH EXTERNAL OSCILLATOR (Olimex EVB):
+- Serial flasher config -> Flash Size (8 MB) // Maybe should be 4 MB for EVB
+- Example Configuration -> Ethernet Type (Internal EMAC)
+			-> Ethernet PHY Device (LAN87xx)
+			-> (23) SMI MDC GPIO number
+			-> (18) SMI MDIO GPIO number
+			-> (-1) PHY Reset GPIO number
+			-> (0) PHY Address
+			-> (Vcc-AP) Wi-Fi SSID
+			-> (12345678) Wi-Fi Password
+			-> (1) WiFi channel
+			-> (4) Maximum STA connections
+- Component config 	-> ESP32-specific -> CPU frequency (240 MHz)
+			-> Ethernet -> Support ESP32 internal EMAC controller	-> PHY interface (Reduced Media Independent Interface (RMII))
+										-> RMII clock mode (Input RMII clock from external)
+										-> (1536) Ethernet DMA buffer size (Byte)
+										-> (10) Amount of Ethernet DMA Rx buffers
+										-> (10) Amount of Ethernet DMA Tx buffers
+			-> HTTP Server -> [*] WebSocket server support
+			-> FreeRTOS -> (1000) Tick rate (Hz)
+
+- However I have already changed and pushed these values in the sdkconfig file, so no changes should be necessary if you pulled the sdkconfig file, where the menuconfigs are saved
+- Connect the ESP-POE
+- Run "idf.py -p COM* build flash monitor" to build, flash, and open the serial monitor, with COM* replaced with whichever COM the ESP-POE is connected to, like COM7
+- These commands can be run separately like "idf.py -p COM* monitor" to open the serial monitor when no changes have been made
+- Go to Control Panel->Network and Internet->Network Connections on your PC
+- Right-click Wi-Fi, and Properties->Sharing. Check "Allow other network users to connect through this computer's Internet connection" and choose Ethernet. The ethernet static IP should be changed to 192.168.137.*. You can check under Properties->IPv4. To access anything on the ESP32 LAN, its static IP must be in the same subnet 192.168.137.* and subnet mask 255.255.255.0
+- Reset the ESP-POE board
+- Then the ESP-POE should initialize the softAP for WiFi, then initialize Ethernet. Now you can connect the external sensing board or any other device using the SSID and password set in the config (I set SSID="Vcc-AP" and pass="12345678")
+- When connecting devices, it should show a message in the serial monitor with new STA IP
+- Otherwise, reset the external ESP
+
+Currently, the camera stream runs very slowly through the ethernet interface.
+Some things to try:
+- Different combinations of DMA buffer sizes and DMA Rx and Tx buffer nums
+- Firewall issue?
+- change values of FLOW_CONTROL_QUEUE_TIMEOUT_MS, FLOW_CONTROL_QUEUE_LENGTH, or FLOW_CONTROL_WIFI_SEND_TIMEOUT_MS (suggested by https://github.com/OLIMEX/ESP32-POE/tree/master/SOFTWARE/ESP-IDF/ESP32-PoE_Eth_to_AP_v4.4)
