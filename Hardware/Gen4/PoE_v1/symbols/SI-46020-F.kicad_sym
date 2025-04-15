@@ -1,0 +1,289 @@
+
+(kicad_symbol_lib (version 20211014) (generator kicad_symbol_editor)
+  (symbol "SI-46020-F" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+    (property "Reference" "J" (id 0) (at -10.16 21.082 0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
+    )
+    (property "Value" "SI-46020-F" (id 1) (at -10.16 -24.13 0)
+      (effects (font (size 1.27 1.27)) (justify top left))
+    )
+    (property "Footprint" "SI-46020-F:BEL_SI-46020-F" (id 2) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MF" "Bel Magnetic Solutions" (id 4) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MAXIMUM_PACKAGE_HEIGHT" "17.27 mm" (id 5) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Package" "None" (id 6) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Price" "None" (id 7) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Check_prices" "https://www.snapeda.com/parts/SI-46020-F/Bel+Magnetic+Solutions/view-part/?ref=eda" (id 8) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "STANDARD" "Manufacturer Recommendations" (id 9) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "PARTREV" "C" (id 10) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "SnapEDA_Link" "https://www.snapeda.com/parts/SI-46020-F/Bel+Magnetic+Solutions/view-part/?ref=snap" (id 11) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MP" "SI-46020-F" (id 12) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Purchase-URL" "https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=4628187&manufacturer=Bel Magnetic Solutions&part_name=SI-46020-F&search_term=si-46020-f" (id 13) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Description" "\nMagJack 10/100BaseT | PoE | 1X1 | G/G | Vertical | RoHS\n" (id 14) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "SNAPEDA_PN" "SI-46020-F" (id 15) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Availability" "In Stock" (id 16) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MANUFACTURER" "Bel Magnetic Solutions" (id 17) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (symbol "SI-46020-F_0_0"
+      (text "GREEN" (at -1.27 -2.54 0)
+        (effects (font (size 1.016 1.016)) (justify top left))
+      )
+      (text "GREEN" (at -1.27 -7.62 0)
+        (effects (font (size 1.016 1.016)) (justify top left))
+      )
+      (polyline
+        (pts (xy -6.096 -2.921) (xy -5.08 -4.572)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -5.08 -4.572) (xy -4.064 -2.921)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -6.223 -4.572) (xy -5.08 -4.572)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -5.08 -4.572) (xy -3.81 -4.572)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -6.096 -2.921) (xy -4.064 -2.921)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -3.175 -2.794) (xy -2.159 -3.81)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -3.302 -3.937) (xy -2.286 -4.953)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -5.08 -2.54) (xy -5.08 -2.794)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -5.08 -4.699) (xy -5.08 -5.08)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -10.16 -2.54) (xy -5.08 -2.54)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -5.08 -5.08) (xy -10.16 -5.08)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts
+          (xy -2.159 -3.81)
+          (xy -2.54 -2.921)
+          (xy -3.048 -3.429)
+          (xy -2.159 -3.81)
+        )
+        (stroke (width 0.1524)) (fill (type outline))
+      )
+      (polyline
+        (pts
+          (xy -2.286 -4.953)
+          (xy -2.667 -4.064)
+          (xy -3.175 -4.572)
+          (xy -2.286 -4.953)
+        )
+        (stroke (width 0.1524)) (fill (type outline))
+      )
+      (polyline
+        (pts (xy -6.096 -8.001) (xy -5.08 -9.652)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -5.08 -9.652) (xy -4.064 -8.001)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -6.223 -9.652) (xy -5.08 -9.652)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -5.08 -9.652) (xy -3.81 -9.652)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -6.096 -8.001) (xy -4.064 -8.001)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -3.175 -7.874) (xy -2.159 -8.89)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -3.302 -9.017) (xy -2.286 -10.033)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -5.08 -7.62) (xy -5.08 -7.874)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -5.08 -9.779) (xy -5.08 -10.16)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -10.16 -7.62) (xy -5.08 -7.62)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy -5.08 -10.16) (xy -10.16 -10.16)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts
+          (xy -2.159 -8.89)
+          (xy -2.54 -8.001)
+          (xy -3.048 -8.509)
+          (xy -2.159 -8.89)
+        )
+        (stroke (width 0.1524)) (fill (type outline))
+      )
+      (polyline
+        (pts
+          (xy -2.286 -10.033)
+          (xy -2.667 -9.144)
+          (xy -3.175 -9.652)
+          (xy -2.286 -10.033)
+        )
+        (stroke (width 0.1524)) (fill (type outline))
+      )
+      (rectangle (start -10.16 -22.86) (end 10.16 20.32)
+        (stroke (width 0.254)) (fill (type background))
+      )
+      (pin passive line (at -15.24 15.24 0) (length 5.08)
+        (name "TCT"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 12.7 0) (length 5.08)
+        (name "TD-"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "3"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 5.08 0) (length 5.08)
+        (name "RD-"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "6"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 17.78 0) (length 5.08)
+        (name "TD+"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 10.16 0) (length 5.08)
+        (name "RD+"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "4"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 7.62 0) (length 5.08)
+        (name "RCT"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "5"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 -15.24 0) (length 5.08)
+        (name "SHIELD"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "S1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 -15.24 0) (length 5.08)
+        (name "SHIELD"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "S2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at -15.24 -17.78 0) (length 5.08)
+        (name "P9"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "9"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 -2.54 0) (length 5.08)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GA1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 -5.08 0) (length 5.08)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GK1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 -10.16 0) (length 5.08)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GK2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 -7.62 0) (length 5.08)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GA2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -15.24 2.54 0) (length 5.08)
+        (name "P7"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "7"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at -15.24 -20.32 0) (length 5.08)
+        (name "P10"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "10"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+    )
+  )
+)
