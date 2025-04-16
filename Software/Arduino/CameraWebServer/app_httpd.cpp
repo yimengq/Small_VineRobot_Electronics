@@ -85,7 +85,9 @@
 
 int led_duty = 0;
 bool isStreaming = false;
-Servo myServo;
+Servo myServo1;
+Servo myServo2;
+
 
 #endif
 
@@ -280,15 +282,26 @@ void enable_led(bool en) {  // Turn LED On or Off
 }
 #endif
 
-void move_servo(int val){
+void move_servo1(int val){
   if(val > 180){
-    myServo.write(180);
+    myServo1.write(180);
   }
   else if(val < 0){
-    myServo.write(0);
+    myServo1.write(0);
   }
   else{
-    myServo.write(val);
+    myServo1.write(val);
+  }
+}
+void move_servo2(int val){
+  if(val > 180){
+    myServo2.write(180);
+  }
+  else if(val < 0){
+    myServo2.write(0);
+  }
+  else{
+    myServo2.write(val);
   }
 }
 
@@ -805,7 +818,7 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
     res = s->set_quality(s, val);
   } else if (!strcmp(variable, "contrast")) {
     if (s->id.PID == OV5640_PID) {
-      move_servo(val);
+      move_servo1(val);
       res = s->set_contrast(s, 0);
     } else {
       res = s->set_contrast(s, val);
@@ -815,7 +828,8 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
   } else if (!strcmp(variable, "saturation")) {
     res = s->set_saturation(s, val);
   } else if (!strcmp(variable, "gainceiling")) {
-    res = s->set_gainceiling(s, (gainceiling_t)val);
+    // res = s->set_gainceiling(s, (gainceiling_t)val);
+    move_servo2(val);
   } else if (!strcmp(variable, "colorbar")) {
     res = s->set_colorbar(s, val);
   } else if (!strcmp(variable, "awb")) {
@@ -854,8 +868,11 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
     res = s->set_ae_level(s, val);
   }
   else if (!strcmp(variable, "led_intensity")) {
-    move_servo(val);
+    move_servo1(val);
   }
+  // else if (!strcmp(variable, "led_intensity2")) {
+  //   move_servo2(val);
+  // }
 // #if CONFIG_LED_ILLUMINATOR_ENABLED
 //   else if (!strcmp(variable, "led_intensity")) {
 //     led_duty = val;

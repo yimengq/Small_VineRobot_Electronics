@@ -50,10 +50,15 @@ int ledState = 0;
 
 imu_function imu_func;
 
-extern Servo myServo;  // Create servo object
-const int servoPin = 2;  // GPIO pin for the servo signal (adjust as needed)
-int servoAngle = 0; // 0 for right, 1 for left
-int servoCounter = 0;
+extern Servo myServo1;  // Create servo object
+extern Servo myServo2;  // Create servo object
+const int servoPin1 = 1;  // GPIO pin for the servo signal (adjust as needed)
+const int servoPin2 = 2;  // GPIO pin for the servo signal (adjust as needed)
+
+int servoAngle1 = 0; // 0 for right, 1 for left
+int servoCounter1 = 0;
+int servoAngle2 = 0; // 0 for right, 1 for left
+int servoCounter2 = 0;
 
 void startCameraServer();
 void setupLedFlash(int pin);
@@ -97,7 +102,8 @@ void setup() {
   digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(1000);
 
-  myServo.attach(servoPin, 750, 2250);  // Attach the servo to the specified pin
+  myServo1.attach(servoPin1, 750, 2250);  // Attach the servo to the specified pin
+  myServo2.attach(servoPin2, 750, 2250);  // Attach the servo to the specified pin
 
   Serial.println( "   Heap: " );
   Serial.print( "      Total: " );
