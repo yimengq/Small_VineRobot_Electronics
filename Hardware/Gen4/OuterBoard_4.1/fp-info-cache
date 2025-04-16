@@ -1,4 +1,4 @@
-24670034510916976
+24682339772431358
 53047-0210
 CON_530470210_MOL
 
@@ -6,6 +6,13 @@ CON_530470210_MOL
 0
 2
 2
+10118194-0001LF
+AMPHENOL_10118194-0001LF
+
+
+0
+11
+11
 1054500101
 CONN_105450-0101_MOL
 
@@ -34,6 +41,27 @@ XTAL_ABS07-32.768KHZ-7-T
 0
 2
 2
+AZ1117CH_3_3TRG1
+SOT-223_DIO
+
+AZ1117CH-3.3TRG1 
+0
+4
+4
+AZ1117CH_3_3TRG1
+SOT-223_DIO-L
+
+AZ1117CH-3.3TRG1 
+0
+4
+4
+AZ1117CH_3_3TRG1
+SOT-223_DIO-M
+
+AZ1117CH-3.3TRG1 
+0
+4
+4
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -1182,7 +1210,121 @@ SMD DIP Switch SPST Slide 5.08mm 200mil SMD JPin
 0
 20
 20
-Button_Switch_
+Button_Switch_SMD
+SW_DIP_SPSTx10_Slide_Copal_CHS-10B_W7.62mm_P1.27mm
+SMD 10x-dip-switch SPST Copal_CHS-10B, Slide, row spacing 7.62 mm (300 mils), body size  (see http://www.nidec-copal-electronics.com/e/catalog/switch/chs.pdf), SMD
+SMD DIP Switch SPST Slide 7.62mm 300mil SMD
+0
+20
+20
+Button_Switch_SMD
+SW_DIP_SPSTx10_Slide_KingTek_DSHP10TJ_W5.25mm_P1.27mm_JPin
+SMD 10x-dip-switch SPST KingTek_DSHP10TJ, Slide, row spacing 5.25 mm (206 mils), body size  (see http://www.kingtek.net.cn/pic/201601201446313350.pdf), JPin
+SMD DIP Switch SPST Slide 5.25mm 206mil JPin
+0
+20
+20
+Button_Switch_SMD
+SW_DIP_SPSTx10_Slide_KingTek_DSHP10TS_W7.62mm_P1.27mm
+SMD 10x-dip-switch SPST KingTek_DSHP10TS, Slide, row spacing 7.62 mm (300 mils), body size  (see http://www.kingtek.net.cn/pic/201601201417455112.pdf)
+SMD DIP Switch SPST Slide 7.62mm 300mil
+0
+20
+20
+Button_Switch_SMD
+SW_DIP_SPSTx10_Slide_Omron_A6H-10101_W6.15mm_P1.27mm
+SMD 10x-dip-switch SPST Omron_A6H-10101, Slide, row spacing 6.15 mm (242 mils), body size  (see https://www.omron.com/ecb/products/pdf/en-a6h.pdf)
+SMD DIP Switch SPST Slide 6.15mm 242mil
+0
+20
+20
+Button_Switch_SMD
+SW_DIP_SPSTx10_Slide_Omron_A6S-1010x_W8.9mm_P2.54mm
+SMD 10x-dip-switch SPST Omron_A6S-1010x, Slide, row spacing 8.9 mm (350 mils), body size  (see http://omronfs.omron.com/en_US/ecb/products/pdf/en-a6s.pdf)
+SMD DIP Switch SPST Slide 8.9mm 350mil
+0
+20
+20
+Button_Switch_SMD
+SW_DIP_SPSTx11_Slide_6.7x29.5mm_W6.73mm_P2.54mm_LowProfile_JPin
+SMD 11x-dip-switch SPST , Slide, row spacing 6.73 mm (264 mils), body size 6.7x29.5mm (see e.g. https://www.ctscorp.com/wp-content/uploads/219.pdf), SMD, LowProfile, JPin
+SMD DIP Switch SPST Slide 6.73mm 264mil SMD LowProfile JPin
+0
+22
+22
+Button_Switch_SMD
+SW_DIP_SPSTx11_Slide_6.7x29.5mm_W8.61mm_P2.54mm_LowProfile
+SMD 11x-dip-switch SPST , Slide, row spacing 8.61 mm (338 mils), body size 6.7x29.5mm (see e.g. https://www.ctscorp.com/wp-content/uploads/219.pdf), SMD, LowProfile
+SMD DIP Switch SPST Slide 8.61mm 338mil SMD LowProfile
+0
+22
+22
+Button_Switch_SMD
+SW_DIP_SPSTx11_Slide_9.78x30.12mm_W8.61mm_P2.54mm
+SMD 11x-dip-switch SPST , Slide, row spacing 8.61 mm (338 mils), body size 9.78x30.12mm (see e.g. https://www.ctscorp.com/wp-content/uploads/204.pdf), SMD
+SMD DIP Switch SPST Slide 8.61mm 338mil SMD
+0
+22
+22
+Button_Switch_SMD
+SW_DIP_SPSTx12_Slide_6.7x32.04mm_W6.73mm_P2.54mm_LowProfile_JPin
+SMD 12x-dip-switch SPST , Slide, row spacing 6.73 mm (264 mils), body size 6.7x32.04mm (see e.g. https://www.ctscorp.com/wp-content/uploads/219.pdf), SMD, LowProfile, JPin
+SMD DIP Switch SPST Slide 6.73mm 264mil SMD LowProfile JPin
+0
+24
+24
+Button_Switch_SMD
+SW_DIP_SPSTx12_Slide_6.7x32.04mm_W8.61mm_P2.54mm_LowProfile
+SMD 12x-dip-switch SPST , Slide, row spacing 8.61 mm (338 mils), body size 6.7x32.04mm (see e.g. https://www.ctscorp.com/wp-content/uploads/219.pdf), SMD, LowProfile
+SMD DIP Switch SPST Slide 8.61mm 338mil SMD LowProfile
+0
+24
+24
+Button_Switch_SMD
+SW_DIP_SPSTx12_Slide_9.78x32.66mm_W8.61mm_P2.54mm
+SMD 12x-dip-switch SPST , Slide, row spacing 8.61 mm (338 mils), body size 9.78x32.66mm (see e.g. https://www.ctscorp.com/wp-content/uploads/204.pdf), SMD
+SMD DIP Switch SPST Slide 8.61mm 338mil SMD
+0
+24
+24
+Button_Switch_SMD
+SW_DPDT_CK_JS202011JCQN
+Sub-miniature slide switch, vertical, SMT J bend https://dznh3ojzb2azq.cloudfront.net/products/Slide/JS/documents/datasheet.pdf
+switch DPDT SMT
+0
+6
+6
+Button_Switch_SMD
+SW_MEC_5GSH9
+MEC 5G single pole normally-open tactile switch
+switch normally-open pushbutton push-button
+0
+4
+4
+Button_Switch_SMD
+SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010
+Side push button (https://www.alps.com/prod/info/E/PDF/Tact/SurfaceMount/SKRT/SKRT.pdf)
+push horizontal SPST 1P1T
+0
+5
+3
+Button_Switch_SMD
+SW_Push_1P1T-SH_NO_CK_KMR2xxG
+CK components KMR2 tactile switch with ground pin http://www.ckswitches.com/media/1479/kmr2.pdf
+tactile switch kmr2
+0
+5
+3
+Button_Switch_SMD
+SW_Push_1P1T_NO_CK_KMR2
+CK components KMR2 tactile switch http://www.ckswitches.com/media/1479/kmr2.pdf
+tactile switch kmr2
+0
+4
+2
+Button_Switch_SMD
+SW_Push_1P1T_NO_CK_KSC6xxJ
+CK components KSC6 tactile switch https://www.ckswitches.com/media/1972/ksc6.pdf
 tactile switch ksc6
 0
 4
@@ -92691,6 +92833,27 @@ Logo WEEE
 0
 0
 0
+TLV75528PDBVR
+DBV0005A_L
+
+TLV75528PDBVR 
+0
+5
+5
+TLV75528PDBVR
+DBV0005A_M
+
+TLV75528PDBVR 
+0
+5
+5
+TLV75528PDBVR
+DBV0005A_N
+
+TLV75528PDBVR 
+0
+5
+5
 TerminalBlock
 TerminalBlock_Altech_AK300-2_P5.00mm
 Altech AK300 terminal block, pitch 5.0mm, 45 degree angled, see http://www.mouser.com/ds/2/16/PCBMETRC-24178.pdf
