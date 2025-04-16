@@ -88,7 +88,8 @@ void WiFiEvent(WiFiEvent_t event) {
 
 void setup() {
   // Wire.begin(3, 4); //Comment out if using XIAO sense, diff SDA/SCL pins
-  Wire.begin(22, 23); //Comment out if using XIAO sense, diff SDA/SCL pins
+  // Wire.begin(23, 22); //Comment out if using XIAO sense, diff SDA/SCL pins
+  Wire.begin(5, 6);
 
   Serial.begin(115200);
   while (!Serial) delay(10);  // Wait for serial
@@ -104,8 +105,8 @@ void setup() {
   digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(1000);
 
-  myServo1.attach(servoPin1, 750, 2250);  // Attach the servo to the specified pin
-  myServo2.attach(servoPin2, 750, 2250);  // Attach the servo to the specified pin
+  // myServo1.attach(servoPin1, 750, 2250);  // Attach the servo to the specified pin
+  // myServo2.attach(servoPin2, 750, 2250);  // Attach the servo to the specified pin
 
   Serial.println( "   Heap: " );
   Serial.print( "      Total: " );

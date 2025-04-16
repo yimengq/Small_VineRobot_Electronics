@@ -22,8 +22,11 @@
 #endif
 
 // Set these to your desired credentials.
-const char *ssid = "Vcc-AP";
-const char *password = "12345678";
+// const char *ssid = "Vcc-AP";
+// const char *password = "12345678";
+
+const char *ssid = "NETGEAR42";
+const char *password = "cleverroad877";
 
 NetworkServer server(80);
 
@@ -52,6 +55,7 @@ void setup() {
 
 void loop() {
   // Check WiFi connection
+  // Serial.println('s');
   if ((WiFi.status() == WL_CONNECTED)) {
 
     Serial.print("[HTTP] begin...\n");
