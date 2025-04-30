@@ -10180,6 +10180,16 @@
 	)
 	(wire
 		(pts
+			(xy 248.158 187.96) (xy 234.188 187.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3926203a-0252-40fe-8f29-863894e9a669")
+	)
+	(wire
+		(pts
 			(xy 67.564 140.716) (xy 67.564 146.558)
 		)
 		(stroke
@@ -11520,6 +11530,16 @@
 	)
 	(wire
 		(pts
+			(xy 234.442 171.196) (xy 234.442 173.482)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7ac03bf6-b35d-4f66-9b3e-89c110c4a4a3")
+	)
+	(wire
+		(pts
 			(xy 367.792 247.65) (xy 355.6 247.65)
 		)
 		(stroke
@@ -11877,6 +11897,16 @@
 			(type default)
 		)
 		(uuid "8c349322-1ad4-474c-be9e-02b775fef3fd")
+	)
+	(wire
+		(pts
+			(xy 234.188 187.96) (xy 234.188 189.738)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8c66b23e-475c-4439-abfe-ddf14e10c438")
 	)
 	(wire
 		(pts
@@ -12470,6 +12500,16 @@
 	)
 	(wire
 		(pts
+			(xy 248.158 173.482) (xy 248.158 171.958)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4faa1cf-b333-4bc9-b264-e429484daea0")
+	)
+	(wire
+		(pts
 			(xy 547.878 111.506) (xy 550.926 111.506)
 		)
 		(stroke
@@ -12507,6 +12547,16 @@
 			(type default)
 		)
 		(uuid "b6e59b36-08aa-4f02-92da-051b95beb913")
+	)
+	(wire
+		(pts
+			(xy 234.442 173.482) (xy 248.158 173.482)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b7091ce0-f486-45fa-a2a7-2dee91734ba2")
 	)
 	(wire
 		(pts
@@ -13607,6 +13657,16 @@
 			(type default)
 		)
 		(uuid "ee790f5b-81bb-41c9-9fe9-01a8ffb45e4c")
+	)
+	(wire
+		(pts
+			(xy 248.158 188.722) (xy 248.158 187.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ef91e3a8-2ff4-4cda-9790-6852270110e2")
 	)
 	(wire
 		(pts
@@ -17005,6 +17065,72 @@
 			(project "OuterBoard_rev3.1"
 				(path "/e0487af4-02df-420a-a23b-b16cb445dead"
 					(reference "#PWR046")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 248.158 171.958 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1069f757-b209-4d29-b0a4-f39ea7360c44")
+		(property "Reference" "#PWR078"
+			(at 248.158 175.768 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 248.158 166.624 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 248.158 171.958 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 248.158 171.958 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 248.158 171.958 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "024a4f80-5c19-4f80-8cf7-5b92f3834e48")
+		)
+		(instances
+			(project "OuterBoard_4.1"
+				(path "/e0487af4-02df-420a-a23b-b16cb445dead"
+					(reference "#PWR078")
 					(unit 1)
 				)
 			)
@@ -30354,6 +30480,73 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
+		(at 234.188 189.738 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ad718f90-40b1-40b1-ad95-9fb6999b4edc")
+		(property "Reference" "TP6"
+			(at 236.728 191.7699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 236.728 194.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical"
+			(at 229.108 189.738 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 229.108 189.738 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 234.188 189.738 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3df5ec77-9e91-44bd-97ce-2c20e0f970ab")
+		)
+		(instances
+			(project "OuterBoard_4.1"
+				(path "/e0487af4-02df-420a-a23b-b16cb445dead"
+					(reference "TP6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
 		(at 20.32 68.834 180)
 		(unit 1)
 		(exclude_from_sim no)
@@ -33917,6 +34110,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 248.158 188.722 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d7c0de96-dca9-48c7-8344-735bea221833")
+		(property "Reference" "#PWR083"
+			(at 248.158 195.072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 248.158 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 248.158 188.722 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 248.158 188.722 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 248.158 188.722 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7ae3ba63-3a24-4549-b07d-6772b44ab33c")
+		)
+		(instances
+			(project "OuterBoard_4.1"
+				(path "/e0487af4-02df-420a-a23b-b16cb445dead"
+					(reference "#PWR083")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:VDC")
 		(at 88.646 94.488 0)
 		(mirror y)
@@ -35101,6 +35361,73 @@
 			(project "OuterBoard_rev2.1"
 				(path "/e0487af4-02df-420a-a23b-b16cb445dead"
 					(reference "R12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 234.442 171.196 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ea826388-2c36-4a9b-bdd1-7f4d0d3c167e")
+		(property "Reference" "TP4"
+			(at 235.966 166.6239 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 235.966 169.1639 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical"
+			(at 239.522 171.196 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 239.522 171.196 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 234.442 171.196 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0c957160-0a50-4200-84e7-501e7ce80a9f")
+		)
+		(instances
+			(project "OuterBoard_4.1"
+				(path "/e0487af4-02df-420a-a23b-b16cb445dead"
+					(reference "TP4")
 					(unit 1)
 				)
 			)
