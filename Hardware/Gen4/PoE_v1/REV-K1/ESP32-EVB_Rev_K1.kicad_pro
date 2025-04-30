@@ -1163,7 +1163,7 @@
     "meta": {
       "version": 1
     },
-    "net_format_name": "Pcbnew",
+    "net_format_name": "OrcadPCB2",
     "page_layout_descr_file": "/home/penko/Desktop/SVN_Checkout/important_DOCs/KiCad-New_Page_Layouts/A4-Landscape-2.kicad_wks",
     "plot_directory": "",
     "space_save_all_events": true,

@@ -1,0 +1,19 @@
+PACKAGE 'usb-micro_misb-swmm-5b_lf'
+CLASS IC
+PINCOUNT 6
+PINORDER MAIN ,
+	?__0,
+	VBUS__1,
+	D-__2,
+	D+__3,
+	ID__4,
+	GND__5
+FUNCTION MAIN MAIN ,
+	0,
+	1,
+	2,
+	3,
+	4,
+	5
+PACKAGEPROP VALUE 'MISB-SWMM-5B-LF(USB_MICRO)'
+END
