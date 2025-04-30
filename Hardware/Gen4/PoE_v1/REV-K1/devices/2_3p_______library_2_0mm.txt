@@ -1,0 +1,19 @@
+PACKAGE '2_0mm'
+CLASS IC
+PINCOUNT 6
+PINORDER MAIN ,
+	1__1,
+	2__2,
+	3__3,
+	4__4,
+	5__5,
+	6__6
+FUNCTION MAIN MAIN ,
+	1,
+	2,
+	3,
+	4,
+	5,
+	6
+PACKAGEPROP VALUE '2_3P??????'
+END
