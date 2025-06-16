@@ -10,13 +10,14 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from stl import mesh    
 import numpy as np
-import rospy
-from sensor_msgs.msg import Joy
+#import rospy
+#from sensor_msgs.msg import Joy
 
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        #self.axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.axes = [0.7, -0.5, -0.3, 0.9]
 
     def update_axes(self, axes):
         self.axes = axes
@@ -24,24 +25,68 @@ class JoystickDisplay(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        try:
+            painter.setRenderHint(QPainter.Antialiasing)
+            
+            painter.fillRect(self.rect(), Qt.white)
 
-        w = self.width()
-        h = self.height()
+            w = self.width()
+            h = self.height()
 
-        box_w = w/2
-        box+h = h/2
+            box_w = w / 2
+            box_h = h
 
-        painter.setPen(QPen(Q.black, 1))
-        for row in range(2):
+            # Draw two side-by-side boxes
+            painter.setPen(QPen(Qt.black, 1))
             for col in range(2):
-                painter.drawRect(col*box_w, row*box_h, box.w, box.h)
+                painter.drawRect(col * box_w, 0, box_w, box_h)
 
-        arrow_color = QColor(50, 150, 100)
-        pen = QPen(arrow_color, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
-        painter.setPen(pen)
-        painter.setBrush(QBrush(arrow_color))
- 
+            arrow_color = QColor(32, 104, 247)
+            pen = QPen(arrow_color, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+            painter.setPen(pen)
+            painter.setBrush(QBrush(arrow_color))
+
+            def draw_arrow(cx, cy, dx, dy, max_len):
+                length = (dx * dx + dy * dy) ** 0.5
+                if length < 0.05:
+                    return
+
+                scale = min(length, 1.0) * max_len
+                norm_dx = dx / length
+                norm_dy = dy / length
+
+                end_x = cx + norm_dx * scale
+                end_y = cy + norm_dy * scale
+
+                painter.drawLine(QPointF(cx, cy), QPointF(end_x, end_y))
+
+                angle = math.atan2(norm_dy, norm_dx)
+                arrow_size = 10
+                p1 = QPointF(end_x, end_y)
+                p2 = QPointF(
+                    end_x - arrow_size * math.cos(angle - math.pi / 6),
+                    end_y - arrow_size * math.sin(angle - math.pi / 6)
+                )
+                p3 = QPointF(
+                    end_x - arrow_size * math.cos(angle + math.pi / 6),
+                    end_y - arrow_size * math.sin(angle + math.pi / 6)
+                )
+
+                painter.drawPolygon([p1, p2, p3])  # ✅ fixed argument style
+
+            max_arrow_len = min(box_w, box_h) / 2 - 20
+
+            # Left stick arrow (axes[0], axes[1])
+            cx, cy = box_w * 0.5, box_h * 0.5
+            draw_arrow(cx, cy, self.axes[0], -self.axes[1], max_arrow_len)
+
+            # Right stick arrow (axes[2], axes[3])
+            cx, cy = box_w * 1.5, box_h * 0.5
+            draw_arrow(cx, cy, self.axes[2], -self.axes[3], max_arrow_len)
+
+        finally:
+            painter.end()
+
 class GLSTLDisplay(QOpenGLWidget):
     def __init__(self, stl_path, parent=None):
         super().__init__(parent)
@@ -103,7 +148,7 @@ class WebcamViewer(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
-        rospy.Subscriber('/joy', Joy, self.joy_callback)
+        #rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
         self.image_label = QLabel()
@@ -185,7 +230,7 @@ class WebcamViewer(QWidget):
 
 
 if __name__ == "__main__":
-    rospy.init_node('gui_node', anonymous=True)
+    #rospy.init_node('gui_node', anonymous=True)
     app = QApplication(sys.argv)
     viewer = WebcamViewer()
     viewer.resize(700, 500)
