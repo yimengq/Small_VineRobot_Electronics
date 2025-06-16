@@ -3,14 +3,45 @@ import cv2
 import serial 
 import math
 from PySide6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout
-from PySide6.QtCore import QTimer, Qt
-from PySide6.QtGui import QImage, QPixmap
+from PySide6.QtCore import QTimer, Qt, QPointF
+from PySide6.QtGui import QImage, QPixmap, QPainter, QColor, QPen, QBrush
 from PySide6.QtOpenGLWidgets import QOpenGLWidget
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from stl import mesh
+from stl import mesh    
 import numpy as np
+import rospy
+from sensor_msgs.msg import Joy
 
+class JoystickDisplay(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+    def update_axes(self, axes):
+        self.axes = axes
+        self.update()
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        w = self.width()
+        h = self.height()
+
+        box_w = w/2
+        box+h = h/2
+
+        painter.setPen(QPen(Q.black, 1))
+        for row in range(2):
+            for col in range(2):
+                painter.drawRect(col*box_w, row*box_h, box.w, box.h)
+
+        arrow_color = QColor(50, 150, 100)
+        pen = QPen(arrow_color, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+        painter.setPen(pen)
+        painter.setBrush(QBrush(arrow_color))
+ 
 class GLSTLDisplay(QOpenGLWidget):
     def __init__(self, stl_path, parent=None):
         super().__init__(parent)
@@ -72,6 +103,7 @@ class WebcamViewer(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
+        rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
         self.image_label = QLabel()
@@ -81,17 +113,21 @@ class WebcamViewer(QWidget):
         # Teensy data label (bottom-left)
         self.teensy_label = QLabel("Waiting for data...")
         self.teensy_label.setAlignment(Qt.AlignCenter)
-        self.teensy_label.setFixedSize(320, 182)
+        self.teensy_label.setFixedSize(320, 240)
         self.teensy_label.setStyleSheet("background-color: gray; border: 1px solid black; font-size: 10pt;")
 
         self.gl_display = GLSTLDisplay("CameraMountSmallBoard.stl")
         self.gl_display.setFixedSize(320, 240)
+
+        self.joystick_display = JoystickDisplay()
+        self.joystick_display.setFixedSize(320, 240)
 
         # Grid layout
         layout = QGridLayout()
         layout.addWidget(self.image_label, 0, 0)
         layout.addWidget(self.teensy_label, 0, 1)
         layout.addWidget(self.gl_display, 1, 1, 1, 2)
+        layout.addWidget(self.joystick_display, 1, 0)
         self.setLayout(layout)
 
         # OpenCV video capture
@@ -143,8 +179,13 @@ class WebcamViewer(QWidget):
         self.cap.release()
         super().closeEvent(event)
 
+    def joy_callback(self, data):
+        axes = data.axes
+        self.joystick_display.update_axes(axes)
+
 
 if __name__ == "__main__":
+    rospy.init_node('gui_node', anonymous=True)
     app = QApplication(sys.argv)
     viewer = WebcamViewer()
     viewer.resize(700, 500)
