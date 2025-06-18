@@ -170,6 +170,10 @@ class GLSTLDisplay(QOpenGLWidget):
     def mousePressEvent(self, event):
         self.clicked.emit()
 
+    def showEvent(self, event):
+        super().showEvent(event)
+        self.update() 
+
 class WebcamViewer(QWidget):
     def __init__(self):
         super().__init__()
@@ -300,4 +304,5 @@ if __name__ == "__main__":
     viewer = WebcamViewer()
     viewer.resize(700, 500)
     viewer.show()
+    QTimer.singleShot(100, lambda: viewer.gl_display.repaint())
     sys.exit(app.exec())
