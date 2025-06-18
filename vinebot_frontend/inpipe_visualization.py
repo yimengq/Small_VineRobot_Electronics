@@ -2,8 +2,8 @@ import sys
 import cv2
 import serial 
 import math
-from PySide6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout
-from PySide6.QtCore import QTimer, Qt, QPointF
+from PySide6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QStackedLayout, QPushButton, QVBoxLayout
+from PySide6.QtCore import QTimer, Qt, QPointF, Signal
 from PySide6.QtGui import QImage, QPixmap, QPainter, QColor, QPen, QBrush
 from PySide6.QtOpenGLWidgets import QOpenGLWidget
 from OpenGL.GL import *
@@ -13,11 +13,26 @@ import numpy as np
 #import rospy
 #from sensor_msgs.msg import Joy
 
+class FullScreenWindow(QWidget):
+    def __init__(self, widget):
+        super().__init__()
+        self.setWindowTitle("Full Screen View")
+        self.setWindowFlag(Qt.Window)
+        self.setWindowState(Qt.WindowFullScreen)
+
+        layout = QGridLayout()
+        layout.addWidget(widget)
+        self.setLayout(layout)
+
+        # Esc key closes window
+        self.keyPressEvent = lambda e: self.close() if e.key() == Qt.Key_Escape else None
+
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        #self.axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        self.axes = [0.7, -0.5, -0.3, 0.9]
+        self.axes = [0.0, 1.0, 0.0, -1.0, 0.0, 0.0]
+        self.setAttribute(Qt.WA_TransparentForMouseEvents)
+        self.setStyleSheet("background: transparent")
 
     def update_axes(self, axes):
         self.axes = axes
@@ -27,8 +42,6 @@ class JoystickDisplay(QWidget):
         painter = QPainter(self)
         try:
             painter.setRenderHint(QPainter.Antialiasing)
-            
-            painter.fillRect(self.rect(), Qt.white)
 
             w = self.width()
             h = self.height()
@@ -36,13 +49,8 @@ class JoystickDisplay(QWidget):
             box_w = w / 2
             box_h = h
 
-            # Draw two side-by-side boxes
-            painter.setPen(QPen(Qt.black, 1))
-            for col in range(2):
-                painter.drawRect(col * box_w, 0, box_w, box_h)
-
-            arrow_color = QColor(32, 104, 247)
-            pen = QPen(arrow_color, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+            arrow_color = QColor(Qt.black)
+            pen = QPen(arrow_color, 5, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
             painter.setPen(pen)
             painter.setBrush(QBrush(arrow_color))
 
@@ -72,7 +80,7 @@ class JoystickDisplay(QWidget):
                     end_y - arrow_size * math.sin(angle + math.pi / 6)
                 )
 
-                painter.drawPolygon([p1, p2, p3])  # ✅ fixed argument style
+                painter.drawPolygon([p1, p2, p3])  
 
             max_arrow_len = min(box_w, box_h) / 2 - 20
 
@@ -87,7 +95,22 @@ class JoystickDisplay(QWidget):
         finally:
             painter.end()
 
+class VideoLabel(QLabel):
+    clicked = Signal()
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.overlay = JoystickDisplay(self)
+        self.overlay.setGeometry(0, 0, self.width(), self.height())
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.overlay.setGeometry(0, 0, self.width(), self.height())
+
+    def mousePressEvent(self, event):
+        self.clicked.emit()
+
 class GLSTLDisplay(QOpenGLWidget):
+    clicked = Signal()
     def __init__(self, stl_path, parent=None):
         super().__init__(parent)
         self.quaternion = (1, 0, 0, 0)
@@ -144,6 +167,9 @@ class GLSTLDisplay(QOpenGLWidget):
 
         glCallList(self.model_list)
 
+    def mousePressEvent(self, event):
+        self.clicked.emit()
+
 class WebcamViewer(QWidget):
     def __init__(self):
         super().__init__()
@@ -151,7 +177,7 @@ class WebcamViewer(QWidget):
         #rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
-        self.image_label = QLabel()
+        self.image_label = VideoLabel()
         self.image_label.setAlignment(Qt.AlignCenter)
         self.image_label.setFixedSize(320, 240)
 
@@ -168,12 +194,20 @@ class WebcamViewer(QWidget):
         self.joystick_display.setFixedSize(320, 240)
 
         # Grid layout
-        layout = QGridLayout()
-        layout.addWidget(self.image_label, 0, 0)
-        layout.addWidget(self.teensy_label, 0, 1)
-        layout.addWidget(self.gl_display, 1, 1, 1, 2)
-        layout.addWidget(self.joystick_display, 1, 0)
-        self.setLayout(layout)
+        self.layout = QGridLayout()
+        self.layout.addWidget(self.image_label, 0, 0)
+        self.layout.addWidget(self.teensy_label, 0, 1)
+        self.layout.addWidget(self.gl_display, 1, 1, 1, 2)
+
+        self.default_layout_widget = QWidget()
+        self.default_layout_widget.setLayout(self.layout)
+
+        self.stack = QStackedLayout()
+        self.stack.addWidget(self.default_layout_widget)
+
+        container_layout = QVBoxLayout()
+        container_layout.addLayout(self.stack)
+        self.setLayout(container_layout)
 
         # OpenCV video capture
         self.cap = cv2.VideoCapture(0)  # 0 is usually the default webcam
@@ -193,6 +227,9 @@ class WebcamViewer(QWidget):
         except serial.SerialException:
             self.teensy_label.setText("Failed to connect to Teensy")
 
+        self.image_label.clicked.connect(lambda: self.focus_widget(self.image_label))
+        self.gl_display.clicked.connect(lambda: self.focus_widget(self.gl_display))
+
     def update_frame(self):
         ret, frame = self.cap.read()
         if ret:
@@ -206,6 +243,8 @@ class WebcamViewer(QWidget):
             pixmap = QPixmap.fromImage(qt_image)
             scaled_pixmap = pixmap.scaled(self.image_label.size(), Qt.KeepAspectRatio)
             self.image_label.setPixmap(scaled_pixmap)
+
+            self.image_label.overlay.update_axes(self.joystick_display.axes)
     
     def read_serial_data(self):
         if self.serial_port.in_waiting:
@@ -227,6 +266,32 @@ class WebcamViewer(QWidget):
     def joy_callback(self, data):
         axes = data.axes
         self.joystick_display.update_axes(axes)
+
+    def focus_widget(self, widget):
+        self.focus_view = QWidget()
+        layout = QVBoxLayout(self.focus_view)
+        widget.setFixedSize(640, 480)
+        layout.addWidget(widget)
+
+        back_button = QPushButton("Back")
+        back_button.clicked.connect(self.unfocus_widget)
+        layout.addWidget(back_button)
+
+        self.stack.addWidget(self.focus_view)
+        self.stack.setCurrentWidget(self.focus_view)
+
+    def unfocus_widget(self):
+        widget = self.focus_view.layout().itemAt(0).widget()
+        # Add back to original grid
+        if widget == self.image_label:
+            self.layout.addWidget(widget, 0, 0)
+        elif widget == self.gl_display:
+            self.layout.addWidget(widget, 1, 1, 1, 2)
+
+        widget.setFixedSize(320, 240)
+        self.stack.setCurrentWidget(self.default_layout_widget)
+        self.stack.removeWidget(self.focus_view)
+        self.focus_view.deleteLater()
 
 
 if __name__ == "__main__":
