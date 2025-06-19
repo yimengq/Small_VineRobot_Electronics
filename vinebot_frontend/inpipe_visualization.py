@@ -164,6 +164,7 @@ class WebcamViewer(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
+        #rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
         self.image_label = VideoLabel()
@@ -252,6 +253,11 @@ class WebcamViewer(QMainWindow):
     def closeEvent(self, event):
         self.cap.release()
         super().closeEvent(event)
+
+    def joy_callback(self, data):
+        axes = data.axes
+        self.joystick_display.update_axes(axes)
+        print("received data")
 
     def focus_widget(self, widget):
         self.focus_view = QWidget()
