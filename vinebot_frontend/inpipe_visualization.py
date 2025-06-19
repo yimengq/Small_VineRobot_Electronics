@@ -2,7 +2,7 @@ import sys
 import cv2
 import serial 
 import math
-from PySide6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QStackedLayout, QPushButton, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QStackedLayout, QPushButton, QVBoxLayout, QMainWindow 
 from PySide6.QtCore import QTimer, Qt, QPointF, Signal
 from PySide6.QtGui import QImage, QPixmap, QPainter, QColor, QPen, QBrush
 from PySide6.QtOpenGLWidgets import QOpenGLWidget
@@ -12,20 +12,6 @@ from stl import mesh
 import numpy as np
 #import rospy
 #from sensor_msgs.msg import Joy
-
-class FullScreenWindow(QWidget):
-    def __init__(self, widget):
-        super().__init__()
-        self.setWindowTitle("Full Screen View")
-        self.setWindowFlag(Qt.Window)
-        self.setWindowState(Qt.WindowFullScreen)
-
-        layout = QGridLayout()
-        layout.addWidget(widget)
-        self.setLayout(layout)
-
-        # Esc key closes window
-        self.keyPressEvent = lambda e: self.close() if e.key() == Qt.Key_Escape else None
 
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
@@ -174,11 +160,10 @@ class GLSTLDisplay(QOpenGLWidget):
         super().showEvent(event)
         self.update() 
 
-class WebcamViewer(QWidget):
+class WebcamViewer(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
-        #rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
         self.image_label = VideoLabel()
@@ -209,25 +194,28 @@ class WebcamViewer(QWidget):
         self.stack = QStackedLayout()
         self.stack.addWidget(self.default_layout_widget)
 
+        container = QWidget()
         container_layout = QVBoxLayout()
         container_layout.addLayout(self.stack)
-        self.setLayout(container_layout)
+        container.setLayout(container_layout)
+
+        self.setCentralWidget(container)
 
         # OpenCV video capture
-        self.cap = cv2.VideoCapture(0)  # 0 is usually the default webcam
+        self.cap = cv2.VideoCapture(0)
 
         # QTimer to grab frames periodically
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_frame)
-        self.timer.start(10)  # 30 ms ~ 33 FPS
+        self.timer.start(10)
 
         # Teensy Serial Connection
         try:
-            self.serial_port = serial.Serial('/dev/tty.usbmodem159405501', 115200, timeout=0.001)  
+            self.serial_port = serial.Serial('/dev/tty.usbmodem159405501', 115200, timeout=0.001)
             self.serial_port.reset_input_buffer()
             self.serial_timer = QTimer()
             self.serial_timer.timeout.connect(self.read_serial_data)
-            self.serial_timer.start(1)  # Check serial every 100 ms
+            self.serial_timer.start(1)
         except serial.SerialException:
             self.teensy_label.setText("Failed to connect to Teensy")
 
@@ -237,19 +225,17 @@ class WebcamViewer(QWidget):
     def update_frame(self):
         ret, frame = self.cap.read()
         if ret:
-            # Convert BGR (OpenCV format) to RGB
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             h, w, ch = frame.shape
             bytes_per_line = ch * w
             qt_image = QImage(frame.data, w, h, bytes_per_line, QImage.Format_RGB888)
 
-            # Scale pixmap to fit QLabel size while keeping aspect ratio
             pixmap = QPixmap.fromImage(qt_image)
             scaled_pixmap = pixmap.scaled(self.image_label.size(), Qt.KeepAspectRatio)
             self.image_label.setPixmap(scaled_pixmap)
 
             self.image_label.overlay.update_axes(self.joystick_display.axes)
-    
+
     def read_serial_data(self):
         if self.serial_port.in_waiting:
             line = self.serial_port.readline().decode('utf-8').strip()
@@ -267,10 +253,6 @@ class WebcamViewer(QWidget):
         self.cap.release()
         super().closeEvent(event)
 
-    def joy_callback(self, data):
-        axes = data.axes
-        self.joystick_display.update_axes(axes)
-
     def focus_widget(self, widget):
         self.focus_view = QWidget()
         layout = QVBoxLayout(self.focus_view)
@@ -286,7 +268,6 @@ class WebcamViewer(QWidget):
 
     def unfocus_widget(self):
         widget = self.focus_view.layout().itemAt(0).widget()
-        # Add back to original grid
         if widget == self.image_label:
             self.layout.addWidget(widget, 0, 0)
         elif widget == self.gl_display:
