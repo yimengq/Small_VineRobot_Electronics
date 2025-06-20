@@ -10,13 +10,13 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from stl import mesh    
 import numpy as np
-#import rospy
-#from sensor_msgs.msg import Joy
+import rospy
+from sensor_msgs.msg import Joy
 
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.axes = [0.0, 1.0, 0.0, -1.0, 0.0, 0.0]
+        self.axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.setAttribute(Qt.WA_TransparentForMouseEvents)
         self.setStyleSheet("background: transparent")
 
@@ -72,11 +72,11 @@ class JoystickDisplay(QWidget):
 
             # Left stick arrow (axes[0], axes[1])
             cx, cy = box_w * 0.5, box_h * 0.5
-            draw_arrow(cx, cy, self.axes[0], -self.axes[1], max_arrow_len)
+            draw_arrow(cx, cy, -self.axes[0], -self.axes[1], max_arrow_len)
 
             # Right stick arrow (axes[2], axes[3])
             cx, cy = box_w * 1.5, box_h * 0.5
-            draw_arrow(cx, cy, self.axes[2], -self.axes[3], max_arrow_len)
+            draw_arrow(cx, cy, -self.axes[2], -self.axes[3], max_arrow_len)
 
         finally:
             painter.end()
@@ -164,7 +164,7 @@ class WebcamViewer(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
-        #rospy.Subscriber('/joy', Joy, self.joy_callback)
+        rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
         self.image_label = VideoLabel()
@@ -257,7 +257,6 @@ class WebcamViewer(QMainWindow):
     def joy_callback(self, data):
         axes = data.axes
         self.joystick_display.update_axes(axes)
-        print("received data")
 
     def focus_widget(self, widget):
         self.focus_view = QWidget()
@@ -286,7 +285,7 @@ class WebcamViewer(QMainWindow):
 
 
 if __name__ == "__main__":
-    #rospy.init_node('gui_node', anonymous=True)
+    rospy.init_node('gui_node', anonymous=True)
     app = QApplication(sys.argv)
     viewer = WebcamViewer()
     viewer.resize(700, 500)
