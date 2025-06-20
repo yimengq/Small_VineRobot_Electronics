@@ -291,5 +291,6 @@ if __name__ == "__main__":
     viewer = WebcamViewer()
     viewer.resize(700, 500)
     viewer.show()
-    QTimer.singleShot(100, lambda: viewer.gl_display.repaint())
+    viewer.focus_widget(viewer.gl_display)
+    viewer.unfocus_widget()
     sys.exit(app.exec())
