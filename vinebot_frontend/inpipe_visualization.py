@@ -2,7 +2,7 @@ import sys
 import cv2
 import serial 
 import math
-from PySide6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QStackedLayout, QPushButton, QVBoxLayout, QMainWindow 
+from PySide6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QStackedLayout, QPushButton, QVBoxLayout, QHBoxLayout, QMainWindow 
 from PySide6.QtCore import QTimer, Qt, QPointF, Signal
 from PySide6.QtGui import QImage, QPixmap, QPainter, QColor, QPen, QBrush
 from PySide6.QtOpenGLWidgets import QOpenGLWidget
@@ -10,8 +10,8 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from stl import mesh    
 import numpy as np
-import rospy
-from sensor_msgs.msg import Joy
+#import rospy
+#from sensor_msgs.msg import Joy
 
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
@@ -87,6 +87,7 @@ class VideoLabel(QLabel):
         super().__init__(parent)
         self.overlay = JoystickDisplay(self)
         self.overlay.setGeometry(0, 0, self.width(), self.height())
+        self.zoom_factor = 1.0
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -94,6 +95,13 @@ class VideoLabel(QLabel):
 
     def mousePressEvent(self, event):
         self.clicked.emit()
+    def wheelEvent(self, event):  # Zoom with scroll
+        delta = event.angleDelta().y()
+        if delta > 0:
+            self.zoom_factor *= 1.1
+        else:
+            self.zoom_factor /= 1.1
+        self.zoom_factor = max(1.0, min(5.0, self.zoom_factor))
 
 class GLSTLDisplay(QOpenGLWidget):
     clicked = Signal()
@@ -164,7 +172,8 @@ class WebcamViewer(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
-        rospy.Subscriber('/joy', Joy, self.joy_callback)
+        self.menu_visible = False
+        #rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
         self.image_label = VideoLabel()
@@ -183,6 +192,21 @@ class WebcamViewer(QMainWindow):
         self.joystick_display = JoystickDisplay()
         self.joystick_display.setFixedSize(320, 240)
 
+        self.menu_button = QPushButton("☰")
+        self.menu_button.setFixedSize(40, 40)
+        self.menu_button.clicked.connect(self.toggle_menu)
+
+        self.menu_panel = QWidget()
+        self.menu_panel.setFixedWidth(200)
+        self.menu_panel.setStyleSheet("background-color: #7c7c7c; border-right: 1px solid #ccc;")
+        self.menu_panel.setVisible(False)
+
+        menu_layout = QVBoxLayout()
+        menu_layout.addWidget(QLabel("Menu Item 1"))
+        menu_layout.addWidget(QLabel("Menu Item 2"))
+        menu_layout.addStretch()
+        self.menu_panel.setLayout(menu_layout)
+
         # Grid layout
         self.layout = QGridLayout()
         self.layout.addWidget(self.image_label, 0, 0)
@@ -195,12 +219,22 @@ class WebcamViewer(QMainWindow):
         self.stack = QStackedLayout()
         self.stack.addWidget(self.default_layout_widget)
 
-        container = QWidget()
-        container_layout = QVBoxLayout()
-        container_layout.addLayout(self.stack)
-        container.setLayout(container_layout)
+        self.container = QWidget()
+        self.main_layout = QHBoxLayout()
 
-        self.setCentralWidget(container)
+        # Left: side panel
+        self.main_layout.addWidget(self.menu_panel)
+
+        # Right: top menu + stacked layout
+        right_panel = QWidget()
+        right_layout = QVBoxLayout()
+        right_layout.addWidget(self.menu_button, alignment=Qt.AlignLeft)
+        right_layout.addLayout(self.stack)
+        right_panel.setLayout(right_layout)
+
+        self.main_layout.addWidget(right_panel)
+        self.container.setLayout(self.main_layout)
+        self.setCentralWidget(self.container)
 
         # OpenCV video capture
         self.cap = cv2.VideoCapture(0)
@@ -232,7 +266,10 @@ class WebcamViewer(QMainWindow):
             qt_image = QImage(frame.data, w, h, bytes_per_line, QImage.Format_RGB888)
 
             pixmap = QPixmap.fromImage(qt_image)
-            scaled_pixmap = pixmap.scaled(self.image_label.size(), Qt.KeepAspectRatio)
+            zoom = self.image_label.zoom_factor
+            w = int(self.image_label.width() * zoom)
+            h = int(self.image_label.height() * zoom)
+            scaled_pixmap = pixmap.scaled(w, h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             self.image_label.setPixmap(scaled_pixmap)
 
             self.image_label.overlay.update_axes(self.joystick_display.axes)
@@ -264,6 +301,14 @@ class WebcamViewer(QMainWindow):
         widget.setFixedSize(640, 480)
         layout.addWidget(widget)
 
+        if widget == self.image_label:
+            zoom_in = QPushButton("Zoom In")
+            zoom_out = QPushButton("Zoom Out")
+            zoom_in.clicked.connect(lambda: self.adjust_zoom(1.1))
+            zoom_out.clicked.connect(lambda: self.adjust_zoom(1/1.1))
+            layout.addWidget(zoom_in)
+            layout.addWidget(zoom_out)
+
         back_button = QPushButton("Back")
         back_button.clicked.connect(self.unfocus_widget)
         layout.addWidget(back_button)
@@ -283,9 +328,34 @@ class WebcamViewer(QMainWindow):
         self.stack.removeWidget(self.focus_view)
         self.focus_view.deleteLater()
 
+    def adjust_zoom(self, factor):
+        self.image_label.zoom_factor *= factor
+        self.image_label.zoom_factor = max(1.0, min(5.0, self.image_label.zoom_factor))
+
+    def resize_to_fit_contents(self):
+        hint = self.centralWidget().sizeHint()
+        frame = self.frameGeometry()
+        geo = self.geometry()
+        dw = frame.width() - geo.width()
+        dh = frame.height() - geo.height()
+        self.setMinimumSize(0, 0)
+        self.resize(hint.width() + dw, hint.height() + dh)
+
+    def toggle_menu(self):
+        if self.menu_visible:
+            self.menu_visible = False  
+            self.menu_panel.setVisible(False)
+            self.main_layout.removeWidget(self.menu_panel)
+            self.menu_panel.setParent(None)
+        else:
+            self.menu_visible = True
+            self.main_layout.insertWidget(0, self.menu_panel)
+            self.menu_panel.setVisible(True)
+
+        self.resize_to_fit_contents()
 
 if __name__ == "__main__":
-    rospy.init_node('gui_node', anonymous=True)
+    #rospy.init_node('gui_node', anonymous=True)
     app = QApplication(sys.argv)
     viewer = WebcamViewer()
     viewer.resize(700, 500)
