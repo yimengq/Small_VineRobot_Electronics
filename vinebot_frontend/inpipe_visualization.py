@@ -201,9 +201,22 @@ class WebcamViewer(QMainWindow):
         self.menu_panel.setStyleSheet("background-color: #7c7c7c; border-right: 1px solid #ccc;")
         self.menu_panel.setVisible(False)
 
+        res_low = QPushButton("Low (QVGA)")
+        res_medium = QPushButton("Medium (VGA)")
+        res_hd = QPushButton("HD (720p)")
+        res_fullhd = QPushButton("Full HD (1080p)")
+
+        res_low.clicked.connect(lambda: self.set_camera_resolution(320, 240))
+        res_medium.clicked.connect(lambda: self.set_camera_resolution(640, 480))
+        res_hd.clicked.connect(lambda: self.set_camera_resolution(960, 720))
+        res_fullhd.clicked.connect(lambda: self.set_camera_resolution(1440, 1080))
+
         menu_layout = QVBoxLayout()
-        menu_layout.addWidget(QLabel("Menu Item 1"))
-        menu_layout.addWidget(QLabel("Menu Item 2"))
+        menu_layout.addWidget(QLabel("Video Resolution"))
+        menu_layout.addWidget(res_low)
+        menu_layout.addWidget(res_medium)
+        menu_layout.addWidget(res_hd)
+        menu_layout.addWidget(res_fullhd)
         menu_layout.addStretch()
         self.menu_panel.setLayout(menu_layout)
 
@@ -238,6 +251,8 @@ class WebcamViewer(QMainWindow):
 
         # OpenCV video capture
         self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
         # QTimer to grab frames periodically
         self.timer = QTimer()
@@ -272,7 +287,7 @@ class WebcamViewer(QMainWindow):
             scaled_pixmap = pixmap.scaled(w, h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             self.image_label.setPixmap(scaled_pixmap)
 
-            self.image_label.overlay.update_axes(self.joystick_display.axes)
+            self.image_label.overlay.update_axes(self.joystick_display.axes)                        
 
     def read_serial_data(self):
         if self.serial_port.in_waiting:
@@ -353,6 +368,13 @@ class WebcamViewer(QMainWindow):
             self.menu_panel.setVisible(True)
 
         self.resize_to_fit_contents()
+
+    def set_camera_resolution(self, width, height):
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+        actual_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+        actual_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        print(f"Set to: {actual_width} x {actual_height}")  
 
 if __name__ == "__main__":
     #rospy.init_node('gui_node', anonymous=True)
