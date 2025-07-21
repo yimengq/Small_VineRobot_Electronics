@@ -13,6 +13,7 @@ import numpy as np
 #import rospy
 #from sensor_msgs.msg import Joy
 
+# Arrows overlayed on video feed as joystick axes are moved 
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -103,6 +104,7 @@ class VideoLabel(QLabel):
             self.zoom_factor /= 1.1
         self.zoom_factor = max(1.0, min(5.0, self.zoom_factor))
 
+# 3D visualization of tip using IMU rotation data
 class GLSTLDisplay(QOpenGLWidget):
     clicked = Signal()
     def __init__(self, stl_path, parent=None):
@@ -243,6 +245,7 @@ class WebcamViewer(QMainWindow):
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(10)
 
+        # STL viewer
         try:
             self.serial_port = serial.Serial('/dev/tty.usbmodem159405501', 115200, timeout=0.001)
             self.serial_port.reset_input_buffer()
@@ -260,6 +263,7 @@ class WebcamViewer(QMainWindow):
         self.overlay_widget.setVisible(False)
         self.overlay_widget.mousePressEvent = lambda event: self.toggle_menu()
 
+        # Resolution menu logic 
         self.sliding_menu = QWidget(self)
         self.sliding_menu.setStyleSheet("background-color: #7c7c7c;")
         self.sliding_menu.setFixedWidth(200)
@@ -315,6 +319,7 @@ class WebcamViewer(QMainWindow):
         axes = data.axes
         self.joystick_display.update_axes(axes)
 
+    # Fullscreen logic 
     def focus_widget(self, widget):
         self.focus_view = QWidget()
         layout = QVBoxLayout(self.focus_view)
