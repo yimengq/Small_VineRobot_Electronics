@@ -3,8 +3,8 @@ import cv2
 import serial 
 import math
 from PySide6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QStackedLayout, QPushButton, QVBoxLayout, QHBoxLayout, QMainWindow 
-from PySide6.QtCore import QTimer, Qt, QPointF, Signal
-from PySide6.QtGui import QImage, QPixmap, QPainter, QColor, QPen, QBrush
+from PySide6.QtCore import QTimer, Qt, QPointF, Signal, QEasingCurve, QPropertyAnimation, QRect
+from PySide6.QtGui import QImage, QPixmap, QPainter, QColor, QPen, QBrush, QSurfaceFormat
 from PySide6.QtOpenGLWidgets import QOpenGLWidget
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -115,6 +115,10 @@ class GLSTLDisplay(QOpenGLWidget):
         scale = 1.0 / np.max(np.linalg.norm(self.model.vectors, axis=2))
         self.model.vectors *= scale
         self.model_list = None
+        self.setAttribute(Qt.WA_AlwaysStackOnTop)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAutoFillBackground(False)
+
 
     def set_rotation(self, r, i, j, k):
         self.quaternion = (r, i, j, k)
@@ -125,7 +129,9 @@ class GLSTLDisplay(QOpenGLWidget):
         glEnable(GL_LIGHTING)
         glEnable(GL_LIGHT0)
         glEnable(GL_COLOR_MATERIAL)
-        glClearColor(1, 1, 1, 1)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glClearColor(0.0, 0.0, 0.0, 0.0)
 
         self.model_list = glGenLists(1)
         glNewList(self.model_list, GL_COMPILE)
@@ -172,15 +178,14 @@ class WebcamViewer(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
+        self.setStyleSheet("background-color: white;")
         self.menu_visible = False
-        #rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
         self.image_label = VideoLabel()
         self.image_label.setAlignment(Qt.AlignCenter)
         self.image_label.setFixedSize(320, 240)
 
-        # Teensy data label (bottom-left)
         self.teensy_label = QLabel("Waiting for data...")
         self.teensy_label.setAlignment(Qt.AlignCenter)
         self.teensy_label.setFixedSize(320, 240)
@@ -188,43 +193,26 @@ class WebcamViewer(QMainWindow):
 
         self.gl_display = GLSTLDisplay("CameraMountSmallBoard.stl")
         self.gl_display.setFixedSize(320, 240)
+        self.gl_display.setStyleSheet("background: transparent;")
+
+        self.localization_label = QLabel("Localization Placeholder")
+        self.localization_label.setAlignment(Qt.AlignCenter)
+        self.localization_label.setFixedSize(320, 240)
+        self.localization_label.setStyleSheet("background-color: gray; border: 1px solid black; font-size: 10pt;")
 
         self.joystick_display = JoystickDisplay()
         self.joystick_display.setFixedSize(320, 240)
 
         self.menu_button = QPushButton("☰")
+        self.menu_button.setStyleSheet("color: black; background-color: #c2c2c2;")
         self.menu_button.setFixedSize(40, 40)
-        self.menu_button.clicked.connect(self.toggle_menu)
 
-        self.menu_panel = QWidget()
-        self.menu_panel.setFixedWidth(200)
-        self.menu_panel.setStyleSheet("background-color: #7c7c7c; border-right: 1px solid #ccc;")
-        self.menu_panel.setVisible(False)
-
-        res_low = QPushButton("Low (QVGA)")
-        res_medium = QPushButton("Medium (VGA)")
-        res_hd = QPushButton("HD (720p)")
-        res_fullhd = QPushButton("Full HD (1080p)")
-
-        res_low.clicked.connect(lambda: self.set_camera_resolution(320, 240))
-        res_medium.clicked.connect(lambda: self.set_camera_resolution(640, 480))
-        res_hd.clicked.connect(lambda: self.set_camera_resolution(960, 720))
-        res_fullhd.clicked.connect(lambda: self.set_camera_resolution(1440, 1080))
-
-        menu_layout = QVBoxLayout()
-        menu_layout.addWidget(QLabel("Video Resolution"))
-        menu_layout.addWidget(res_low)
-        menu_layout.addWidget(res_medium)
-        menu_layout.addWidget(res_hd)
-        menu_layout.addWidget(res_fullhd)
-        menu_layout.addStretch()
-        self.menu_panel.setLayout(menu_layout)
-
-        # Grid layout
-        self.layout = QGridLayout()
+        # Main layout
+        self.layout = QGridLayout() 
         self.layout.addWidget(self.image_label, 0, 0)
         self.layout.addWidget(self.teensy_label, 0, 1)
         self.layout.addWidget(self.gl_display, 1, 1, 1, 2)
+        self.layout.addWidget(self.localization_label, 1, 0)
 
         self.default_layout_widget = QWidget()
         self.default_layout_widget.setLayout(self.layout)
@@ -235,10 +223,7 @@ class WebcamViewer(QMainWindow):
         self.container = QWidget()
         self.main_layout = QHBoxLayout()
 
-        # Left: side panel
-        self.main_layout.addWidget(self.menu_panel)
-
-        # Right: top menu + stacked layout
+        # Top bar with menu button
         right_panel = QWidget()
         right_layout = QVBoxLayout()
         right_layout.addWidget(self.menu_button, alignment=Qt.AlignLeft)
@@ -254,12 +239,10 @@ class WebcamViewer(QMainWindow):
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
-        # QTimer to grab frames periodically
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(10)
 
-        # Teensy Serial Connection
         try:
             self.serial_port = serial.Serial('/dev/tty.usbmodem159405501', 115200, timeout=0.001)
             self.serial_port.reset_input_buffer()
@@ -271,6 +254,28 @@ class WebcamViewer(QMainWindow):
 
         self.image_label.clicked.connect(lambda: self.focus_widget(self.image_label))
         self.gl_display.clicked.connect(lambda: self.focus_widget(self.gl_display))
+
+        self.overlay_widget = QWidget(self)
+        self.overlay_widget.setStyleSheet("background-color: rgba(0, 0, 0, 120);")
+        self.overlay_widget.setVisible(False)
+        self.overlay_widget.mousePressEvent = lambda event: self.toggle_menu()
+
+        self.sliding_menu = QWidget(self)
+        self.sliding_menu.setStyleSheet("background-color: #7c7c7c;")
+        self.sliding_menu.setFixedWidth(200)
+        menu_layout = QVBoxLayout(self.sliding_menu)
+        menu_layout.addWidget(QLabel("Video Resolution"))
+        menu_layout.addWidget(QPushButton("Low (QVGA)", clicked=lambda: self.set_camera_resolution(320, 240)))
+        menu_layout.addWidget(QPushButton("Medium (VGA)", clicked=lambda: self.set_camera_resolution(640, 480)))
+        menu_layout.addWidget(QPushButton("HD (720p)", clicked=lambda: self.set_camera_resolution(960, 720)))
+        menu_layout.addWidget(QPushButton("Full HD (1080p)", clicked=lambda: self.set_camera_resolution(1440, 1080)))
+        menu_layout.addStretch()
+
+        self.menu_button.clicked.connect(self.toggle_menu)
+
+        self.resize_timer = QTimer()
+        self.resize_timer.setSingleShot(True)
+        self.resize_timer.timeout.connect(self.update_overlay_geometry)
 
     def update_frame(self):
         ret, frame = self.cap.read()
@@ -317,14 +322,39 @@ class WebcamViewer(QMainWindow):
         layout.addWidget(widget)
 
         if widget == self.image_label:
-            zoom_in = QPushButton("Zoom In")
-            zoom_out = QPushButton("Zoom Out")
-            zoom_in.clicked.connect(lambda: self.adjust_zoom(1.1))
-            zoom_out.clicked.connect(lambda: self.adjust_zoom(1/1.1))
-            layout.addWidget(zoom_in)
-            layout.addWidget(zoom_out)
+            zoom_buttons_layout = QHBoxLayout()
+            zoom_buttons_layout.setSpacing(5)
 
-        back_button = QPushButton("Back")
+            zoom_in = QPushButton("+")
+            zoom_in.setFixedSize(30, 30)
+            zoom_in.setStyleSheet("font-size: 16pt; color: black; background-color: #c2c2c2;")
+            zoom_in.clicked.connect(lambda: self.adjust_zoom(1.1))
+
+            zoom_out = QPushButton("-")
+            zoom_out.setFixedSize(30, 30)
+            zoom_out.setStyleSheet("font-size: 16pt; color: black; background-color: #c2c2c2;")
+            zoom_out.clicked.connect(lambda: self.adjust_zoom(1/1.1))
+
+            zoom_buttons_layout.addWidget(zoom_in)
+            zoom_buttons_layout.addWidget(zoom_out)
+
+            right_align_layout = QHBoxLayout()
+            right_align_layout.addSpacing(540)
+            right_align_layout.addLayout(zoom_buttons_layout)
+
+            layout.addLayout(right_align_layout)
+
+        back_button = QPushButton("←")
+        back_button.setFixedSize(40, 40)
+        back_button.setStyleSheet("""
+            QPushButton {
+                font-size: 18pt;
+                color: black;
+                background-color: white;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+        """)
         back_button.clicked.connect(self.unfocus_widget)
         layout.addWidget(back_button)
 
@@ -356,28 +386,51 @@ class WebcamViewer(QMainWindow):
         self.setMinimumSize(0, 0)
         self.resize(hint.width() + dw, hint.height() + dh)
 
-    def toggle_menu(self):
-        if self.menu_visible:
-            self.menu_visible = False  
-            self.menu_panel.setVisible(False)
-            self.main_layout.removeWidget(self.menu_panel)
-            self.menu_panel.setParent(None)
-        else:
-            self.menu_visible = True
-            self.main_layout.insertWidget(0, self.menu_panel)
-            self.menu_panel.setVisible(True)
-
-        self.resize_to_fit_contents()
-
     def set_camera_resolution(self, width, height):
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
         actual_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         actual_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        print(f"Set to: {actual_width} x {actual_height}")  
+        self.toggle_menu()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.resize_timer.start(10)
+
+    def update_overlay_geometry(self):
+        self.overlay_widget.setGeometry(self.rect())
+        self.sliding_menu.setGeometry(-200, 0, 200, self.height())
+
+    def toggle_menu(self):
+        if self.menu_visible:
+            anim = QPropertyAnimation(self.sliding_menu, b"geometry")
+            anim.setDuration(300)
+            anim.setStartValue(QRect(0, 0, 200, self.height()))
+            anim.setEndValue(QRect(-200, 0, 200, self.height()))
+            anim.setEasingCurve(QEasingCurve.OutCubic)
+            anim.start()
+            self.menu_animation = anim
+            self.overlay_widget.setVisible(False)
+            self.menu_visible = False
+        else:
+            self.overlay_widget.setVisible(True)
+            anim = QPropertyAnimation(self.sliding_menu, b"geometry")
+            anim.setDuration(300)
+            anim.setStartValue(QRect(-200, 0, 200, self.height()))
+            anim.setEndValue(QRect(0, 0, 200, self.height()))
+            anim.setEasingCurve(QEasingCurve.OutCubic)
+            anim.start()
+            self.menu_animation = anim
+            self.menu_visible = True
 
 if __name__ == "__main__":
     #rospy.init_node('gui_node', anonymous=True)
+    fmt = QSurfaceFormat()
+    fmt.setAlphaBufferSize(8)
+    fmt.setRenderableType(QSurfaceFormat.OpenGL)
+    fmt.setProfile(QSurfaceFormat.CoreProfile)
+    QSurfaceFormat.setDefaultFormat(fmt)    
+
     app = QApplication(sys.argv)
     viewer = WebcamViewer()
     viewer.resize(700, 500)
