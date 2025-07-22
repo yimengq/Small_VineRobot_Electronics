@@ -178,7 +178,7 @@ class GLSTLDisplay(QOpenGLWidget):
 class WebcamViewer(QMainWindow):
     telemetry_updated = Signal(float, float, float, float)
     imu_label_updated = Signal(str)
-    
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
@@ -277,17 +277,6 @@ class WebcamViewer(QMainWindow):
         self.telemetry_updated.connect(self.gl_display.set_rotation)
         self.imu_label_updated.connect(self.teensy_label.setText)
 
-
-        # # Teensy Serial Connection
-        # try:
-        #     self.serial_port = serial.Serial('/dev/tty.usbmodem159405501', 115200, timeout=0.001)
-        #     self.serial_port.reset_input_buffer()
-        #     self.serial_timer = QTimer()
-        #     self.serial_timer.timeout.connect(self.read_serial_data)
-        #     self.serial_timer.start(1)
-        # except serial.SerialException:
-        #     self.teensy_label.setText("Failed to connect to Teensy")
-
         self.image_label.clicked.connect(lambda: self.focus_widget(self.image_label))
         self.gl_display.clicked.connect(lambda: self.focus_widget(self.gl_display))
 
@@ -343,28 +332,12 @@ class WebcamViewer(QMainWindow):
                         z = orientation.get("z", 0.0)
                         r, i, j, k = WebcamViewer.euler_to_quaternion(x, y, z)
 
-                        #self.gl_display.set_rotation(r, i, j, k)
-                        #self.teensy_label.setText(f"IMU (gyro xyz): x={x:.2f} y={y:.2f} z={z:.2f}")
-
                         self.telemetry_updated.emit(r, i, j, k)
                         self.imu_label_updated.emit(f"IMU (xyz): x={x:.2f} y={y:.2f} z={z:.2f}")
 
         except Exception as e:
             pass
 
-
-    # def read_serial_data(self):
-    #     if self.serial_port.in_waiting:
-    #         line = self.serial_port.readline().decode('utf-8').strip()
-    #         self.teensy_label.setTrext(f"Teensy: {line}")
-
-    #         if "Rotation Vector" in line:
-    #             parts = line.split()
-    #             r = float(parts[4])
-    #             i = float(parts[6])
-    #             j = float(parts[8])
-    #             k = float(parts[10])
-    #             self.gl_display.set_rotation(r, i, j, k)
 
     def closeEvent(self, event):
         self.cap.release()
