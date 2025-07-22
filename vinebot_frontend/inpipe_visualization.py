@@ -13,6 +13,13 @@ import numpy as np
 #import rospy
 #from sensor_msgs.msg import Joy
 
+import json
+import requests
+import threading
+
+VIDEO_URL = "http://192.168.2.3:81/stream"
+TELEMETRY_URL = "http://192.168.2.3/telemetry"
+
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -169,6 +176,9 @@ class GLSTLDisplay(QOpenGLWidget):
         self.update() 
 
 class WebcamViewer(QMainWindow):
+    telemetry_updated = Signal(float, float, float, float)
+    imu_label_updated = Signal(str)
+    
     def __init__(self):
         super().__init__()
         self.setWindowTitle("In-Pipe Visualization")
@@ -250,24 +260,33 @@ class WebcamViewer(QMainWindow):
         self.setCentralWidget(self.container)
 
         # OpenCV video capture
-        self.cap = cv2.VideoCapture(0)
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        self.cap = cv2.VideoCapture(VIDEO_URL)
+        #self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        #self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
         # QTimer to grab frames periodically
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(10)
 
-        # Teensy Serial Connection
-        try:
-            self.serial_port = serial.Serial('/dev/tty.usbmodem159405501', 115200, timeout=0.001)
-            self.serial_port.reset_input_buffer()
-            self.serial_timer = QTimer()
-            self.serial_timer.timeout.connect(self.read_serial_data)
-            self.serial_timer.start(1)
-        except serial.SerialException:
-            self.teensy_label.setText("Failed to connect to Teensy")
+        # Setup for telemetry thread (currently just IMU)
+        self.telemetry_thread_stop = threading.Event()
+        self.telemetry_thread = threading.Thread(target=self.read_telemetry, daemon=True)
+        self.telemetry_thread.start()
+
+        self.telemetry_updated.connect(self.gl_display.set_rotation)
+        self.imu_label_updated.connect(self.teensy_label.setText)
+
+
+        # # Teensy Serial Connection
+        # try:
+        #     self.serial_port = serial.Serial('/dev/tty.usbmodem159405501', 115200, timeout=0.001)
+        #     self.serial_port.reset_input_buffer()
+        #     self.serial_timer = QTimer()
+        #     self.serial_timer.timeout.connect(self.read_serial_data)
+        #     self.serial_timer.start(1)
+        # except serial.SerialException:
+        #     self.teensy_label.setText("Failed to connect to Teensy")
 
         self.image_label.clicked.connect(lambda: self.focus_widget(self.image_label))
         self.gl_display.clicked.connect(lambda: self.focus_widget(self.gl_display))
@@ -289,21 +308,67 @@ class WebcamViewer(QMainWindow):
 
             self.image_label.overlay.update_axes(self.joystick_display.axes)                        
 
-    def read_serial_data(self):
-        if self.serial_port.in_waiting:
-            line = self.serial_port.readline().decode('utf-8').strip()
-            self.teensy_label.setText(f"Teensy: {line}")
+    @staticmethod
+    def euler_to_quaternion(x, y, z):
+        x = math.radians(x)
+        y = math.radians(y)
+        z = math.radians(z)
 
-            if "Rotation Vector" in line:
-                parts = line.split()
-                r = float(parts[4])
-                i = float(parts[6])
-                j = float(parts[8])
-                k = float(parts[10])
-                self.gl_display.set_rotation(r, i, j, k)
+        cx = math.cos(x * 0.5)
+        sx = math.sin(x * 0.5)
+        cy = math.cos(y * 0.5)
+        sy = math.sin(y * 0.5)
+        cz = math.cos(z * 0.5)
+        sz = math.sin(z * 0.5)
+
+        r = cx * cy * cz + sx * sy * sz
+        i = sx * cy * cz - cx * sy * sz
+        j = cx * sy * cz + sx * cy * sz
+        k = cx * cy * sz - sx * sy * cz
+
+        return r, i, j, k
+
+    def read_telemetry(self):
+        try:
+            with requests.get(TELEMETRY_URL, stream=True, timeout=1) as r:
+                for line in r.iter_lines():
+                    if self.telemetry_thread_stop.is_set():
+                        break
+                    if line:
+                        print(line)
+                        data = json.loads(line.decode('utf-8'))
+                        orientation = data.get("orientation", {})
+                        x = orientation.get("x", 0.0)
+                        y = orientation.get("y", 0.0)
+                        z = orientation.get("z", 0.0)
+                        r, i, j, k = WebcamViewer.euler_to_quaternion(x, y, z)
+
+                        #self.gl_display.set_rotation(r, i, j, k)
+                        #self.teensy_label.setText(f"IMU (gyro xyz): x={x:.2f} y={y:.2f} z={z:.2f}")
+
+                        self.telemetry_updated.emit(r, i, j, k)
+                        self.imu_label_updated.emit(f"IMU (xyz): x={x:.2f} y={y:.2f} z={z:.2f}")
+
+        except Exception as e:
+            pass
+
+
+    # def read_serial_data(self):
+    #     if self.serial_port.in_waiting:
+    #         line = self.serial_port.readline().decode('utf-8').strip()
+    #         self.teensy_label.setTrext(f"Teensy: {line}")
+
+    #         if "Rotation Vector" in line:
+    #             parts = line.split()
+    #             r = float(parts[4])
+    #             i = float(parts[6])
+    #             j = float(parts[8])
+    #             k = float(parts[10])
+    #             self.gl_display.set_rotation(r, i, j, k)
 
     def closeEvent(self, event):
         self.cap.release()
+        self.telemetry_thread_stop.set()  # terminate telem thread (that is reading IMU data)
         super().closeEvent(event)
 
     def joy_callback(self, data):
