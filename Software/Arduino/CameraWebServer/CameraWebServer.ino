@@ -46,6 +46,8 @@ void setup() {
   Serial.setDebugOutput(true);
   delay(1000);
 
+  imu_init();
+
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -65,12 +67,12 @@ void setup() {
   config.pin_sccb_scl = SIOC_GPIO_NUM;
   config.pin_pwdn = PWDN_GPIO_NUM;
   config.pin_reset = RESET_GPIO_NUM;
-  config.xclk_freq_hz = 20000000;
-  config.frame_size = FRAMESIZE_FHD;     // resolution, FHD=1920x1080
+  config.xclk_freq_hz = 24000000;
+  config.frame_size = FRAMESIZE_HD;      // resolution, FHD=1920x1080
   config.pixel_format = PIXFORMAT_JPEG;  // for streaming
-  config.grab_mode = CAMERA_GRAB_LATEST; 
+  config.grab_mode = CAMERA_GRAB_LATEST;
   config.fb_location = CAMERA_FB_IN_PSRAM;
-  config.jpeg_quality = 20;
+  config.jpeg_quality = 12;
   config.fb_count = 2;
 
   // camera init
@@ -82,9 +84,8 @@ void setup() {
 
   sensor_t *s = esp_camera_sensor_get();
 
-  if (config.pixel_format == PIXFORMAT_JPEG) {
-    s->set_framesize(s, FRAMESIZE_FHD);
-  }
+  s->set_res_raw(s, 16, 252, 2576, 1692, 0, 0, 2560, 1440, 1280, 720, true, true); // optimal 720p settings per OV5640 datasheet
+  s->set_hmirror(s, 1);
 
   WiFi.begin(ssid, password);
   WiFi.setSleep(false);

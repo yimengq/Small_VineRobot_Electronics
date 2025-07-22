@@ -20,6 +20,7 @@
 #include "sdkconfig.h"
 #include "camera_index.h"
 #include <ESP32Servo.h>
+#include "imu_function.h"
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
@@ -33,7 +34,9 @@ typedef struct {
   size_t len;
 } jpg_chunking_t;
 
-httpd_handle_t server = NULL;
+httpd_handle_t stream = NULL;
+httpd_handle_t data = NULL; 
+
 
 // temp test function -> TODO: implement and move to separate file, e.g. peripherals.cpp
 void command_servo(int angle) {
@@ -75,56 +78,14 @@ esp_err_t telemetry_handler(httpd_req_t *req) {
   httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
   httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
 
-  char buf[700];
+  const char* buf;
 
   while (true) {
-    // COMMENTED OUT since IMU/ToF not mounted 
-    // imu::Vector<3> accel = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
-    // imu::Vector<3> mag   = bno.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
-    // imu::Vector<3> gyro  = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
-    // imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-    // imu::Vector<3> lin   = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-    // imu::Vector<3> grav  = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
-    // int8_t temp = bno.getTemp();
-    // int tof_dist = tof.dist();  
-
-    snprintf(buf, sizeof(buf),
-    "{"
-    "\"euler\":[%.2f,%.2f,%.2f],"
-    "\"accel\":[%.2f,%.2f,%.2f],"
-    "\"gyro\":[%.2f,%.2f,%.2f],"
-    "\"mag\":[%.2f,%.2f,%.2f],"
-    "\"lin\":[%.2f,%.2f,%.2f],"
-    "\"grav\":[%.2f,%.2f,%.2f],"
-    "\"temp\":%d,"
-    "\"tof\":%d"
-    "}\n\n",
-    // COMMENTED OUT since IMU/ToF not mounted 
-    // euler.x(), euler.y(), euler.z(),
-    // accel.x(), accel.y(), accel.z(),
-    // gyro.x(), gyro.y(), gyro.z(),
-    // mag.x(), mag.y(), mag.z(),
-    // lin.x(), lin.y(), lin.z(),
-    // grav.x(), grav.y(), grav.z(),
-    // temp,
-    // tof_distance_mm,                
-
-    // Placeholder data 
-    57.62, 88.93, 12.74, 
-    0.22, 0.56, 0.33,
-    0.05, 0.03, 0.13,
-    1.12, 2.13, 0.54,
-    0.51, 0.32, 0.22, 
-    0.01, 8.77, 0.22,
-    45,
-    37
-  );
+    buf = imu_update(); 
 
     if (httpd_resp_send_chunk(req, buf, strlen(buf)) != ESP_OK)
       break;
-
     vTaskDelay(pdMS_TO_TICKS(10));  // stream at 100 Hz (adjust to match IMU/ToF freq.)
-    Serial.println("Successfully sent last chunk"); 
   }
 
   httpd_resp_send_chunk(req, NULL, 0);  
@@ -142,6 +103,7 @@ static esp_err_t stream_handler(httpd_req_t *req) {
   char *part_buf[128];
 
   res = httpd_resp_set_type(req, _STREAM_CONTENT_TYPE);
+
   if (res != ESP_OK) {
     return res;
   }
@@ -150,6 +112,11 @@ static esp_err_t stream_handler(httpd_req_t *req) {
   httpd_resp_set_hdr(req, "X-Framerate", "60");
 
   while (true) {
+    // check client still connected 
+    if (httpd_req_to_sockfd(req) == -1) {
+        break;
+    }
+
     fb = esp_camera_fb_get();
     if (!fb) {
       res = ESP_FAIL;
@@ -221,9 +188,14 @@ void startCameraServer() {
     .user_ctx = NULL
   };
 
-  if (httpd_start(&server, &config) == ESP_OK) {
-    httpd_register_uri_handler(server, &stream_uri);
-    httpd_register_uri_handler(server, &servo_uri);
-    httpd_register_uri_handler(server, &telemetry_uri);
+  if (httpd_start(&data, &config) == ESP_OK) {
+    httpd_register_uri_handler(data, &servo_uri);
+    httpd_register_uri_handler(data, &telemetry_uri);
+  }
+
+  config.server_port++;
+  config.ctrl_port++; 
+  if (httpd_start(&stream, &config) == ESP_OK) {
+    httpd_register_uri_handler(stream, &stream_uri);
   }
 }

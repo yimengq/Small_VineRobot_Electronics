@@ -1,65 +1,60 @@
-"""
-Test script for two-way http communication with ESP32-S3. 
+'''
+Simple test script to record test video and log imu data. 
+ESP32-S3 with OV5640 and BNO055
+'''
 
-To view live video stream from S3:
-python3 testing.py v 
-
-To send test servo command to S3:
-python3 testing.py s 
-"""
 import cv2
-import numpy as np
-import time
 import requests
-import sys 
+import threading
+import json
+import time
 
-URL = "http://192.168.3.2"  # replace with addr printed by CameraWebServer.ino
-NUM_FRAMES = 500  # duration of livestream, can change for test purposes 
+# modify with address given by CameraWebServer.ino
+VIDEO_URL = "http://192.168.2.3:81/stream"
+TELEMETRY_URL = "http://192.168.2.3/telemetry"
 
+imu_log = []
+stop = threading.Event()
 
-def play_livestream():
-    cap = cv2.VideoCapture(URL + "/stream")
-    frames = []
-
-    # receive frames, display to window
-    while len(frames) < NUM_FRAMES:
-        ret, frame = cap.read()
-        if not ret:
-            break
+# Read IMU data
+def imu_data():
+    try:
+        with requests.get(TELEMETRY_URL, stream=True, timeout=1) as r:
+            for line in r.iter_lines():
+                if stop.is_set():
+                    break
+                if line:
+                    imu_data = json.loads(line.decode('utf-8'))
+                    timestamp = time.time()
+                    imu_log.append((timestamp, imu_data))
+    except Exception as e:
+        print("IMU listener error:", e)
         
-        frames.append(frame.copy())
+# IMU logging thread 
+imu_thread = threading.Thread(target=imu_data, daemon=True)
+imu_thread.start()
 
-        cv2.imshow("ESP32 Camera", frame) 
-        if cv2.waitKey(1) == ord('q'):
-            break
-          
-            
-    cap.release()
-    cv2.destroyAllWindows()
+cap = cv2.VideoCapture(VIDEO_URL)
 
-    # TO DO: implement video save (write to np array, then save)
-    # frames_np = np.stack(frames, axis=0)
-    # frames_np.shape
-    return
+nframes = 0
+frame_limit = 300  # limit for test purposes, ~10s video
+while nframes < frame_limit:
+    ret, frame = cap.read()
+    if not ret:
+        break
+        
+    nframes += 1
+    cv2.imshow("ESP32 Camera", frame) 
+    if cv2.waitKey(1) == ord('q'):
+        break
+        
+        
+cap.release()
+cv2.destroyAllWindows()
 
+stop.set()
+imu_thread.join(timeout=2)
 
-def test_servo_command(): 
-    res = requests.post(URL + "/servo", data="90")  # example 90 deg servo command
-    print(res.text)
-    return
-    
-
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python3 script.py [v|s]")
-        return
-
-    opt = sys.argv[1]
-    if opt == "v":
-        play_livestream(); 
-    elif opt == "s":
-        test_servo_command(); 
-    return
-
-if __name__ == "__main__": 
-    main()
+with open("imu_log.txt", "w") as f:
+    for timestamp, data in imu_log:
+        f.write(f"{timestamp}: {json.dumps(data)}\n")
