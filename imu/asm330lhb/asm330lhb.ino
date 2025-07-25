@@ -100,6 +100,6 @@ void loop() {
   float gy = rgy * GYRO_SENSITIVITY;
   float gz = rgz * GYRO_SENSITIVITY; 
 
-  Serial.printf("Accel [raw]: X=%.2f Y=%.2f Z=%.2f\tGyro [raw]: X=%.2f Y=%.2f Z=%.2f\n", ax, ay, az, gx, gy, gz);
+  Serial.printf("Accel [g]: X=%.2f Y=%.2f Z=%.2f\tGyro [dps]: X=%.2f Y=%.2f Z=%.2f\n", ax, ay, az, gx, gy, gz);
   delay(500);
 }
