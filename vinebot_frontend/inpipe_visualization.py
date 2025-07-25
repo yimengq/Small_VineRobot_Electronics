@@ -24,7 +24,7 @@ TELEMETRY_URL = "http://192.168.2.3/telemetry"
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.axes = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.setAttribute(Qt.WA_TransparentForMouseEvents)
         self.setStyleSheet("background: transparent")
 
@@ -103,13 +103,13 @@ class VideoLabel(QLabel):
 
     def mousePressEvent(self, event):
         self.clicked.emit()
-    def wheelEvent(self, event):  # Zoom with scroll
-        delta = event.angleDelta().y()
-        if delta > 0:
-            self.zoom_factor *= 1.1
-        else:
-            self.zoom_factor /= 1.1
-        self.zoom_factor = max(1.0, min(5.0, self.zoom_factor))
+    # def wheelEvent(self, event):  # Zoom with scroll
+    #     delta = event.angleDelta().y()
+    #     if delta > 0:
+    #         self.zoom_factor *= 1.1
+    #     else:
+    #         self.zoom_factor /= 1.1
+    #     self.zoom_factor = max(1.0, min(5.0, self.zoom_factor))
 
 # 3D visualization of tip using IMU rotation data
 class GLSTLDisplay(QOpenGLWidget):
@@ -366,6 +366,7 @@ class WebcamViewer(QMainWindow):
         layout.addWidget(widget)
 
         if widget == self.image_label:
+            self.menu_button.setVisible(True)
             zoom_buttons_layout = QHBoxLayout()
             zoom_buttons_layout.setSpacing(5)
 
@@ -387,6 +388,9 @@ class WebcamViewer(QMainWindow):
 
             layout.addLayout(right_align_layout)
 
+        elif widget == self.gl_display:
+            self.menu_button.setVisible(False)
+
         back_button = QPushButton("←")
         back_button.setFixedSize(40, 40)
         back_button.setStyleSheet("""
@@ -405,6 +409,7 @@ class WebcamViewer(QMainWindow):
         self.stack.setCurrentWidget(self.focus_view)
 
     def unfocus_widget(self):
+        self.menu_button.setVisible(True)
         widget = self.focus_view.layout().itemAt(0).widget()
         if widget == self.image_label:
             self.layout.addWidget(widget, 0, 0)
