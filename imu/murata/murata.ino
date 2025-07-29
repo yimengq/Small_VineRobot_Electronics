@@ -1,3 +1,13 @@
+/*
+Test script initializes Murata SCH16T-K10 IMU and records accel and gyro data for testing. 
+SCH16T-K10 uses 4-wire, 48bit frame SPI with an out of frame protocol (data is received after 
+the next transmission is sent from the master). See documentation for further details. 
+
+Documentation describes an initialization procedure which is not fully implemented here (TO DO). 
+
+Further process the IMU data in the main loop() by accessing contents of imu_data struct. 
+ */
+
 #include <Arduino.h>
 #include <SPI.h>
 
@@ -9,7 +19,7 @@
 #define PIN_SPI_CS 44
 
 /*
- * SCH1 Standard requests
+ * SCH1 standard requests (from documentation)
  */
 
 // Rate and acceleration
@@ -56,27 +66,26 @@
 #define REQ_READ_ACC12_CTRL 0x0A4800000022
 #define REQ_READ_ACC3_CTRL 0x0A8800000014
 #define REQ_READ_MODE_CTRL 0x0D4800000010
-#define REQ_SET_FILT_RATE 0x0968000000   // For building Rate_XYZ1/2 filter setting frame.
-#define REQ_SET_FILT_ACC12 0x09A8000000  // For building Acc_XYZ1/2 filter setting frame.
-#define REQ_SET_FILT_ACC3 0x09E8000000   // For building Acc_XYZ3 filter setting frame.
+#define REQ_SET_FILT_RATE 0x0968000000   
+#define REQ_SET_FILT_ACC12 0x09A8000000  
+#define REQ_SET_FILT_ACC3 0x09E8000000   
 
 // Sensitivity and decimation
-#define REQ_SET_RATE_CTRL 0x0A28000000   // For building Rate_XYZ1/2 sensitivity and \
-                                         //     Rate_XYZ2 decimation setting frame.
-#define REQ_SET_ACC12_CTRL 0x0A68000000  // For building Acc_XYZ1/2 sensitivity and \
-                                         //     Acc_XYZ2 decimation setting frame.
-#define REQ_SET_ACC3_CTRL 0x0AA8000000   // For building Acc_XYZ3 sensitivity setting frame.
-#define REQ_SET_MODE_CTRL 0x0D68000000   // For building MODE-register setting frame.
+#define REQ_SET_RATE_CTRL 0x0A28000000   
+#define REQ_SET_ACC12_CTRL 0x0A68000000  
+#define REQ_SET_ACC3_CTRL 0x0AA8000000   
+#define REQ_SET_MODE_CTRL 0x0D68000000   
 
 // DRY/SYNC configuration
 #define REQ_READ_USER_IF_CTRL 0x0CC80000007C
-#define REQ_SET_USER_IF_CTRL 0x0CE8000000  // For building USER_IF_CTRL -register setting frame.
+#define REQ_SET_USER_IF_CTRL 0x0CE8000000  
 
 // Other
 #define REQ_SOFTRESET 0x0DA800000AC3  // SPI soft reset command.
 #define CMD_EN_SENSOR 0x0D68000001D3
+#define EXP_COMP_ID 0x21
 
-/**
+/*
  * Frame field masks
  */
 #define TA_FIELD_MASK 0xFFC000000000
@@ -85,16 +94,12 @@
 #define CRC_FIELD_MASK 0x0000000000FF
 #define ERROR_FIELD_MASK 0x001E00000000
 
-#define EXP_COMP_ID 0x21
-
-const float ACC_SENSITIVITY = 3200.0f; 
-const float GYRO_SENSITIVITY = 1600.0f;
-
+const float ACC_SENSITIVITY = 3200.0f;  // to convert raw accelerometer readings 
+const float GYRO_SENSITIVITY = 1600.0f; // to convert raw gyro readings 
 
 /* ----- */
 
-SPIClass murataSPI(HSPI);
-
+// store imu readings  
 struct imu_data {
   float acc_x;
   float acc_y;
@@ -104,6 +109,7 @@ struct imu_data {
   float gyro_z;
 };
 
+SPIClass murataSPI(HSPI);
 imu_data imu_data; 
 
 // TO DO: implement 
@@ -111,7 +117,7 @@ void sch1_reset() {
   return;
 }
 
-// 48bit spi CRC8 calculation
+/* 8-bit CRC for 48-bit SPI frames. Function from Murata documentation */
 uint8_t CRC8(uint64_t SPIframe)
 {
   uint64_t data = SPIframe & 0xFFFFFFFFFF00LL;
@@ -126,6 +132,7 @@ uint8_t CRC8(uint64_t SPIframe)
   return crc;
 }
 
+/* Activates/deactivate SCH1 measurement mode and sets the EOI bit if needed. */
 int sch1_enable_meas(bool enable_sensor, bool set_eoi) {
   uint64_t requestFrame_Mode_Ctrl;
   uint64_t responseFrame_Mode_Ctrl;
@@ -146,72 +153,68 @@ int sch1_enable_meas(bool enable_sensor, bool set_eoi) {
   requestFrame_Mode_Ctrl |= CRCvalue;
   spi48_send_request(requestFrame_Mode_Ctrl, responseFrame_Mode_Ctrl);
 
-  // Read back sensitivity control register contents.
+  // Read back sensitivity control register contents
   spi48_send_request(REQ_READ_MODE_CTRL, responseFrame_Mode_Ctrl);
   spi48_send_request(REQ_READ_MODE_CTRL, responseFrame_Mode_Ctrl);
 
   // Check that return frame is not blank
   if ((responseFrame_Mode_Ctrl == 0xFFFFFFFFFFFF) || (responseFrame_Mode_Ctrl == 0x00))
-      return 1; // TO DO: change error codes to enum
+      return 1; // TO DO: change return codes to enum
 
   // Check that Source Address matches Target Address.
   if (((requestFrame_Mode_Ctrl & TA_FIELD_MASK) >> 38) != ((responseFrame_Mode_Ctrl & SA_FIELD_MASK) >> 37))
-      return 1;
+      return 1; // TO DO: change return codes to enum
   
-  return 0;
+  return 0; // TO DO: change return codes to enum
 }
 
-// TO DO: fully implement startup sequence with error-checking
-int sch1_init() {
-  int ret = 0;
-  uint8_t startup_attempt = 0;
-  bool SCH1status = false;
-  // SCH1_status SCH1statusAll;
+/* Initialize SCH1 sensor */
+// TO DO: implement full procedure and error checking described in datasheet 
+int sch1_init() { 
 
-  for (startup_attempt = 0; startup_attempt < 2; startup_attempt++) {
-                                  
-      // Wait 32 ms for the non-volatile memory (NVM) Read
-      delay(32);       
+  delay(32);
+  if (sch1_enable_meas(true, false)) {
+    return 1; 
+  }
 
-      // Write EN_SENSOR = 1
-      sch1_enable_meas(true, false);
+  delay(215);
 
-      // Wait 215 ms
-      delay(215);
+  if (sch1_enable_meas(true, true)) {
+    return 1; 
+  }
+
+  delay(3); 
+  return 0; 
+}
+
+
+//   for (startup_attempt = 0; startup_attempt < 2; startup_attempt++) {              
+//       delay(32); // wait 32ms for non-volatile memory read 
+
+//       // write EN_SENSOR = 1
+//       if (sch1_enable_meas(true, false)) {
+//         cont
+//       }
+
+//       delay(215); // wait 215 ms 
   
-      // SCH1_getStatus(&SCH1statusAll);
+//       // write EOI = 1 (End of Initialization command)
+//       if (sch1_enable_meas(true, true)) {
 
-      // Write EOI = 1 (End of Initialization command)
-      sch1_enable_meas(true, true);
+//       }
       
-      // Wait 3 ms
-      delay(3);
+//       delay(3); // wait 3ms 
+//       SCH1status = true;
       
-      // Read all status registers twice.
-      // SCH1_getStatus(&SCH1statusAll);
-      // SCH1_getStatus(&SCH1statusAll);
-
-      // Check that all status registers have OK status.
-      // if (!SCH1_verifyStatus(&SCH1statusAll)) {
-      //     SCH1status = false;            
-      //     SCH1_reset();    // Sensor failed, reset and retry.
-      // }
-      // else {
-      //     SCH1status = true;           
-      //     break;
-      // }
-      SCH1status = true;
-      
-  } 
-  if (SCH1status != true)
-      ret = 1;
+//   } 
+//   if (SCH1status != true)
+//       ret = 1;
             
-  return ret;
-}
+//   return ret;
+// }
 
-
+/* Send SPI command to IMU */
 void spi48_send_request(uint64_t request, uint64_t &rx) {
-
   delayMicroseconds(10);
   uint16_t tx_buf[3];
   uint16_t rx_buf[3];
@@ -232,13 +235,15 @@ void spi48_send_request(uint64_t request, uint64_t &rx) {
   rx = ((uint64_t)rx_buf[0] << 32) | ((uint64_t)rx_buf[1] << 16) | ((uint64_t)rx_buf[2]);
 }
 
+/* Reads response to SPI command, using out-of-frame protocol */
 int32_t spi48_read_response(uint64_t &rx) {
-  spi48_send_request(0x000000000000, rx);
+  spi48_send_request(0x000000000000, rx);  // send dummy request 
   delayMicroseconds(10);
   uint32_t out = (rx & DATA_FIELD_MASK) >> 8;
-  return sign_extend(out);
+  return sign_extend(out);  
 }
 
+/* Sign extends 20-bit datafield to int32 */
 int32_t sign_extend(uint32_t raw) {
   if (raw & (1 << 19)) {
     return (int32_t)(raw | 0xFFF00000); // extend negative
@@ -248,6 +253,7 @@ int32_t sign_extend(uint32_t raw) {
 }
 
 
+/* Read and convert raw IMU data, store in global struct */
 void read_imu_data() {
   uint64_t resp = 0;
 
