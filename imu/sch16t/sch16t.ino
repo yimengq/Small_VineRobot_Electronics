@@ -187,32 +187,6 @@ int sch1_init() {
   return 0; 
 }
 
-
-//   for (startup_attempt = 0; startup_attempt < 2; startup_attempt++) {              
-//       delay(32); // wait 32ms for non-volatile memory read 
-
-//       // write EN_SENSOR = 1
-//       if (sch1_enable_meas(true, false)) {
-//         cont
-//       }
-
-//       delay(215); // wait 215 ms 
-  
-//       // write EOI = 1 (End of Initialization command)
-//       if (sch1_enable_meas(true, true)) {
-
-//       }
-      
-//       delay(3); // wait 3ms 
-//       SCH1status = true;
-      
-//   } 
-//   if (SCH1status != true)
-//       ret = 1;
-            
-//   return ret;
-// }
-
 /* Send SPI command to IMU */
 void spi48_send_request(uint64_t request, uint64_t &rx) {
   delayMicroseconds(10);
