@@ -10,6 +10,9 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from stl import mesh    
 import numpy as np
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+
 #import rospy
 #from sensor_msgs.msg import Joy
 
@@ -19,6 +22,34 @@ import threading
 
 VIDEO_URL = "http://192.168.2.3:81/stream"
 TELEMETRY_URL = "http://192.168.2.3/telemetry"
+
+class Matplotlib3DPlot(QWidget):
+    clicked = Signal()
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.canvas = FigureCanvas(Figure(figsize=(4, 3)))
+        layout = QVBoxLayout()
+        layout.addWidget(self.canvas)
+        self.setLayout(layout)
+
+        self.ax = self.canvas.figure.add_subplot(111, projection='3d')
+        self.plot_dummy_path()
+
+    def plot_dummy_path(self):
+        t = np.linspace(0, 4 * np.pi, 100)
+        x = np.sin(t)
+        y = np.cos(t)
+        z = t
+
+        self.ax.plot(x, y, z, label='Ground Truth Path')
+        self.ax.set_xlabel('X')
+        self.ax.set_ylabel('Y')
+        self.ax.set_zlabel('Z')
+        self.ax.legend()
+        self.canvas.draw()
+    
+    def mousePressEvent(self, event):
+        self.clicked.emit()
 
 # Arrows overlayed on video feed as joystick axes are moved 
 class JoystickDisplay(QWidget):
@@ -182,6 +213,8 @@ class GLSTLDisplay(QOpenGLWidget):
         super().showEvent(event)
         self.update() 
 
+
+
 class WebcamViewer(QMainWindow):
     telemetry_updated = Signal(float, float, float, float)
     imu_label_updated = Signal(str)
@@ -208,10 +241,8 @@ class WebcamViewer(QMainWindow):
         self.gl_display.setFixedSize(320, 240)
         self.gl_display.setStyleSheet("background: transparent;")
 
-        self.localization_label = QLabel("Localization Placeholder")
-        self.localization_label.setAlignment(Qt.AlignCenter)
+        self.localization_label = Matplotlib3DPlot()
         self.localization_label.setFixedSize(320, 240)
-        self.localization_label.setStyleSheet("background-color: gray; border: 1px solid black; font-size: 10pt;")
 
         self.joystick_display = JoystickDisplay()
         self.joystick_display.setFixedSize(320, 240)
@@ -266,6 +297,7 @@ class WebcamViewer(QMainWindow):
 
         self.image_label.clicked.connect(lambda: self.focus_widget(self.image_label))
         self.gl_display.clicked.connect(lambda: self.focus_widget(self.gl_display))
+        self.localization_label.clicked.connect(lambda: self.focus_widget(self.localization_label))
 
         self.overlay_widget = QWidget(self)
         self.overlay_widget.setStyleSheet("background-color: rgba(0, 0, 0, 120);")
@@ -388,7 +420,7 @@ class WebcamViewer(QMainWindow):
 
             layout.addLayout(right_align_layout)
 
-        elif widget == self.gl_display:
+        elif widget == self.gl_display or widget == self.localization_label:
             self.menu_button.setVisible(False)
 
         back_button = QPushButton("←")
