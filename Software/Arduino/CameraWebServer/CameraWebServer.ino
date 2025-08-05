@@ -9,12 +9,16 @@
 // ===================
 #define CAMERA_MODEL_XIAO_ESP32S3  // Has PSRAM
 #include "camera_pins.h"
+Servo myservo;
 
 // ===========================
 // WiFi credentials
 // ===========================
-const char *ssid = "M";
-const char *password = "12345678";
+// const char *ssid = "M";
+// const char *password = "12345678";
+
+const char *ssid = "NETGEAR42";
+const char *password = "cleverroad877";
 
 void startCameraServer();
 
@@ -41,12 +45,16 @@ void WiFiEvent(WiFiEvent_t event) {
 }
 
 void setup() {
+  Wire.begin(3, 4);
   Serial.begin(115200);
   while (!Serial) delay(10);  // Wait for serial
   Serial.setDebugOutput(true);
   delay(1000);
 
   imu_init();
+
+  myservo.setPeriodHertz(50);
+  myservo.attach(46);
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;

@@ -10,9 +10,14 @@ import json
 import time
 
 # modify with address given by CameraWebServer.ino
-VIDEO_URL = "http://192.168.2.3:81/stream"
-TELEMETRY_URL = "http://192.168.2.3/telemetry"
-SERVO_URL = "http://192.168.2.3/servo"
+# VIDEO_URL = "http://192.168.2.3:81/stream"
+# TELEMETRY_URL = "http://192.168.2.3/telemetry"
+# SERVO_URL = "http://192.168.2.3/servo"
+
+
+VIDEO_URL = "http://192.168.1.43:81/stream"
+TELEMETRY_URL = "http://192.168.1.43/telemetry"
+SERVO_URL = "http://192.168.1.43/servo"
 
 
 imu_log = []

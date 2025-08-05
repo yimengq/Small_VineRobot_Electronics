@@ -37,10 +37,10 @@ typedef struct {
 httpd_handle_t stream = NULL;
 httpd_handle_t data = NULL; 
 
-
 // temp test function -> TODO: implement and move to separate file, e.g. peripherals.cpp
 void command_servo(int angle) {
   Serial.printf("Servo moving %d degrees\n", angle); 
+  myservo.write(angle);
 }
 
 

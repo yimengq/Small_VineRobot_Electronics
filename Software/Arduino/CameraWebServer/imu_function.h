@@ -1,7 +1,8 @@
 
 #ifndef __IMU_FUNCTION_H__
 #define __IMU_FUNCTION_H__
-
+#include <ESP32Servo.h>
+extern Servo myservo;
 // class imu_function{
 //     public:
 //     void init();
