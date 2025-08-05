@@ -283,6 +283,8 @@ void enable_led(bool en) {  // Turn LED On or Off
 #endif
 
 void move_servo1(int val){
+  Serial.print("here1");
+  Serial.print(val);
   if(val > 180){
     myServo1.write(180);
   }
@@ -294,6 +296,7 @@ void move_servo1(int val){
   }
 }
 void move_servo2(int val){
+  Serial.print("here1");
   if(val > 180){
     myServo2.write(180);
   }
