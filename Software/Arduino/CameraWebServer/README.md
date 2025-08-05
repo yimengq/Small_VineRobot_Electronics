@@ -20,4 +20,7 @@ Reference `Software/testing.py` to see how to view the videostream using
 cv2. The video is accessed at `http://<IP_addr>:81/stream`. IMU telemetry  
 is accessible at `http://<IP_addr>/telemetry` and servo commands can be  
 sent via HTTP post to `http://<IP_addr>/servo`. Again, see  
-`Software/testing.py` for example cases of each.    
+`Software/testing.py` for example cases of each.  
+
+Run `python3 testing.py` for a simple 10-second sequence that displays  
+live video, locally logs IMU telemetry, and sends a test servo command.
