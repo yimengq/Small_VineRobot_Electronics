@@ -1,6 +1,6 @@
-#Instructions  
+# Instructions  
 
-###Required Hardware 
+### Required Hardware 
 - Xiao ESP32-S3 
 - BNO055 IMU (I2C wiring to ESP32) 
 - OV5640 Camera Module
@@ -8,7 +8,7 @@
 - Servo. To actuate the servo, wire to ESP32-S3 and define servo pins in  
 `app_httpd.cpp`. Modify `command_servo()` function.   
 
-###Software Setup 
+### Software Setup 
 First, setup the Olimex board as a Wifi AP for the ESP32 to connect to,  
 following instructions in `Software/SoftwareSetup.txt`. Update the wifi  
 credentials in `CameraWebserver.ino`. 
