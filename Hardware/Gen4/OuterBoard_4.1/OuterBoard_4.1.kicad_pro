@@ -507,7 +507,7 @@
       "plot": "Gerber/",
       "pos_files": "./",
       "specctra_dsn": "",
-      "step": "OuterBoard_4.1.2.step",
+      "step": "../../../../../OuterBoard_4.1.2.step",
       "svg": "",
       "vrml": ""
     },

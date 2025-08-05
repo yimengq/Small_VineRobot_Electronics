@@ -39,11 +39,11 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-const char *ssid = "Vcc-AP";
-const char *password = "12345678";
+// const char *ssid = "Vcc-AP";
+// const char *password = "12345678";
 
-// const char *ssid = "NETGEAR42";
-// const char *password = "cleverroad877";
+const char *ssid = "NETGEAR42";
+const char *password = "cleverroad877";
 
 const int ledPin = 21; // On-board LED on GPIO21
 int ledState = 0;
