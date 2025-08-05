@@ -44,7 +44,7 @@ imu_thread.start()
 cap = cv2.VideoCapture(VIDEO_URL)
 
 nframes = 0
-frame_limit = 300  # limit for test purposes, ~10s video
+frame_limit = 10  # limit for test purposes, ~10s video
 while nframes < frame_limit:
     ret, frame = cap.read()
     if not ret:
@@ -62,7 +62,7 @@ stop.set()
 imu_thread.join(timeout=2)
 
 # test servo command  
-response = requests.post(SERVO_URL, data="90")
+response = requests.post(SERVO_URL, data="150")
 if response.ok:
     print("Good HTTP post, check Arduino IDE output")
 
