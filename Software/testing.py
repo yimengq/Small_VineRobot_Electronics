@@ -12,6 +12,8 @@ import time
 # modify with address given by CameraWebServer.ino
 VIDEO_URL = "http://192.168.2.3:81/stream"
 TELEMETRY_URL = "http://192.168.2.3/telemetry"
+SERVO_URL = "http://192.168.2.3/servo"
+
 
 imu_log = []
 stop = threading.Event()
@@ -48,12 +50,17 @@ while nframes < frame_limit:
     if cv2.waitKey(1) == ord('q'):
         break
         
-        
 cap.release()
 cv2.destroyAllWindows()
 
 stop.set()
 imu_thread.join(timeout=2)
+
+# test servo command  
+response = requests.post(SERVO_URL, data="90")
+if response.ok:
+    print("Good HTTP post, check Arduino IDE output")
+
 
 with open("imu_log.txt", "w") as f:
     for timestamp, data in imu_log:
