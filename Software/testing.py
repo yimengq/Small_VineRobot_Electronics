@@ -10,9 +10,9 @@ import json
 import time
 
 # modify with address given by CameraWebServer.ino
-# VIDEO_URL = "http://192.168.2.3:81/stream"
-# TELEMETRY_URL = "http://192.168.2.3/telemetry"
-# SERVO_URL = "http://192.168.2.3/servo"
+#VIDEO_URL = "http://192.168.2.3:81/stream"
+#TELEMETRY_URL = "http://192.168.2.3/telemetry"
+#SERVO_URL = "http://192.168.2.3/servo"
 
 
 VIDEO_URL = "http://192.168.1.43:81/stream"
@@ -62,10 +62,13 @@ stop.set()
 imu_thread.join(timeout=2)
 
 # test servo command  
-response = requests.post(SERVO_URL, data="150")
+payload = {
+    "servo1": 150, 
+    "servo2": 90
+}
+response = requests.post(SERVO_URL, json=payload)
 if response.ok:
     print("Good HTTP post, check Arduino IDE output")
-
 
 with open("imu_log.txt", "w") as f:
     for timestamp, data in imu_log:

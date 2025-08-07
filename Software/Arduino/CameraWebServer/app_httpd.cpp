@@ -20,6 +20,7 @@
 #include "sdkconfig.h"
 #include "camera_index.h"
 #include <ESP32Servo.h>
+#include <ArduinoJson.h>
 #include "imu_function.h"
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
@@ -40,18 +41,19 @@ httpd_handle_t data = NULL;
 Servo myServo1; 
 Servo myServo2;
 
-// temp test function -> TODO: implement and move to separate file, e.g. peripherals.cpp
-void command_servo(int angle) {
-  Serial.printf("Servo moving %d degrees\n", angle); 
-  myServo1.write(angle);
-  myServo2.write(angle);
+// commands servos for 2D tip control 
+void command_servo(uint8_t angle1, uint8_t angle2) {
+  Serial.printf("Servo1 moving %d degrees\n", angle1);
+  Serial.printf("Servo2 moving %d degrees\n", angle2); 
+  myServo1.write(angle1);
+  myServo2.write(angle2);
 }
 
 
 /* Read http servo request and command servo if angle is valid. */
 esp_err_t servo_handler(httpd_req_t *req)
 {
-    char content[8];
+    char content[64];
     size_t recv_size = MIN(req->content_len, sizeof(content));
     int ret = httpd_req_recv(req, content, recv_size);
 
@@ -63,14 +65,22 @@ esp_err_t servo_handler(httpd_req_t *req)
     }
 
     content[ret] = '\0'; 
-    int angle = atoi(content); 
-
-    if (angle < 0 || angle > 180) {  // verify angle 
-      httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Requested angle must be 0-180");
+    StaticJsonDocument<64> doc;
+    DeserializationError error = deserializeJson(doc, content);
+    if (error) {
+      httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Bad JSON");
       return ESP_FAIL;
     }
 
-    command_servo(angle);  // move servo 
+    uint8_t s1 = doc["servo1"]; // angle for servo1
+    uint8_t s2 = doc["servo2"]; // angle for servo2
+
+    if (s1 < 0 || s1 > 180 || s2 < 0 || s2 > 180) {  // verify angles 
+      httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Requested angles must be 0-180");
+      return ESP_FAIL;
+    }
+
+    command_servo(s1, s2);  // move servo 
     httpd_resp_sendstr(req, "OK");
     return ESP_OK;
 }
