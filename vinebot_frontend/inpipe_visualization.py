@@ -17,8 +17,11 @@ import json
 import requests
 import threading
 
-VIDEO_URL = "http://192.168.2.3:81/stream"
-TELEMETRY_URL = "http://192.168.2.3/telemetry"
+#VIDEO_URL = "http://192.168.2.3:81/stream"
+#TELEMETRY_URL = "http://192.168.2.3/telemetry"
+
+VIDEO_URL = "http://192.168.1.43:81/stream"
+TELEMETRY_URL = "http://192.168.1.43/telemetry"
 
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
