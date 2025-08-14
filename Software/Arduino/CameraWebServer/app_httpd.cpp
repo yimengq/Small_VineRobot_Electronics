@@ -283,8 +283,13 @@ void enable_led(bool en) {  // Turn LED On or Off
 #endif
 
 void move_servo1(int val){
-  Serial.print("here1");
-  Serial.print(val);
+  if (!myServo1.attached()) {
+    Serial.println("Servo1 is not attached!");
+    return; // Exit early if it's not attached
+  }
+
+  Serial.print("Servo1 target: ");
+  Serial.println(val);
   if(val > 180){
     myServo1.write(180);
   }
@@ -296,7 +301,10 @@ void move_servo1(int val){
   }
 }
 void move_servo2(int val){
-  Serial.print("here1");
+  if (!myServo2.attached()) {
+    Serial.println("Servo2 is not attached!");
+    return; // Exit early if it's not attached
+  }
   if(val > 180){
     myServo2.write(180);
   }
@@ -793,6 +801,9 @@ static esp_err_t parse_get(httpd_req_t *req, char **obuf) {
   return ESP_FAIL;
 }
 
+int led_pin_state = 0;
+
+
 static esp_err_t cmd_handler(httpd_req_t *req) {
   char *buf = NULL;
   char variable[32];
@@ -812,7 +823,6 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
   log_i("%s = %d", variable, val);
   sensor_t *s = esp_camera_sensor_get();
   int res = 0;
-
   if (!strcmp(variable, "framesize")) {
     if (s->pixformat == PIXFORMAT_JPEG) {
       res = s->set_framesize(s, (framesize_t)val);
@@ -820,6 +830,8 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
   } else if (!strcmp(variable, "quality")) {
     res = s->set_quality(s, val);
   } else if (!strcmp(variable, "contrast")) {
+    move_servo1(val);
+    Serial.print(val);
     if (s->id.PID == OV5640_PID) {
       move_servo1(val);
       res = s->set_contrast(s, 0);
@@ -829,7 +841,8 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
   } else if (!strcmp(variable, "brightness")) {
     res = s->set_brightness(s, val);
   } else if (!strcmp(variable, "saturation")) {
-    res = s->set_saturation(s, val);
+    // res = s->set_saturation(s, val);
+    led_pin_state = (val > 0) ? 1 : 0;
   } else if (!strcmp(variable, "gainceiling")) {
     // res = s->set_gainceiling(s, (gainceiling_t)val);
     move_servo2(val);

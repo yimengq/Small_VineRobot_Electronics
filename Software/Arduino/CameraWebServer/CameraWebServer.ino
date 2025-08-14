@@ -42,9 +42,12 @@
 // const char *ssid = "Vcc-AP";
 // const char *password = "12345678";
 
-const char *ssid = "NETGEAR42-5G";
+const char *ssid = "NETGEAR42";
 const char *password = "cleverroad877";
 
+extern int led_pin_state;
+const int led_pin1 = 5;
+const int led_pin2 = 6;
 const int ledPin = 21; // On-board LED on GPIO21
 int ledState = 0;
 
@@ -52,7 +55,7 @@ imu_function imu_func;
 
 extern Servo myServo1;  // Create servo object
 extern Servo myServo2;  // Create servo object
-const int servoPin1 = 46;  // GPIO pin for the servo signal (adjust as needed)
+const int servoPin1 = 2;  // GPIO pin for the servo signal (adjust as needed)
 const int servoPin2 = 45;  // GPIO pin for the servo signal (adjust as needed)
 
 int servoAngle1 = 0; // 0 for right, 1 for left
@@ -89,6 +92,7 @@ void WiFiEvent(WiFiEvent_t event) {
 void setup() {
   Wire.begin(3, 4); //Comment out if using XIAO sense, diff SDA/SCL pins
   Serial.begin(115200);
+
   while (!Serial) delay(10);  // Wait for serial
   Serial.setDebugOutput(true);
   Serial.println();
@@ -99,10 +103,13 @@ void setup() {
   Serial.println("IMU init done");
 
   pinMode(ledPin, OUTPUT);
+  pinMode(led_pin1, OUTPUT);
+  pinMode(led_pin2, OUTPUT);
   digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(1000);
 
   myServo1.attach(servoPin1, 750, 2250);  // Attach the servo to the specified pin
+  delay(1000);
   myServo2.attach(servoPin2, 750, 2250);  // Attach the servo to the specified pin
 
   Serial.println( "   Heap: " );
@@ -233,26 +240,12 @@ void loop() {
   delay(1000);
   digitalWrite(ledPin, ledState);  // turn the LED on (HIGH is the voltage level)
   ledState = ~ledState;
-  // if(servoCounter == 5){
-  //   servoCounter = 0;
-  //   if(servoAngle == 0){
-  //     Serial.println("Moving right...");
-  //     myServo.write(servoAngle);
-  //     servoAngle = 180;
-  //   }
-  //   else if(servoAngle == 180){
-  //     Serial.println("Moving left...");
-  //     myServo.write(servoAngle);
-  //     servoAngle = 0;
-  //   }
-  //   else{
-  //     servoAngle = 0;
-  //   }
-  // }
-  // else{
-  //   servoCounter += 1;
-  // }
-  // delay(10000);
+  Serial.print("LED State");
+  Serial.println(led_pin_state);
+  digitalWrite(led_pin1, 1);
+  delay(10);
+  digitalWrite(led_pin2, led_pin_state);
+  delay(10);
   Serial.print("Camera Ready! Use 'http://");
   Serial.print(WiFi.localIP());
   Serial.println("' to connect");
