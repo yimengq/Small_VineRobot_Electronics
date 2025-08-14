@@ -28,8 +28,8 @@ sleep 3
 echo "[INFO] Starting joy_node..."
 gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && rosrun joy joy_node"
 
-# Start base_station.py in a new terminal
-echo "[INFO] Starting joystick.py..."
-gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 joystick.py; exec bash"
+# Start inpipe_visualization.py in a new terminal
+echo "[INFO] Starting inpipe_visualization.py..."
+gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 inpipe_visualization.py; exec bash"
 
 wait $ROSCORE_PID
