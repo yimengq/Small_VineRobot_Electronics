@@ -10,18 +10,22 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from stl import mesh    
 import numpy as np
+import time
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-#import rospy
-#from sensor_msgs.msg import Joy
+import rospy
+from sensor_msgs.msg import Joy
 
 import json
 import requests
 import threading
-
-VIDEO_URL = "http://192.168.2.3:81/stream"
-TELEMETRY_URL = "http://192.168.2.3/telemetry"
+import queue
+VIDEO_URL = "http://192.168.1.43:81/stream"
+TELEMETRY_URL = "http://192.168.1.43/telemetry"
+SERVO_URL = "http://192.168.1.43/servo"
+axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+image_label_global = None  # Global reference to the image label for joystick updates
 
 class Matplotlib3DPlot(QWidget):
     clicked = Signal()
@@ -55,12 +59,12 @@ class Matplotlib3DPlot(QWidget):
 class JoystickDisplay(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.axes = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.setAttribute(Qt.WA_TransparentForMouseEvents)
         self.setStyleSheet("background: transparent")
 
-    def update_axes(self, axes):
-        self.axes = axes
+    def update_axes(self, ax):
+        global axes
+        axes = ax
         self.update()
 
     def paintEvent(self, event):
@@ -111,11 +115,11 @@ class JoystickDisplay(QWidget):
 
             # Left stick arrow (axes[0], axes[1])
             cx, cy = box_w * 0.5, box_h * 0.5
-            draw_arrow(cx, cy, -self.axes[0], -self.axes[1], max_arrow_len)
+            draw_arrow(cx, cy, -axes[0], -axes[1], max_arrow_len)
 
             # Right stick arrow (axes[2], axes[3])
             cx, cy = box_w * 1.5, box_h * 0.5
-            draw_arrow(cx, cy, -self.axes[2], -self.axes[3], max_arrow_len)
+            draw_arrow(cx, cy, -axes[3], -axes[4], max_arrow_len)
 
         finally:
             painter.end()
@@ -224,12 +228,14 @@ class WebcamViewer(QMainWindow):
         self.setWindowTitle("In-Pipe Visualization")
         self.setStyleSheet("background-color: white;")
         self.menu_visible = False
-        #rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # QLabel to display the video frame
-        self.image_label = VideoLabel()
-        self.image_label.setAlignment(Qt.AlignCenter)
-        self.image_label.setFixedSize(320, 240)
+        global image_label_global
+        image_label_global = VideoLabel()
+        image_label_global.setAlignment(Qt.AlignCenter)
+        image_label_global.setFixedSize(320, 240)
+
+        self.image_label = image_label_global
 
         # Teensy data label (bottom-left)
         self.teensy_label = QLabel("Waiting for data...")
@@ -244,8 +250,10 @@ class WebcamViewer(QMainWindow):
         self.localization_label = Matplotlib3DPlot()
         self.localization_label.setFixedSize(320, 240)
 
-        self.joystick_display = JoystickDisplay()
-        self.joystick_display.setFixedSize(320, 240)
+        # self.joystick_display = JoystickDisplay()
+        # self.joystick_display.setFixedSize(320, 240)
+
+        # threading.Thread(target=self.servo_command_thread, daemon=True).start()
 
         self.menu_button = QPushButton("☰")
         self.menu_button.setStyleSheet("color: black; background-color: #c2c2c2;")
@@ -279,6 +287,7 @@ class WebcamViewer(QMainWindow):
 
         # OpenCV video capture
         self.cap = cv2.VideoCapture(VIDEO_URL)
+        #self.cap = cv2.VideoCapture(0)
         #self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         #self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
@@ -337,7 +346,7 @@ class WebcamViewer(QMainWindow):
             scaled_pixmap = pixmap.scaled(w, h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             self.image_label.setPixmap(scaled_pixmap)
 
-            self.image_label.overlay.update_axes(self.joystick_display.axes)                        
+            self.image_label.overlay.update_axes(axes)
 
     @staticmethod
     def euler_to_quaternion(x, y, z):
@@ -361,12 +370,12 @@ class WebcamViewer(QMainWindow):
 
     def read_telemetry(self):
         try:
-            with requests.get(TELEMETRY_URL, stream=True, timeout=1) as r:
+            with requests.get(TELEMETRY_URL, stream=True, timeout=5) as r:
                 for line in r.iter_lines():
                     if self.telemetry_thread_stop.is_set():
                         break
                     if line:
-                        print(line)
+                        # print(line)
                         data = json.loads(line.decode('utf-8'))
                         orientation = data.get("orientation", {})
                         x = orientation.get("x", 0.0)
@@ -385,10 +394,6 @@ class WebcamViewer(QMainWindow):
         self.cap.release()
         self.telemetry_thread_stop.set()  # terminate telem thread (that is reading IMU data)
         super().closeEvent(event)
-
-    def joy_callback(self, data):
-        axes = data.axes
-        self.joystick_display.update_axes(axes)
 
     # Fullscreen logic 
     def focus_widget(self, widget):
@@ -501,10 +506,51 @@ class WebcamViewer(QMainWindow):
             anim.setEasingCurve(QEasingCurve.OutCubic)
             anim.start()
             self.menu_animation = anim
-            self.menu_visible = True
+#             self.menu_visible = True
+
+def servo_command_thread():
+    last = None
+    rate = rospy.Rate(0.05)
+    xdir = 90
+    ydir = 150
+    while not rospy.is_shutdown():
+        print("Tick", flush=True)
+        # xdir = int(axes[3] * 180)
+        # ydir = int(axes[4] * 180)
+        payload = {
+            "servo1": xdir, 
+            "servo2": ydir
+        }
+        try:
+            print("posting servo command", [xdir, ydir], flush=True)
+            response = requests.post(SERVO_URL, json=payload, timeout = 1)
+            if response.ok:
+                print("Servo command successful")
+            else:
+                print("Servo command failed")
+        except requests.RequestException as e:
+            print(f"Servo command failed: {e}", flush=True)
+
+        xdir += 10
+
+        rate.sleep()
+
+def joy_callback(data):
+    global axes
+    axes = data.axes
+    print(axes)
+    global image_label_global
+    if image_label_global is not None:
+        image_label_global.overlay.update_axes(axes)
+
+def ros_spin_thread():
+    rospy.spin()
 
 if __name__ == "__main__":
-    #rospy.init_node('gui_node', anonymous=True)
+    rospy.init_node('gui_node', anonymous=True)
+    rospy.Subscriber('/joy', Joy, joy_callback)
+    #threading.Thread(target=servo_command_thread, daemon=True).start()
+
     fmt = QSurfaceFormat()
     fmt.setAlphaBufferSize(8)
     fmt.setRenderableType(QSurfaceFormat.OpenGL)
@@ -517,4 +563,6 @@ if __name__ == "__main__":
     viewer.show()
     viewer.focus_widget(viewer.gl_display)
     viewer.unfocus_widget()
+    threading.Thread(target=ros_spin_thread, daemon=True).start()
+    #rospy.spin()
     sys.exit(app.exec())
