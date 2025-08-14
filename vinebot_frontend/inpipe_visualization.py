@@ -27,6 +27,26 @@ SERVO_URL = "http://192.168.1.43/servo"
 axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 image_label_global = None  # Global reference to the image label for joystick updates
 
+class CameraThread(threading.Thread):
+    def __init__(self, url):
+        super().__init__(daemon=True)
+        self.cap = cv2.VideoCapture(url)
+        self.latest_frame = None
+        self.lock = threading.Lock()
+        self.running = True
+    def run(self):
+        while self.running:
+            ret, frame = self.cap.read()
+            if ret:
+                with self.lock:
+                    self.latest_frame = frame
+    def get_frame(self):
+        with self.lock:
+            return None if self.latest_frame is None else self.latest_frame.copy()
+    def stop(self):
+        self.running = False
+        self.cap.release()
+
 class Matplotlib3DPlot(QWidget):
     clicked = Signal()
     def __init__(self, parent=None):
@@ -286,7 +306,8 @@ class WebcamViewer(QMainWindow):
         self.setCentralWidget(self.container)
 
         # OpenCV video capture
-        self.cap = cv2.VideoCapture(VIDEO_URL)
+        self.cam_thread = CameraThread(VIDEO_URL)
+        self.cam_thread.start()
         #self.cap = cv2.VideoCapture(0)
         #self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         #self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
@@ -332,21 +353,23 @@ class WebcamViewer(QMainWindow):
         self.resize_timer.timeout.connect(self.update_overlay_geometry)
 
     def update_frame(self):
-        ret, frame = self.cap.read()
-        if ret:
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            h, w, ch = frame.shape
-            bytes_per_line = ch * w
-            qt_image = QImage(frame.data, w, h, bytes_per_line, QImage.Format_RGB888)
+        # ret, frame = self.cap.read()
+        frame = self.cam_thread.get_frame()
+        if frame is None:
+            return
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        h, w, ch = frame.shape
+        bytes_per_line = ch * w
+        qt_image = QImage(frame.data, w, h, bytes_per_line, QImage.Format_RGB888)
 
-            pixmap = QPixmap.fromImage(qt_image)
-            zoom = self.image_label.zoom_factor
-            w = int(self.image_label.width() * zoom)
-            h = int(self.image_label.height() * zoom)
-            scaled_pixmap = pixmap.scaled(w, h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            self.image_label.setPixmap(scaled_pixmap)
+        pixmap = QPixmap.fromImage(qt_image)
+        zoom = self.image_label.zoom_factor
+        w = int(self.image_label.width() * zoom)
+        h = int(self.image_label.height() * zoom)
+        scaled_pixmap = pixmap.scaled(w, h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        self.image_label.setPixmap(scaled_pixmap)
 
-            self.image_label.overlay.update_axes(axes)
+        self.image_label.overlay.update_axes(axes)
 
     @staticmethod
     def euler_to_quaternion(x, y, z):
@@ -391,7 +414,7 @@ class WebcamViewer(QMainWindow):
 
 
     def closeEvent(self, event):
-        self.cap.release()
+        self.cam_thread.stop()
         self.telemetry_thread_stop.set()  # terminate telem thread (that is reading IMU data)
         super().closeEvent(event)
 
