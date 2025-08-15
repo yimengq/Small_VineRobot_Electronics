@@ -39,7 +39,21 @@ SERVO_URL = "http://192.168.1.55:80/servo"
 axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 image_label_global = None  # Global reference to the image label for joystick updates
 
-class CameraThread(threading.Thread):
+from threading import Lock
+
+# Global servo angles (shared between ROS callback and servo thread)
+servo1_angle = 90
+servo2_angle = 90
+servo_lock = Lock()
+
+def map_axis_to_angle(v: float, invert=False) -> int:
+    """Map joystick axis in [-1, 1] to servo angle in [0, 180]."""
+    if invert:
+        v = -v
+    angle = int((v + 1.0) * 90.0)
+    return 0 if angle < 0 else 180 if angle > 180 else angle
+
+# class CameraThread(threading.Thread):
     def __init__(self, url):
         super().__init__(daemon=True)
         self.cap = cv2.VideoCapture(url)
@@ -317,9 +331,9 @@ class WebcamViewer(QMainWindow):
         self.setCentralWidget(self.container)
 
         # OpenCV video capture
-        self.cam_thread = CameraThread(VIDEO_URL)
-        self.cam_thread.start()
-        #self.cap = cv2.VideoCapture(0)
+        # self.cam_thread = CameraThread(VIDEO_URL)
+        # self.cam_thread.start()
+        self.cap = cv2.VideoCapture(VIDEO_URL)
         #self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         #self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
@@ -590,30 +604,69 @@ class WebcamViewer(QMainWindow):
 #             self.menu_visible = True
 
 def servo_command_thread():
-    servo1 = 90
-    servo2 = 90
-    step = 10
-    direction = 1  # 1 = increasing, -1 = decreasing
+    last_s1 = None
+    last_s2 = None
+    change_thresh = 1      # degrees; only POST if changed >= 1
+    period = 0.01          # 100 Hz
+    # Optional exponential smoothing (tames noisy sticks)
+    use_smoothing = True
+    alpha = 0.4            # 0..1 (higher = more responsive)
+    filt_s1 = 90
+    filt_s2 = 90
 
     while True:
-        payload = {"servo1": servo1, "servo2": servo2}
-        try:
-            print(f"Posting servo command: {servo1}, {servo2}", flush=True)
-            response = requests.post(SERVO_URL, json=payload, timeout=3)
-            if response.ok:
-                print("Servo command successful")
-            else:
-                print(f"Servo command failed: {response.status_code}")
-        except requests.RequestException as e:
-            print(f"Servo command failed: {e}", flush=True)
+        # read latest desired angles
+        with servo_lock:
+            s1 = servo1_angle
+            s2 = servo2_angle
+            print("servo1",s1)
+        # if use_smoothing:
+        #     filt_s1 = int(alpha * s1 + (1 - alpha) * filt_s1)
+        #     filt_s2 = int(alpha * s2 + (1 - alpha) * filt_s2)
+        #     s1, s2 = filt_s1, filt_s2
 
-        servo1 += step * direction
-        servo2 += step * direction
+        # send only if changed
+        if last_s1 is None or abs(s1 - last_s1) >= change_thresh or \
+           last_s2 is None or abs(s2 - last_s2) >= change_thresh:
+            payload = {"servo1": int(s1), "servo2": int(s2)}
+            try:
+                resp = requests.post(SERVO_URL, json=payload, timeout=0.5)
+                if resp.ok:
+                    last_s1, last_s2 = s1, s2
+                else:
+                    print(f"[servo] HTTP {resp.status_code}: {resp.text[:80]}")
+            except requests.RequestException as e:
+                print(f"[servo] error: {e}")
 
-        if servo1 >= 180 or servo1 <= 0:
-            direction *= -1
+        time.sleep(period)
 
-        time.sleep(1)  # every 10 seconds
+
+
+# def servo_command_thread():
+#     servo1 = 90
+#     servo2 = 90
+#     step = 10
+#     direction = 1  # 1 = increasing, -1 = decreasing
+
+#     while True:
+#         payload = {"servo1": servo1, "servo2": servo2}
+#         try:
+#             print(f"Posting servo command: {servo1}, {servo2}", flush=True)
+#             response = requests.post(SERVO_URL, json=payload, timeout=3)
+#             if response.ok:
+#                 print("Servo command successful")
+#             else:
+#                 print(f"Servo command failed: {response.status_code}")
+#         except requests.RequestException as e:
+#             print(f"Servo command failed: {e}", flush=True)
+
+#         servo1 += step * direction
+#         servo2 += step * direction
+
+#         if servo1 >= 180 or servo1 <= 0:
+#             direction *= -1
+
+#         time.sleep(1)  # every 10 seconds
 
 
 # def servo_command_thread():
@@ -645,12 +698,31 @@ def servo_command_thread():
 #         rate.sleep()
 
 def joy_callback(data):
-    global axes
+    global axes, servo1_angle, servo2_angle
     axes = data.axes
-    print(axes)
+
+    # Map joystick to servo angles
+    s1 = map_axis_to_angle(axes[0], invert=False)  # left stick X
+    s2 = map_axis_to_angle(axes[1], invert=True)   # left stick Y (invert if your Y is reversed)
+
+    # Update shared globals safely
+    with servo_lock:
+        servo1_angle = s1
+        servo2_angle = s2
+
+    # Keep your on-screen arrows in sync
     global image_label_global
     if image_label_global is not None:
         image_label_global.overlay.update_axes(axes)
+
+
+# def joy_callback(data):
+#     global axes
+#     axes = data.axes
+#     print(axes)
+#     global image_label_global
+#     if image_label_global is not None:
+#         image_label_global.overlay.update_axes(axes)
 
 def ros_spin_thread():
     rospy.spin()
@@ -658,7 +730,7 @@ def ros_spin_thread():
 if __name__ == "__main__":
     rospy.init_node('gui_node', anonymous=True)
     rospy.Subscriber('/joy', Joy, joy_callback)
-    # threading.Thread(target=servo_command_thread, daemon=True).start()
+    threading.Thread(target=servo_command_thread, daemon=True).start()
 
     fmt = QSurfaceFormat()
     fmt.setAlphaBufferSize(8)
