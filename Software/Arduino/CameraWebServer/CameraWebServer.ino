@@ -52,8 +52,8 @@ imu_function imu_func;
 
 extern Servo myServo1;  // Create servo object
 extern Servo myServo2;  // Create servo object
-const int servoPin1 = 1;  // GPIO pin for the servo signal (adjust as needed)
-const int servoPin2 = 2;  // GPIO pin for the servo signal (adjust as needed)
+const int servoPin1 = 2;  // GPIO pin for the servo signal (adjust as needed)
+const int servoPin2 = 45;  // GPIO pin for the servo signal (adjust as needed)
 
 int servoAngle1 = 0; // 0 for right, 1 for left
 int servoCounter1 = 0;
