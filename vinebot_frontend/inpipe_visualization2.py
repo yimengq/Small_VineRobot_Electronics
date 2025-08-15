@@ -53,7 +53,7 @@ def map_axis_to_angle(v: float, invert=False) -> int:
     angle = int((v + 1.0) * 90.0)
     return 0 if angle < 0 else 180 if angle > 180 else angle
 
-# class CameraThread(threading.Thread):
+class CameraThread(threading.Thread):
     def __init__(self, url):
         super().__init__(daemon=True)
         self.cap = cv2.VideoCapture(url)
@@ -331,9 +331,9 @@ class WebcamViewer(QMainWindow):
         self.setCentralWidget(self.container)
 
         # OpenCV video capture
-        # self.cam_thread = CameraThread(VIDEO_URL)
-        # self.cam_thread.start()
-        self.cap = cv2.VideoCapture(VIDEO_URL)
+        self.cam_thread = CameraThread(VIDEO_URL)
+        self.cam_thread.start()
+        # self.cap = cv2.VideoCapture(VIDEO_URL)
         #self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         #self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
@@ -376,6 +376,23 @@ class WebcamViewer(QMainWindow):
         self.resize_timer = QTimer()
         self.resize_timer.setSingleShot(True)
         self.resize_timer.timeout.connect(self.update_overlay_geometry)
+
+    # def update_frame(self):
+    #     ret, frame = self.cap.read()
+    #     if ret:
+    #         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    #         h, w, ch = frame.shape
+    #         bytes_per_line = ch * w
+    #         qt_image = QImage(frame.data, w, h, bytes_per_line, QImage.Format_RGB888)
+
+    #         pixmap = QPixmap.fromImage(qt_image)
+    #         zoom = self.image_label.zoom_factor
+    #         w = int(self.image_label.width() * zoom)
+    #         h = int(self.image_label.height() * zoom)
+    #         scaled_pixmap = pixmap.scaled(w, h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+    #         self.image_label.setPixmap(scaled_pixmap)
+
+    #         self.image_label.overlay.update_axes(axes)
 
     def update_frame(self):
         # ret, frame = self.cap.read()
