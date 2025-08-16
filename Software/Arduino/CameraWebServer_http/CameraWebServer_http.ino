@@ -1,247 +1,128 @@
-#include "esp_http_server.h"
-#include "esp_timer.h"
+#include <Wire.h>
 #include "esp_camera.h"
-#include "img_converters.h"
-#include "fb_gfx.h"
-#include "esp32-hal-ledc.h"
-#include "sdkconfig.h"
-#include "camera_index.h"
-#include <ESP32Servo.h>
-#include <ArduinoJson.h>
+#include <WiFi.h>
 #include "imu_function.h"
+#include <ESP32Servo.h>
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+// ===================
+// Camera model
+// ===================
+#define CAMERA_MODEL_XIAO_ESP32S3  // Has PSRAM
+#include "camera_pins.h"
 
-#define PART_BOUNDARY "123456789000000000000987654321"
-static const char *_STREAM_CONTENT_TYPE = "multipart/x-mixed-replace;boundary=" PART_BOUNDARY;
-static const char *_STREAM_BOUNDARY = "\r\n--" PART_BOUNDARY "\r\n";
-static const char *_STREAM_PART = "Content-Type: image/jpeg\r\nContent-Length: %u\r\nX-Timestamp: %d.%06d\r\n\r\n";
+// ===========================
+// WiFi credentials
+// ===========================
+// const char *ssid = "M";
+// const char *password = "12345678";
 
-typedef struct {
-  httpd_req_t *req;
-  size_t len;
-} jpg_chunking_t;
+const char *ssid = "NETGEAR42";
+const char *password = "cleverroad877";
 
-httpd_handle_t stream = NULL;   // :81
-httpd_handle_t data = NULL;     // :80
-httpd_handle_t telem = NULL;    // :82  (NEW)
+void startCameraServer();
 
-Servo myServo1;
-Servo myServo2;
+// =======
+// Setup Servos 
+// =======
+extern Servo myServo1;  
+extern Servo myServo2;  
+const int servoPin1 = 2;  // GPIO pin for the servo signal (adjust as needed)
+const int servoPin2 = 45;  // GPIO pin for the servo signal (adjust as needed)
 
-// --- Servo command helper ---
-void command_servo(uint8_t angle1, uint8_t angle2) {
-  Serial.printf("Servo1 moving %d degrees\n", angle1);
-  Serial.printf("Servo2 moving %d degrees\n", angle2);
-  myServo1.write(angle1);
-  myServo2.write(angle2);
-}
+// Function to handle WiFi events
+void WiFiEvent(WiFiEvent_t event) {
+  switch (event) {
+    case ARDUINO_EVENT_WIFI_STA_DISCONNECTED:
+      Serial.println("WiFi disconnected! Attempting reconnection...");
+      WiFi.begin(ssid, password);
+      break;
 
-/* ===== /servo (POST JSON) ===== */
-esp_err_t servo_handler(httpd_req_t *req)
-{
-    // Read the FULL POST body (up to 256 bytes)
-    if (req->content_len == 0 || req->content_len > 256) {
-        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Body too large or empty");
-        return ESP_FAIL;
-    }
-    char content[257];
-    size_t read_total = 0;
-    while (read_total < req->content_len) {
-        int r = httpd_req_recv(req, content + read_total, req->content_len - read_total);
-        if (r <= 0) {
-            if (r == HTTPD_SOCK_ERR_TIMEOUT) httpd_resp_send_408(req);
-            return ESP_FAIL;
-        }
-        read_total += r;
-    }
-    content[read_total] = '\0';
+    case ARDUINO_EVENT_WIFI_STA_CONNECTED:
+      Serial.println("WiFi connected!");
+      break;
 
-    StaticJsonDocument<128> doc;
-    DeserializationError error = deserializeJson(doc, content);
-    if (error) {
-      httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Bad JSON");
-      return ESP_FAIL;
-    }
+    case ARDUINO_EVENT_WIFI_STA_GOT_IP:
+      Serial.print("WiFi reconnected! New IP address: ");
+      Serial.println(WiFi.localIP());
+      break;
 
-    int s1 = doc["servo1"] | -1;
-    int s2 = doc["servo2"] | -1;
-
-    if (s1 < 0 || s1 > 180 || s2 < 0 || s2 > 180) {
-      httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Requested angles must be 0-180");
-      return ESP_FAIL;
-    }
-
-    command_servo((uint8_t)s1, (uint8_t)s2);
-    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
-    httpd_resp_sendstr(req, "OK");
-    return ESP_OK;
-}
-
-/* ===== /telemetry (GET, SSE) ===== */
-esp_err_t telemetry_handler(httpd_req_t *req) {
-  // SSE headers
-  httpd_resp_set_type(req, "text/event-stream");
-  httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
-  httpd_resp_set_hdr(req, "Connection", "keep-alive");
-  httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
-
-  const TickType_t tick_10ms = pdMS_TO_TICKS(10);
-  uint32_t hb_ms = 0;
-
-  while (true) {
-    const char* buf = imu_update();  // should return a short, null-terminated JSON string (no newlines)
-    if (buf && buf[0] != '\0') {
-      if (httpd_resp_sendstr_chunk(req, "data: ") != ESP_OK) break;
-      if (httpd_resp_sendstr_chunk(req, buf) != ESP_OK) break;
-      if (httpd_resp_sendstr_chunk(req, "\n\n") != ESP_OK) break;
-      hb_ms = 0;
-    } else {
-      // heartbeat comment each ~1s so proxies keep the connection alive
-      if (hb_ms >= 1000) {
-        if (httpd_resp_sendstr_chunk(req, ": keepalive\n\n") != ESP_OK) break;
-        hb_ms = 0;
-      }
-    }
-
-    vTaskDelay(tick_10ms);
-    hb_ms += 10;
-  }
-
-  httpd_resp_send_chunk(req, NULL, 0);
-  return ESP_OK;
-}
-
-/* ===== /stream (GET, MJPEG) ===== */
-static esp_err_t stream_handler(httpd_req_t *req) {
-  camera_fb_t *fb = NULL;
-  struct timeval _timestamp;
-  esp_err_t res = ESP_OK;
-  size_t _jpg_buf_len = 0;
-  uint8_t *_jpg_buf = NULL;
-  char part_buf[128];  // FIXED TYPE
-
-  res = httpd_resp_set_type(req, _STREAM_CONTENT_TYPE);
-  if (res != ESP_OK) return res;
-
-  httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
-  httpd_resp_set_hdr(req, "X-Framerate", "60");
-
-  while (true) {
-    // if client disconnected, break
-    if (httpd_req_to_sockfd(req) == -1) break;
-
-    fb = esp_camera_fb_get();
-    if (!fb) {
-      res = ESP_FAIL;
-    } else {
-      _timestamp.tv_sec = fb->timestamp.tv_sec;
-      _timestamp.tv_usec = fb->timestamp.tv_usec;
-      _jpg_buf_len = fb->len;
-      _jpg_buf = fb->buf;
-    }
-
-    if (res == ESP_OK) {
-      res = httpd_resp_send_chunk(req, _STREAM_BOUNDARY, strlen(_STREAM_BOUNDARY));
-    }
-    if (res == ESP_OK) {
-      size_t hlen = snprintf(part_buf, sizeof(part_buf), _STREAM_PART,
-                             (unsigned)_jpg_buf_len, (int)_timestamp.tv_sec, (int)_timestamp.tv_usec);
-      res = httpd_resp_send_chunk(req, (const char *)part_buf, hlen);
-    }
-    if (res == ESP_OK) {
-      res = httpd_resp_send_chunk(req, (const char *)_jpg_buf, _jpg_buf_len);
-    }
-
-    if (fb) {
-      esp_camera_fb_return(fb);
-      fb = NULL;
-      _jpg_buf = NULL;
-    } else if (_jpg_buf) {
-      free(_jpg_buf);
-      _jpg_buf = NULL;
-    }
-
-    if (res != ESP_OK) break;
-
-    // **Yield** so other sockets (servo/telemetry) get CPU/TCP time
-    vTaskDelay(pdMS_TO_TICKS(15));  // ~60–66 FPS; use 33 for ~30 FPS
-  }
-  return res;
-}
-
-/* ===== Server init: 80 (/servo), 81 (/stream), 82 (/telemetry) ===== */
-void startCameraServer() {
-  // ---- Server on :80 (servo) ----
-  httpd_config_t cfg80 = HTTPD_DEFAULT_CONFIG();
-  cfg80.max_uri_handlers   = 16;
-  cfg80.max_open_sockets   = 10;
-  cfg80.backlog_conn       = 10;
-  cfg80.lru_purge_enable   = true;
-  cfg80.send_wait_timeout  = 2;   // seconds
-  cfg80.recv_wait_timeout  = 2;   // seconds
-  cfg80.stack_size         = 4096;
-
-  httpd_uri_t servo_uri = {
-    .uri      = "/servo",
-    .method   = HTTP_POST,
-    .handler  = servo_handler,
-    .user_ctx = NULL
-  };
-
-  if (httpd_start(&data, &cfg80) == ESP_OK) {
-    httpd_register_uri_handler(data, &servo_uri);
-  }
-
-  // ---- Server on :81 (stream) ----
-  httpd_config_t cfg81 = HTTPD_DEFAULT_CONFIG();
-  cfg81.server_port       = 81;
-  cfg81.ctrl_port         = 32769;  // unique
-  cfg81.max_uri_handlers  = 16;
-  cfg81.max_open_sockets  = 10;
-  cfg81.backlog_conn      = 10;
-  cfg81.lru_purge_enable  = true;
-  cfg81.send_wait_timeout = 2;
-  cfg81.recv_wait_timeout = 2;
-  cfg81.stack_size        = 8192;   // more stack for MJPEG
-
-  httpd_uri_t stream_uri = {
-    .uri      = "/stream",
-    .method   = HTTP_GET,
-    .handler  = stream_handler,
-    .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    , .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
-  };
-
-  if (httpd_start(&stream, &cfg81) == ESP_OK) {
-    httpd_register_uri_handler(stream, &stream_uri);
-  }
-
-  // ---- Server on :82 (telemetry SSE) ----
-  httpd_config_t cfg82 = HTTPD_DEFAULT_CONFIG();
-  cfg82.server_port       = 82;
-  cfg82.ctrl_port         = 32770;  // unique
-  cfg82.max_uri_handlers  = 8;
-  cfg82.max_open_sockets  = 8;
-  cfg82.backlog_conn      = 8;
-  cfg82.lru_purge_enable  = true;
-  cfg82.send_wait_timeout = 2;
-  cfg82.recv_wait_timeout = 2;
-  cfg82.stack_size        = 4096;
-
-  httpd_uri_t telemetry_uri = {
-    .uri      = "/telemetry",
-    .method   = HTTP_GET,
-    .handler  = telemetry_handler,
-    .user_ctx = NULL
-  };
-
-  if (httpd_start(&telem, &cfg82) == ESP_OK) {
-    httpd_register_uri_handler(telem, &telemetry_uri);
+    default:
+      break;
   }
 }
 
+void setup() {
+  Wire.begin(3, 4);
+  Serial.begin(115200);
+  while (!Serial) delay(10);  // Wait for serial
+  Serial.setDebugOutput(true);
+  delay(1000);
+
+  imu_init();
+  
+  myServo1.setPeriodHertz(50);
+  myServo1.attach(servoPin1);
+  myServo2.setPeriodHertz(50);
+  myServo2.attach(servoPin2);
+  
+
+  camera_config_t config;
+  config.ledc_channel = LEDC_CHANNEL_0;
+  config.ledc_timer = LEDC_TIMER_0;
+  config.pin_d0 = Y2_GPIO_NUM;
+  config.pin_d1 = Y3_GPIO_NUM;
+  config.pin_d2 = Y4_GPIO_NUM;
+  config.pin_d3 = Y5_GPIO_NUM;
+  config.pin_d4 = Y6_GPIO_NUM;
+  config.pin_d5 = Y7_GPIO_NUM;
+  config.pin_d6 = Y8_GPIO_NUM;
+  config.pin_d7 = Y9_GPIO_NUM;
+  config.pin_xclk = XCLK_GPIO_NUM;
+  config.pin_pclk = PCLK_GPIO_NUM;
+  config.pin_vsync = VSYNC_GPIO_NUM;
+  config.pin_href = HREF_GPIO_NUM;
+  config.pin_sccb_sda = SIOD_GPIO_NUM;
+  config.pin_sccb_scl = SIOC_GPIO_NUM;
+  config.pin_pwdn = PWDN_GPIO_NUM;
+  config.pin_reset = RESET_GPIO_NUM;
+  config.xclk_freq_hz = 24000000;
+  config.frame_size = FRAMESIZE_SVGA;      // resolution, FHD=1920x1080
+  config.pixel_format = PIXFORMAT_JPEG;  // for streaming
+  config.grab_mode = CAMERA_GRAB_LATEST;
+  config.fb_location = CAMERA_FB_IN_PSRAM;
+  config.jpeg_quality = 12;
+  config.fb_count = 2;
+
+  // camera init
+  esp_err_t err = esp_camera_init(&config);
+  if (err != ESP_OK) {
+    Serial.printf("Camera init failed with error 0x%x", err);
+    return;
+  }
+
+  sensor_t *s = esp_camera_sensor_get();
+
+  // s->set_res_raw(s, 16, 252, 2576, 1692, 0, 0, 2560, 1440, 1280, 720, true, true); // optimal 720p settings per OV5640 datasheet
+  s->set_hmirror(s, 1);
+
+  WiFi.begin(ssid, password);
+  WiFi.setSleep(false);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  WiFi.onEvent(WiFiEvent);
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  startCameraServer();
+
+  Serial.print("Camera Ready! Use 'http://");
+  Serial.print(WiFi.localIP());
+  Serial.println("' to connect");
+}
+
+void loop() {}
