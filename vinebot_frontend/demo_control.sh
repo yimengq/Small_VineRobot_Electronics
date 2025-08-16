@@ -30,6 +30,6 @@ gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && rosrun joy joy_n
 
 # Start inpipe_visualization.py in a new terminal
 echo "[INFO] Starting inpipe_visualization2.py..."
-gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 inpipe_visualization2.py; exec bash"
+gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 inpipe_visualization.py; exec bash"
 
 wait $ROSCORE_PID
