@@ -1,7 +1,6 @@
 import cv2
 
-# ensure correct radxa ip 
-RADXA_IP = "192.168.1.49"
+RADXA_IP = "192.168.1.49" # ensure correct radxa ip 
 RTSP_URL = f"rtsp://{RADXA_IP}:8554/stream"
 
 cap = cv2.VideoCapture(RTSP_URL)
@@ -23,4 +22,5 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
 
