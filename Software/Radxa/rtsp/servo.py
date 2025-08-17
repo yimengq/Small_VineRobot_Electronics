@@ -150,19 +150,14 @@ import mraa, time
 
 class PWMOut:
     def __init__(self, chip: int, channel: int = 0, freq_hz: float = 50.0):
-        # stash for debug since some mraa builds lack getters
         self._chip = int(chip)
         self._channel = int(channel)
 
-        # owner=True -> unexport on delete
         self._p = mraa.Pwm(self._channel, True, self._chip)
 
         self._enabled = False
         self._period_us = None
         self._closed = False
-
-        # print(f"[DEBUG] Init PWM: chip={self._chip}, channel={self._channel}, "
-        #       f"target_freq={freq_hz} Hz")
 
         self.set_frequency(freq_hz)
         self.enable(True)
