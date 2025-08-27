@@ -1,0 +1,23 @@
+[31mRLException: ERROR: could not contact master [http://f35b51b2de0d:11311/][0m
+[31mThe traceback for the exception was written to the log file[0m
+... logging to /root/.ros/log/af747a56-7c74-11f0-9f0d-264640e18df9/roslaunch-f35b51b2de0d-1186.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;roscore
+[1mstarted roslaunch server http://f35b51b2de0d:45635/[0m
+ros_comm version 1.17.4
+
+
+SUMMARY
+========
+
+PARAMETERS
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+
+NODES
+
+auto-starting new master
+[1mprocess[master]: started with pid [1197][0m
+[master] killing on exit
