@@ -884,7 +884,7 @@ def print_pimu(payload: bytes):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", default="/dev/ttyS5")
-    ap.add_argument("--baud", type=int, default=115200)
+    ap.add_argument("--baud", type=int, default=57600)
     ap.add_argument("--timeout", type=float, default=0.2)
     ap.add_argument("--rx-chunk", type=int, default=1024)
     ap.add_argument("--no-tx", action="store_true", help="Skip request; just listen")
