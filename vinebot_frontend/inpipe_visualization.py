@@ -253,8 +253,7 @@ class WebcamViewer(QMainWindow):
         # self.joystick_display = JoystickDisplay()
         # self.joystick_display.setFixedSize(320, 240)
 
-        #threading.Thread(target=self.servo_command_thread, daemon=True).start()
-    
+        # threading.Thread(target=self.servo_command_thread, daemon=True).start()
 
         self.menu_button = QPushButton("☰")
         self.menu_button.setStyleSheet("color: black; background-color: #c2c2c2;")
@@ -507,39 +506,39 @@ class WebcamViewer(QMainWindow):
             anim.setEasingCurve(QEasingCurve.OutCubic)
             anim.start()
             self.menu_animation = anim
-            self.menu_visible = True
+#             self.menu_visible = True
 
-# def servo_command_thread():
-#     last = None
-#     rate = rospy.Rate(10)
-#     while not rospy.is_shutdown():
-#         xdir = axes[3] * 180
-#         ydir = axes[4] * 180
-#         payload = {
-#             "servo1": xdir, 
-#             "servo2": ydir
-#         }
-#         if payload != last:
-#             print("New!")
-#             try:
-#                 print("posting servo command", [xdir, ydir], flush=True)
-#                 response = requests.post(SERVO_URL, json=payload, timeout = (5))
-#                 if response.ok:
-#                     print("Servo command successful")
-#                 else:
-#                     print("Servo command failed")
-#             except requests.RequestException as e:
-#                 print(f"Servo command failed: {e}", flush=True)
-#             last = payload
-#     rate.sleep()
+def servo_command_thread():
+    last = None
+    rate = rospy.Rate(0.05)
+    xdir = 90
+    ydir = 150
+    while not rospy.is_shutdown():
+        print("Tick", flush=True)
+        # xdir = int(axes[3] * 180)
+        # ydir = int(axes[4] * 180)
+        payload = {
+            "servo1": xdir, 
+            "servo2": ydir
+        }
+        try:
+            print("posting servo command", [xdir, ydir], flush=True)
+            response = requests.post(SERVO_URL, json=payload, timeout = 1)
+            if response.ok:
+                print("Servo command successful")
+            else:
+                print("Servo command failed")
+        except requests.RequestException as e:
+            print(f"Servo command failed: {e}", flush=True)
+
+        xdir += 10
+
+        rate.sleep()
 
 def joy_callback(data):
     global axes
     axes = data.axes
     print(axes)
-    # with axes_lock:
-    #     if joystick_display_instance is not None:
-    #         joystick_display_instance.axes = axes.copy()
     global image_label_global
     if image_label_global is not None:
         image_label_global.overlay.update_axes(axes)
@@ -550,18 +549,7 @@ def ros_spin_thread():
 if __name__ == "__main__":
     rospy.init_node('gui_node', anonymous=True)
     rospy.Subscriber('/joy', Joy, joy_callback)
-    # threading.Thread(target=servo_command_thread, daemon=True).start()
-    
-    # print ("trying")
-    # xdir = 90
-    # ydir = 150
-    # payload = {
-    #     "servo1": xdir, 
-    #     "servo2": ydir
-    # }
-    # response = requests.post(SERVO_URL, json=payload)
-    # if response.ok:
-    #     print("Good HTTP post, check Arduino IDE output")
+    #threading.Thread(target=servo_command_thread, daemon=True).start()
 
     fmt = QSurfaceFormat()
     fmt.setAlphaBufferSize(8)
