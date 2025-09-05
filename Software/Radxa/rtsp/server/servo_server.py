@@ -92,11 +92,11 @@ SERVO2_PWM_CH   = 0
 SERVO_FREQ_HZ   = 50.0
 
 # If your servo expects 500–2500 µs, adjust these
-SERVO_MIN_US = 1000
-SERVO_MAX_US = 2000
+SERVO_MIN_US = 950
+SERVO_MAX_US = 2050
 
-ANGLE_MIN = 0
-ANGLE_MAX = 180
+ANGLE_MIN = -10
+ANGLE_MAX = 190
 
 # --------------------------
 # Hardware drivers (mraa-based)

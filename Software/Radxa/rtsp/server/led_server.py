@@ -6,7 +6,7 @@ from aiohttp import web
 N_LEDS = 3          # number of LEDs
 BUS, DEV = 3, 0     # /dev/spidev3.0
 HZ = 1_000_000      # 1 MHz
-BRIGHT = 31         # 0..31 (global brightness)
+BRIGHT = 50         # 0..31 (global brightness)
 
 def _frame_all(r, g, b):
     start = [0x00, 0x00, 0x00, 0x00]
