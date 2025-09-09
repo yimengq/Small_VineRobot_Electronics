@@ -90,8 +90,8 @@ class PWMOut:
 # ---- Minimal usage example ----
 if __name__ == "__main__":
     # Adjust chip/channel to match your /sys/class/pwm/pwmchipN and pwmN mapping
-    with PWMOut(chip=9, channel=0, freq_hz=50.0) as servo1, \
-        PWMOut(chip=8, channel=0, freq_hz=50.0) as servo2:
+    with PWMOut(chip=0, channel=0, freq_hz=50.0) as servo1, \
+        PWMOut(chip=1, channel=0, freq_hz=50.0) as servo2:
 
         while True:
             servo1.set_pulse_us(1000)  # Servo 1 min

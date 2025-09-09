@@ -6,7 +6,7 @@ from aiohttp import web
 N_LEDS = 3          # number of LEDs
 BUS, DEV = 3, 0     # /dev/spidev3.0
 HZ = 1_000_000      # 1 MHz
-BRIGHT = 50         # 0..31 (global brightness)
+BRIGHT = 31         # 0..31 (global brightness)
 
 def _frame_all(r, g, b):
     start = [0x00, 0x00, 0x00, 0x00]
@@ -24,10 +24,12 @@ def _write(frame):
 
 async def led_on(_):
     _write(_frame_all(255, 255, 255))  # all white
+    print("led on")
     return web.json_response({"ok": True, "state": "on"})
 
 async def led_off(_):
     _write(_frame_all(0, 0, 0))        # all off
+    print("led off")
     return web.json_response({"ok": True, "state": "off"})
 
 app = web.Application()

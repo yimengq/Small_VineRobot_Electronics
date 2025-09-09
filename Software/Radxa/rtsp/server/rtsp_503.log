@@ -1,0 +1,9 @@
+0:00:00.079912499 10819 0xaaaac7e34260 WARN                     mpp gstmpp.c:121:gst_mpp_use_rga: RGA enabled
+0:00:00.402066540 10817      0x4bcc040 DEBUG        rtspmountpoints rtsp-mount-points.c:131:gst_rtsp_mount_points_init:<GstRTSPMountPoints@0x498b2c0> created
+0:00:00.406223812 10817      0x4bcc040 INFO         rtspmountpoints rtsp-mount-points.c:360:gst_rtsp_mount_points_add_factory: adding media factory 0x4dc0380 for path /stream
+0:00:00.406629535 10817      0x4bcc040 DEBUG             rtspserver rtsp-server.c:882:gst_rtsp_server_create_socket:<__main__+Server@0x4da29d0> getting address info of 0.0.0.0/8554
+0:00:00.408253884 10817      0x4bcc040 DEBUG             rtspserver rtsp-server.c:953:gst_rtsp_server_create_socket:<__main__+Server@0x4da29d0> failed to bind socket (Error binding to address 0.0.0.0:8554: Address already in use), try next
+0:00:00.408429473 10817      0x4bcc040 DEBUG             rtspserver rtsp-server.c:904:gst_rtsp_server_create_socket:<__main__+Server@0x4da29d0> no more addresses 
+0:00:00.408472642 10817      0x4bcc040 ERROR             rtspserver rtsp-server.c:1004:gst_rtsp_server_create_socket:<__main__+Server@0x4da29d0> failed to create socket
+0:00:00.408506185 10817      0x4bcc040 ERROR             rtspserver rtsp-server.c:1375:gst_rtsp_server_create_source:<__main__+Server@0x4da29d0> failed to create socket
+0:00:00.408524268 10817      0x4bcc040 ERROR             rtspserver rtsp-server.c:1421:gst_rtsp_server_attach:<__main__+Server@0x4da29d0> failed to create watch: Error binding to address 0.0.0.0:8554: Address already in use
