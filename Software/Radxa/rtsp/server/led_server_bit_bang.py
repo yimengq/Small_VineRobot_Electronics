@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import time
-import gpiodq
+import gpiod
 from aiohttp import web
 
 # ===== Hardware config (match your board) =====
