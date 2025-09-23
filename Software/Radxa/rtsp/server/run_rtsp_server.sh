@@ -46,8 +46,7 @@ sudo fuser -k 8554/tcp 2>/dev/null
 sleep 1
 
 sudo python3 rtsp_server.py --device /dev/video0 --width 1920 --height 1080 --fps 60 --bitrate 20000000 &
-<<<<<<< HEAD
-sudo python3 led_server.py &
+sudo python3 led_server_bit_bang.py &
 sudo python3 servo_server.py
 sudo python3 SPI_IMU.py
 
