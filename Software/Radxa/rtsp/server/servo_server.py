@@ -85,9 +85,9 @@ def deg_to_us(deg: int) -> int:
 # --------------------------
 # Configuration
 # --------------------------
-SERVO1_PWM_CHIP = 1
+SERVO1_PWM_CHIP = 0
 SERVO1_PWM_CH   = 0
-SERVO2_PWM_CHIP = 0
+SERVO2_PWM_CHIP = 1
 SERVO2_PWM_CH   = 0
 SERVO_FREQ_HZ   = 50.0
 
@@ -95,8 +95,12 @@ SERVO_FREQ_HZ   = 50.0
 SERVO_MIN_US = 950
 SERVO_MAX_US = 2050
 
-ANGLE_MIN = -10
-ANGLE_MAX = 190
+
+SERVO1_ANGLE_MIN = -10
+SERVO1_ANGLE_MAX = 190
+
+SERVO2_ANGLE_MIN = 5
+SERVO2_ANGLE_MAX = 145
 
 # --------------------------
 # Hardware drivers (mraa-based)
@@ -127,9 +131,9 @@ async def handle_servo(request: web.Request):
 
     try:
         if s1 is not None:
-            s1 = clamp(int(s1), ANGLE_MIN, ANGLE_MAX)
+            s1 = clamp(int(s1), SERVO1_ANGLE_MIN, SERVO1_ANGLE_MAX)
         if s2 is not None:
-            s2 = clamp(int(s2), ANGLE_MIN, ANGLE_MAX)
+            s2 = clamp(int(s2), SERVO2_ANGLE_MIN, SERVO2_ANGLE_MAX)
     except ValueError:
         return web.json_response({"error": "servo values must be integers"}, status=400)
 
