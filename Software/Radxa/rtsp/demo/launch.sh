@@ -28,23 +28,19 @@ sleep 3
 echo "[INFO] Starting joy_node..."
 gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && rosrun joy joy_node"
 
-# # Start base_station.py in a new terminal
-echo "[INFO] Starting Large_basestation.py..."
-gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 host_combined.py; exec bash"
-
-# Start base_station.py in a new terminal
+# # # Start base_station.py in a new terminal
 # echo "[INFO] Starting Large_basestation.py..."
-# gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 Large_basestation.py; exec bash"
+# gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 host_combined.py; exec bash"
 
-# echo "[INFO] Starting Small_basestation.py..."
-# gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 Small_basestation.py; exec bash"
+# # # Start base_station.py in a new terminal
+# echo "[INFO] Starting host_combined.py..."
+# gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 host_combined.py; exec bash"
 
-# echo "[INFO] Starting demo_controller.py.py..."
-# gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 demo_controller.py; exec bash"
+echo "[INFO] Starting streaming.py..."
+gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 streaming.py; exec bash"
+
+echo "[INFO] Starting base.py..."
+gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 base.py; exec bash"
+
 sleep 5
-# # Start controller.py in a new terminal
-# echo "[INFO] Starting controller.py..."
-# gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 demo_controller.py"
-
-# Optional: wait for roscore process to finish
 wait $ROSCORE_PID
