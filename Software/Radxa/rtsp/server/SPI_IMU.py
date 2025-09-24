@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import time, struct
 import spidev
+import numpy as np
 
 # ================= Config =================
 SPI_BUS, SPI_DEV = 3, 0
@@ -11,7 +12,7 @@ PAD_BYTES = 256
 # --- NEW: payload interpretation toggles ---
 # Some firmware variants send [time, dt, status, 3f, 3f] with the 3f blocks swapped.
 FLIP_THETA_VEL = True       # True => payload order is [Δv][Δθ]; False => [Δθ][Δv]
-THETA_SCALE    = 1e1       # 1e-3 if Δθ is in milliradians; 1.0 if already in radians
+THETA_SCALE    = (180/np.pi)*1e1       # 1e-3 if Δθ is in milliradians; 1.0 if already in radians
 VEL_SCALE      = 1.0        # keep Δv as-is (m/s); change if yours is scaled
 # -------------------------------------------
 

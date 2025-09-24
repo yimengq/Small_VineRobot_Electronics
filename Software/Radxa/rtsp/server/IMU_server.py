@@ -5,6 +5,8 @@ import struct
 import threading
 import asyncio
 import contextlib
+import numpy as np
+
 
 from aiohttp import web
 import spidev
@@ -12,13 +14,14 @@ import spidev
 # ================= Config =================
 SPI_BUS, SPI_DEV = 3, 0
 SPI_MODE = 3
-SPI_HZ   = 1_000_000
+# SPI_HZ   = 1_000_000
+SPI_HZ   = 500_000
 PAD_BYTES = 256
 
 # --- NEW: payload interpretation toggles ---
 # Some firmware variants send [time, dt, status, 3f, 3f] with the 3f blocks swapped.
 FLIP_THETA_VEL = True       # True => payload order is [Δv][Δθ]; False => [Δθ][Δv]
-THETA_SCALE    = 1e1       # 1e-3 if Δθ is in milliradians; 1.0 if already in radians
+THETA_SCALE    = (180/np.pi)*1e1       # 1e-3 if Δθ is in milliradians; 1.0 if already in radians
 VEL_SCALE      = 1.0        # keep Δv as-is (m/s); change if yours is scaled
 # -------------------------------------------
 
@@ -48,6 +51,10 @@ loop: asyncio.AbstractEventLoop | None = None
 line_queue: asyncio.Queue[str] | None = None
 latest_line: str | None = None
 running_flag = threading.Event()
+
+# put at module scope with your other globals
+_HEADER_LEN = 6          # EF 49 <type> <did> <size_lo> <size_hi>
+_scan_carry = bytearray()  # leftover tail between calls
 
 # ================= Helpers =================
 def to_bytes(x):
@@ -141,6 +148,7 @@ def scan_and_format_lines(rx_bytes: bytes) -> list[str]:
                     f"status=0x{p['status']:08X}"
                 )
                 out.append(line)
+                # print(line)
 
         # advance to next frame candidate
         i = end
