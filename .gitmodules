@@ -1,0 +1,6 @@
+[submodule "inertial-sense-sdk"]
+	path = inertial-sense-sdk
+	url = git@github.com:inertialsense/inertial-sense-sdk.git
+[submodule "libgpiod"]
+	path = libgpiod
+	url = git@github.com:brgl/libgpiod.git
