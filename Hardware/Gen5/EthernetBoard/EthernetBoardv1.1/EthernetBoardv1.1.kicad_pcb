@@ -20655,6 +20655,78 @@
 		(layer "Edge.Cuts")
 		(uuid "284f18d1-1ae3-4540-aad8-56c59e31e4c3")
 	)
+	(gr_text "USB\n"
+		(at 123 107.9 0)
+		(layer "F.SilkS")
+		(uuid "05f660ef-d65f-49fb-963f-85247567075b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "ESP32"
+		(at 122.5 66.4 0)
+		(layer "F.SilkS")
+		(uuid "15d813da-f383-4e95-904e-4bcbf34c89a5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "Ethernet"
+		(at 61.5 67.7 0)
+		(layer "F.SilkS")
+		(uuid "4bfb4038-339e-4454-abb2-d1cec157dd5c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "Power"
+		(at 81 124.3 0)
+		(layer "F.SilkS")
+		(uuid "7a4c2a90-c378-43d2-b3a9-ef250c527e2b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "BOOT"
+		(at 117.7 73.7 0)
+		(layer "F.SilkS")
+		(uuid "8d307e33-b506-4b10-b02b-d89ec74ce9eb")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "EN"
+		(at 150 55.5 0)
+		(layer "F.SilkS")
+		(uuid "ad81227c-ba10-4f0b-aae9-b3eff1987f5d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "Ethernet Dev Board - Vine Internal rev 1.1\nCharm Lab, Stanford\nOctober 19 2025"
 		(at 154.2 139.4 0)
 		(layer "B.SilkS")
