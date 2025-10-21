@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # to generate real time graphics, I'm sending info from radxa to computer
 HOST = "0.0.0.0"  
 PORT = 6000     
-TEST = True;  
+TEST = False;  
 x_plot = 20
 
 
@@ -52,19 +52,25 @@ titles = ['Roll (°)', 'Pitch (°)', 'Yaw (°)']
 for ax, title in zip(axs, titles):
     line, = ax.plot([], [], lw=2)
     ax.set_xlim(0, 10)
-    ax.set_ylim(-180, 180)
     ax.set_ylabel(title)
+    
+
+axs[0].set_ylim(-180, 180)
+# axs[0].set_ylim(-0.3, 0.3)
+axs[1].set_ylim(-180, 180)
+# axs[2].set_ylim(0.9, 1.1)
+axs[2].set_ylim(-180, 180)
 axs[-1].set_xlabel('Time (s)')
 
 plt.pause(1)
-time=[]
+time_list=[]
 roll_list=[]
 pitch_list=[]
 yaw_list=[]
 
-roll_graph = axs[0].plot(time,roll_list,color = 'g')[0]
-pitch_graph = axs[1].plot(time,pitch_list,color = 'g')[0]
-yaw_graph = axs[2].plot(time,yaw_list,color = 'g')[0]
+roll_graph = axs[0].plot(time_list,roll_list,color = 'g')[0]
+yaw_graph = axs[1].plot(time_list,pitch_list,color = 'g')[0]
+pitch_graph= axs[2].plot(time_list,yaw_list,color = 'g')[0]
 
 test= 0
 while True:
@@ -81,30 +87,30 @@ while True:
         roll = float(euler_list[0])
         pitch = -float(euler_list[2])
         yaw = float(euler_list[1])
-        # time = float(euler_list[3]) #add into the other code
+        time = float(euler_list[3]) #add into the other code
     else:
         roll = 0
         pitch = math.sin(test) * 170
         yaw = 0
         test = test+1
         
-        pitch_list.append(pitch)
-        yaw_list.append(yaw)
-        roll_list.append(roll)
-        time.append(test)
+    pitch_list.append(pitch)
+    yaw_list.append(yaw)
+    roll_list.append(roll)
+    time_list.append(time)
         
-        roll_graph.set_data(time, roll_list)
-        pitch_graph.set_data(time, pitch_list)
-        yaw_graph.set_data(time, yaw_list)
+    roll_graph.set_data(time_list, roll_list)
+    pitch_graph.set_data(time_list, pitch_list)
+    yaw_graph.set_data(time_list, yaw_list)
         
-        for ax in axs:
-            if (len(time) > x_plot):
-                ax.set_xlim(time[len(time)-x_plot-1], time[len(time)-1])
-            else:
-                ax.set_xlim(time[0], time[-1])
-        plt.pause(0.001)
+    for ax in axs:
+        if (len(time_list) > x_plot):
+            ax.set_xlim(time_list[len(time_list)-x_plot-1], time_list[len(time_list)-1])
+        else:
+            ax.set_xlim(time_list[0], time_list[-1])
+    plt.pause(0.001)
         
     
-    set_orientation(imu, pitch, yaw, roll)
+    set_orientation(imu, yaw, pitch, roll)
 
 conn.close()
