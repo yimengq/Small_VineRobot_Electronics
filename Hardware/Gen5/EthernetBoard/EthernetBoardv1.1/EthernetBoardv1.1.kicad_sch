@@ -8564,7 +8564,7 @@
 		)
 		(uuid c0854cad-081c-4a6a-a871-5b4457346dbe)
 	)
-	(text "Notes:\nInductor Value\n1% Resistors\nD120 Stackup - JLC Pcb\nEthernet Port\n\n1.6mm\nmake with JLC components"
+	(text "Notes:\nInductor Value\n1% Resistors\n\nmake with JLC components"
 		(exclude_from_sim no)
 		(at 36.322 36.576 0)
 		(effects
@@ -8777,6 +8777,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7aaacfe9-d734-40ac-8514-1b5b53c0bd3b")
+	)
+	(junction
+		(at 356.87 95.25)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7ced9e37-9bc4-4f38-b13a-5a3e8eecc6e3")
 	)
 	(junction
 		(at 388.62 189.23)
@@ -10446,6 +10452,16 @@
 	)
 	(wire
 		(pts
+			(xy 356.87 92.71) (xy 356.87 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7306cbeb-77ac-4398-b0f9-2b784944a959")
+	)
+	(wire
+		(pts
 			(xy 166.37 50.8) (xy 166.37 55.88)
 		)
 		(stroke
@@ -10453,6 +10469,16 @@
 			(type default)
 		)
 		(uuid "73e9a499-faa6-4f8d-87fe-5d3eace2e961")
+	)
+	(wire
+		(pts
+			(xy 300.99 44.45) (xy 316.23 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "740714e9-9900-4e1d-afb0-8f504630aa60")
 	)
 	(wire
 		(pts
@@ -10663,6 +10689,16 @@
 			(type default)
 		)
 		(uuid "89d62b27-74b1-4dd1-945c-7797ecd878ad")
+	)
+	(wire
+		(pts
+			(xy 351.79 92.71) (xy 356.87 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89f0eb8f-bbea-498e-b897-d4ba6d0a25cb")
 	)
 	(wire
 		(pts
@@ -12673,6 +12709,16 @@
 			(justify left bottom)
 		)
 		(uuid "37c12eba-6b80-4984-aac3-beb5901e35d3")
+	)
+	(label "EN"
+		(at 300.99 44.45 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "37d512ce-23c0-4fce-9737-ff1130481740")
 	)
 	(label "TXD0"
 		(at 354.33 110.49 180)
