@@ -150,7 +150,7 @@ static void handlePIMUMessage(pimu_t *pimu)
 void setup()
 {
     Serial.begin(115200);
-    Serial1.begin(115200, SERIAL_8N1, /*rx=*/16, /*tx=*/17);
+    Serial1.begin(57600, SERIAL_8N1, /*rx=*/16, /*tx=*/17);
 
     if (sizeof(double) != 8)
     {
