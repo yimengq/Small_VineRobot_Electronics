@@ -1,0 +1,6 @@
+Placement file: '/Users/yimeng/Desktop/EthernetBoardv1.1-all-pos.csv'.
+Info: Component count: 64.
+Info: Done.
+Placement file: '/Users/yimeng/Desktop/EthernetBoardv1.1-all-pos.csv'.
+Info: Component count: 64.
+Info: Done.

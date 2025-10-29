@@ -3229,7 +3229,7 @@
 		(pad "40" thru_hole circle
 			(at -2.2 -1.86 270)
 			(size 0.4 0.4)
-			(drill 0.2)
+			(drill 0.3)
 			(layers "*.Cu")
 			(remove_unused_layers no)
 			(uuid "e001f645-e5e2-4021-a9a2-a36f1881ee30")
