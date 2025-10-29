@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 0.3,
-          "height": 0.4,
-          "width": 0.4
+          "height": 0.45,
+          "width": 0.45
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -64,7 +64,7 @@
       },
       "rule_severities": {
         "annular_width": "error",
-        "clearance": "ignore",
+        "clearance": "error",
         "connection_width": "warning",
         "copper_edge_clearance": "error",
         "copper_sliver": "warning",
@@ -501,7 +501,7 @@
       "idf": "",
       "netlist": "",
       "plot": "Gerbers/",
-      "pos_files": "/Users/yimeng/Desktop/",
+      "pos_files": "",
       "specctra_dsn": "",
       "step": "",
       "svg": "",
