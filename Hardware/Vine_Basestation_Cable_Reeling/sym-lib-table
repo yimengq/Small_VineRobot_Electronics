@@ -1,0 +1,6 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "ESP32-S3-WROOM-1-N16R8")(type "KiCad")(uri "${KIPRJMOD}/Components/ESP32-S3-WROOM-1-N16R8/2025-10-17_01-43-32.kicad_sym")(options "")(descr ""))
+  (lib (name "FT231XQ (USB to UART)")(type "KiCad")(uri "${KIPRJMOD}/Components/FT231XQ_T/KiCADv6/2025-10-17_05-34-02.kicad_sym")(options "")(descr ""))
+  (lib (name "TCR2EF33_LM_CT (3V3 LDO)")(type "KiCad")(uri "${KIPRJMOD}/Components/TCR2EF33_LM_CT/KiCADv6/2025-10-06_19-13-14.kicad_sym")(options "")(descr ""))
+)
