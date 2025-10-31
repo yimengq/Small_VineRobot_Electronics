@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 26754464028028938
+=======
+26757987817512803
+>>>>>>> 44b46461a797bd8f4ac2922cadd3e00c4d43ef50
 ADP2370ACPZ_3_3_R7
 CP_8_5_ADI
 
@@ -2834,6 +2838,16 @@ speaker CUI
 0
 2
 2
+<<<<<<< HEAD
+=======
+CC453232_120KL
+IND_BOURNS_CC453232
+
+CC453232-120KL 
+0
+2
+2
+>>>>>>> 44b46461a797bd8f4ac2922cadd3e00c4d43ef50
 Calibration_Scale
 Gauge_10mm_Type1_CopperTop
 Gauge, Massstab, 10mm, CopperTop, Type 1,
@@ -70685,6 +70699,16 @@ CONV_MIC28514T-E_PHA
 0
 60
 60
+<<<<<<< HEAD
+=======
+MWSA1206S_270MT
+INDM134126X600N
+
+
+0
+2
+2
+>>>>>>> 44b46461a797bd8f4ac2922cadd3e00c4d43ef50
 Module
 A20_OLINUXINO_LIME2
 A20 Olinuxino LIME2, 1.2GHz, 512-1024MB RAM, Micro-SD, NAND or eMMC, 1000Mbit Ethernet

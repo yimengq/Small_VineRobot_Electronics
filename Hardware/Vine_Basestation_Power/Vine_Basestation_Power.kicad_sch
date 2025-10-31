@@ -7991,7 +7991,11 @@
 				)
 			)
 		)
+<<<<<<< HEAD
 		(property "Footprint" "Inductor_SMD:L_0603_1608Metric"
+=======
+		(property "Footprint" "CC453232_120KL:IND_BOURNS_CC453232"
+>>>>>>> 44b46461a797bd8f4ac2922cadd3e00c4d43ef50
 			(at 337.82 69.85 0)
 			(effects
 				(font
@@ -9465,7 +9469,11 @@
 				)
 			)
 		)
+<<<<<<< HEAD
 		(property "Footprint" "Inductor_SMD:L_0805_2012Metric"
+=======
+		(property "Footprint" "MWSA1206S_270MT:INDM134126X600N"
+>>>>>>> 44b46461a797bd8f4ac2922cadd3e00c4d43ef50
 			(at 149.86 52.07 0)
 			(effects
 				(font

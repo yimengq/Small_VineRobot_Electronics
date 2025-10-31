@@ -506,7 +506,11 @@
       "idf": "",
       "netlist": "",
       "plot": "Fabrication Outputs",
+<<<<<<< HEAD
       "pos_files": "../../../../",
+=======
+      "pos_files": "",
+>>>>>>> 44b46461a797bd8f4ac2922cadd3e00c4d43ef50
       "specctra_dsn": "",
       "step": "",
       "svg": "",
