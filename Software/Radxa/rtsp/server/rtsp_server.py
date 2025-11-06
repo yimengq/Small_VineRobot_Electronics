@@ -3,6 +3,7 @@
 #!/usr/bin/env python3
 import socket
 import gi
+import subprocess
 gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 from gi.repository import Gst, GstRtspServer, GLib
@@ -77,7 +78,7 @@ def get_local_ip():
     finally:
         s.close()
 
-
+# ffmpeg -f v4l2 -i /dev/video10        -vf format=yuv420p        -vcodec mjpeg -q:v 5        -f mpjpeg -listen 1 http://0.0.0.0:8080/
 if __name__ == "__main__":
     DEVICE = "/dev/video0"
     WIDTH, HEIGHT = 1280, 720
