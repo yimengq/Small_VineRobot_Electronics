@@ -3,7 +3,7 @@ import curses
 import time
 import requests
 
-RADXA_IP       = "192.168.1.49"     # <-- change me if needed
+RADXA_IP       = "192.168.1.64"     # <-- change me if needed
 RTSP_PORT      = 8554
 RTSP_PATH      = "/stream"
 SERVO_HTTP_PT  = 80

@@ -3,6 +3,7 @@ import cv2
 import requests
 import threading
 import time
+import socket
 
 # ---------- Config ----------
 RADXA_IP       = "192.168.1.49"     # <-- change me if needed
@@ -10,6 +11,7 @@ RTSP_PORT      = 8554
 RTSP_PATH      = "/stream"
 SERVO_HTTP_PT  = 80
 LED_HTTP_PT    = 8080
+TEMP_PORT = 6000   
 
 RTSP_URL    = f"rtsp://{RADXA_IP}:{RTSP_PORT}{RTSP_PATH}"
 SERVO_URL   = f"http://{RADXA_IP}:{SERVO_HTTP_PT}/servo"
@@ -18,6 +20,9 @@ LED_OFF_URL = f"http://{RADXA_IP}:{LED_HTTP_PT}/off"
 
 HTTP_TIMEOUT = (0.2, 0.4)   # (connect, read) seconds
 RECONNECT_DELAY_S = 1.5
+
+
+print(cv2.getBuildInformation())
 
 # Reuse one HTTP session (faster)
 _session = requests.Session()
@@ -45,16 +50,19 @@ def led_off_async(): _post_async(LED_OFF_URL)
 def _open_rtsp(url: str):
     """Try FFMPEG backend first, then GStreamer, then default."""
     # Try default first (usually FFMPEG if built that way)
+    print("trying normal video")
     cap = cv2.VideoCapture(url)
     if cap.isOpened():
         return cap
 
     # Try forcing FFMPEG (works on many OpenCV builds)
+    print("trying FFMPEG")
     cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
     if cap.isOpened():
         return cap
 
     # Try GStreamer pipeline (requires OpenCV built with GStreamer)
+    print("trying Gstreamer")
     gst_url = f"rtspsrc location={url} latency=0 ! rtph264depay ! avdec_h264 ! videoconvert ! appsink"
     cap = cv2.VideoCapture(gst_url, cv2.CAP_GSTREAMER)
     if cap.isOpened():
@@ -68,6 +76,17 @@ def _put_text(img, text, org, scale=0.6, color=(255,255,255), thickness=1):
 def main():
     servo1, servo2 = 90, 90  # initial angles
     step = 5
+    
+    #temp section
+    while True:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((RADXA_IP, TEMP_PORT))
+            print("Connected successfully!")
+            break 
+        except (ConnectionRefusedError, OSError) as e:
+            print(f"Connection failed: {e}. Retrying in 1 second...")
+            time.sleep(2)
 
     print("Opening RTSP:", RTSP_URL)
     cap = _open_rtsp(RTSP_URL)
@@ -85,6 +104,12 @@ def main():
     fps = 0.0
 
     while True:
+        #temp update
+        data = s.recv(1024)
+        temp = data.decode()
+        temp = temp.split("\n")
+        temp_final = float(temp[0])/1000
+        
         ok, frame = cap.read()
         if not ok or frame is None:
             print("[video] read failed — reconnecting...")
@@ -107,7 +132,7 @@ def main():
             frames = 0
 
         # Overlay text
-        _put_text(frame, f"FPS: {fps:4.1f}", (10, 24))
+        _put_text(frame, f"FPS: {fps:4.1f} Temp: {temp_final:4.1f} °C", (10, 24)) # add temp through the other socket 
         _put_text(frame, f"A1: {servo1:3d}°  A2: {servo2:3d}°  step:{step}", (10, 48))
         _put_text(frame, "W/S=A1 +/- , A/D=A2 +/- , O=LED on , P=LED off , Q=quit", (10, 72))
         _put_text(frame, f"Status: {last_post_status[:60]}", (10, 96))
@@ -135,7 +160,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 
 
