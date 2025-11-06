@@ -11,6 +11,10 @@ RTSP_PORT      = 8554
 RTSP_PATH      = "/stream"
 SERVO_HTTP_PT  = 80
 LED_HTTP_PT    = 8080
+<<<<<<< HEAD
+=======
+HOST = "0.0.0.0"  
+>>>>>>> 1afb3b10d074606376d771113f5c7f894e045884
 TEMP_PORT = 6000   
 
 RTSP_URL    = f"rtsp://{RADXA_IP}:{RTSP_PORT}{RTSP_PATH}"
