@@ -11,7 +11,10 @@ RTSP_PORT      = 8554
 RTSP_PATH      = "/stream"
 SERVO_HTTP_PT  = 80
 LED_HTTP_PT    = 8080
+<<<<<<< HEAD
+=======
 HOST = "0.0.0.0"  
+>>>>>>> 1afb3b10d074606376d771113f5c7f894e045884
 TEMP_PORT = 6000   
 
 RTSP_URL    = f"rtsp://{RADXA_IP}:{RTSP_PORT}{RTSP_PATH}"
@@ -79,12 +82,15 @@ def main():
     step = 5
     
     #temp section
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((HOST, TEMP_PORT))
-    s.listen(1)
-    print(f"Listening on {HOST}:{TEMP_PORT} ...")
-    conn, addr = s.accept()
-    print(f"Connected by {addr}")
+    while True:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((RADXA_IP, TEMP_PORT))
+            print("Connected successfully!")
+            break 
+        except (ConnectionRefusedError, OSError) as e:
+            print(f"Connection failed: {e}. Retrying in 1 second...")
+            time.sleep(2)
 
     print("Opening RTSP:", RTSP_URL)
     cap = _open_rtsp(RTSP_URL)
@@ -103,7 +109,7 @@ def main():
 
     while True:
         #temp update
-        data = conn.recv(1024)
+        data = s.recv(1024)
         temp = data.decode()
         temp = temp.split("\n")
         temp_final = float(temp[0])/1000
@@ -158,7 +164,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 
 
