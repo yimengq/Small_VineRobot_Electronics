@@ -11411,7 +11411,7 @@
 		(dnp no)
 		(uuid "08818709-215d-443c-8993-2b3b9512a9d3")
 		(property "Reference" "R42"
-			(at 291.084 162.814 90)
+			(at 286.258 163.068 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11419,7 +11419,7 @@
 			)
 		)
 		(property "Value" "10K"
-			(at 291.338 171.704 90)
+			(at 286.258 171.704 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19397,7 +19397,7 @@
 		(dnp no)
 		(uuid "de3fb9dc-f021-4f55-8425-9cb1594bb493")
 		(property "Reference" "R36"
-			(at 291.084 193.294 90)
+			(at 286.258 193.548 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19405,7 +19405,7 @@
 			)
 		)
 		(property "Value" "10K"
-			(at 291.338 202.184 90)
+			(at 286.258 202.184 90)
 			(effects
 				(font
 					(size 1.27 1.27)
