@@ -1,3 +1,10 @@
+'''
+TODO : figure out pipeline for this rpi camera
+refer to comment in rtsp_camn.py
+this file is for the receiving end of that file.
+
+'''
+
 import cv2
 
 RADXA_IP = "192.168.1.64" # ensure correct radxa ip 
