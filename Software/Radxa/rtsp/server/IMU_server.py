@@ -7,7 +7,7 @@ import time
 HOST = "0.0.0.0"  # fake IP
 PORT = 6020
 port_command = "ls /dev/ttyACM*"
-path_command ="/home/radxa/Small_VineRobot_Electronics/inertial-sense-sdk/ExampleProjects/ISComm/build/"
+path_command ="/home/radxa/inertial-sense-sdk/ExampleProjects/ISComm/build/"
 
 # subprocess to handle imu c++ code
 ports = subprocess.getoutput(port_command)
