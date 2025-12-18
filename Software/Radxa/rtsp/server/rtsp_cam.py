@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 
+
+
 '''
 TODO : figure out pipeline for this rpi camera
 currently using this line of bash code:  gst-launch-1.0 v4l2src device=/dev/video0 io-mode=dmabuf ! video/x-raw,format=NV12! videoconvert ! jpegenc ! queue max-size-buffers=10 leaky=downstream ! tcpserversink host=0.0.0.0  port=8080 sync=false
@@ -8,9 +10,10 @@ currently using this line of bash code:  gst-launch-1.0 v4l2src device=/dev/vide
 running this on client side: gst-launch-1.0 tcpclientsrc host=192.168.1.53 port=8080 !  jpegdec ! videoconvert ! autovideosink
 
 it works when runnning locally on radxa, but doesn't work when running remotely
-but even when it works, it freezes sometimes.
+but even when it works, it freezes sometimes. 
 
 '''
+
 import gi
 gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
@@ -34,7 +37,7 @@ def build_launch(device, w, h, fps, bps):
         enc = f"x264enc tune=zerolatency speed-preset=ultrafast bitrate={bps//1000} key-int-max={fps} ! h264parse config-interval=1"
 
     # Converter
-    if Gst.ElementFactory.find('rkvideoconvert'):
+    if Gst.ElementFactory.find('1'):
         convert = f"rkvideoconvert ! {caps_enc}"
     elif Gst.ElementFactory.find('mppvideoconvert'):
         convert = f"mppvideoconvert ! {caps_enc}"
