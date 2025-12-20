@@ -1866,8 +1866,8 @@
 		(uuid 17936162-d411-41d7-b8e8-5274bb735a05)
 	)
 	(rectangle
-		(start 288.29 40.64)
-		(end 372.11 92.71)
+		(start 250.19 285.75)
+		(end 334.01 337.82)
 		(stroke
 			(width 0)
 			(type default)
@@ -1949,6 +1949,40 @@
 		)
 		(uuid eb8d932b-a5d7-4d97-b00e-4ce03fc9232d)
 	)
+	(rectangle
+		(start 463.55 66.04)
+		(end 547.37 118.11)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid ed20ca84-c0ec-425b-a162-eb1510ff592f)
+	)
+	(rectangle
+		(start 302.768 55.118)
+		(end 451.358 118.618)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid f061502f-6452-419c-8626-3c209c738b47)
+	)
+	(text "Motor Driver 3\n\n\n"
+		(exclude_from_sim no)
+		(at 441.96 122.174 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "1563cd56-aca2-4b72-b212-9050a7e8b696")
+	)
 	(text "Motor Driver 2\n\n"
 		(exclude_from_sim no)
 		(at 172.212 169.672 0)
@@ -2011,7 +2045,7 @@
 	)
 	(text "I2C Pull Ups\n"
 		(exclude_from_sim no)
-		(at 364.744 94.996 0)
+		(at 326.644 340.106 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2028,6 +2062,22 @@
 			)
 		)
 		(uuid "e1a908f7-fec0-4a60-a076-c8b5726c6e62")
+	)
+	(text "DAC3\n\n"
+		(exclude_from_sim no)
+		(at 540.004 120.396 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "e5c9d022-5425-4507-8c4f-2576affd0a2b")
+	)
+	(junction
+		(at 534.67 86.36)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0012505a-af73-40f3-984a-6f35f4e2ae88")
 	)
 	(junction
 		(at 312.42 215.9)
@@ -2078,10 +2128,22 @@
 		(uuid "2e44674a-54e3-445b-97bd-e46b7fccc443")
 	)
 	(junction
+		(at 534.67 93.98)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "310e2d53-d8c6-4cbb-acef-307ae46ad99b")
+	)
+	(junction
 		(at 152.4 205.74)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "33d32435-cd63-4794-a527-fc7ae45fc78d")
+	)
+	(junction
+		(at 361.95 99.06)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3bcaa1b8-f5dd-45bb-93aa-9de5fb888b3f")
 	)
 	(junction
 		(at 260.35 60.96)
@@ -2100,6 +2162,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4b1b9316-fcfb-4ec4-909e-d22000e05091")
+	)
+	(junction
+		(at 339.09 78.74)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4d7aece5-4865-4a3f-b51a-5c80f05da0c2")
 	)
 	(junction
 		(at 137.16 154.94)
@@ -2156,6 +2224,18 @@
 		(uuid "7b598536-3ff8-4558-8bfe-476ca8ace9fc")
 	)
 	(junction
+		(at 339.09 71.12)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7b8f251c-4ac6-48c2-965b-579ba4c1d710")
+	)
+	(junction
+		(at 411.48 106.68)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7fe9b13c-7b27-4c8e-9fbb-9745862ef45f")
+	)
+	(junction
 		(at 383.54 210.82)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2202,6 +2282,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a18b7ca6-728a-4093-b2bd-d6d0ed3996b6")
+	)
+	(junction
+		(at 408.94 92.71)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a6613bc8-dcd8-4c17-a82c-be4d2da9aa2c")
 	)
 	(junction
 		(at 306.07 182.88)
@@ -2258,6 +2344,12 @@
 		(uuid "cdd0e97a-6040-48bb-b0d5-6e81dd7d3331")
 	)
 	(junction
+		(at 356.87 111.76)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cf799657-cf66-42e1-9773-4bb1d350693e")
+	)
+	(junction
 		(at 152.4 182.88)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2280,6 +2372,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e0c75457-23d4-410a-beb1-0e88ac3b1c4f")
+	)
+	(junction
+		(at 328.93 71.12)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e27af610-28b7-4fa9-be5e-40d779b2b8c8")
 	)
 	(junction
 		(at 262.89 132.08)
@@ -2368,12 +2466,32 @@
 		(uuid "9cbd198f-3d0e-4bdb-b529-28feb9f46e25")
 	)
 	(no_connect
+		(at 363.22 76.2)
+		(uuid "9d692c52-b110-409b-8191-f2f1abb859e5")
+	)
+	(no_connect
+		(at 408.94 78.74)
+		(uuid "a767d8f1-d9cc-4d71-a86a-f438ee253427")
+	)
+	(no_connect
+		(at 408.94 99.06)
+		(uuid "a8ae6614-b241-4c0d-a692-cfe8e21816c9")
+	)
+	(no_connect
 		(at 137.16 193.04)
 		(uuid "ab4c4d9b-cb56-42d1-abf4-74aac2e5d0b9")
 	)
 	(no_connect
 		(at 290.83 193.04)
 		(uuid "ab5f6ed4-808e-40fd-a797-0e8ed6405139")
+	)
+	(no_connect
+		(at 363.22 81.28)
+		(uuid "b03f0e26-17a3-4b9a-8017-415052761cb0")
+	)
+	(no_connect
+		(at 363.22 83.82)
+		(uuid "b05e66ce-7d99-4dd5-ae0f-d4c2e7dfd1a0")
 	)
 	(no_connect
 		(at 88.9 50.8)
@@ -2401,6 +2519,16 @@
 	)
 	(wire
 		(pts
+			(xy 411.48 106.68) (xy 408.94 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "00740bca-e61d-4f56-aa3e-a99878b17397")
+	)
+	(wire
+		(pts
 			(xy 450.85 210.82) (xy 450.85 215.9)
 		)
 		(stroke
@@ -2408,6 +2536,16 @@
 			(type default)
 		)
 		(uuid "087dda63-13b7-4c8c-bc52-8c4b19cf942e")
+	)
+	(wire
+		(pts
+			(xy 350.52 111.76) (xy 356.87 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "095e7b7f-7b39-4fcd-908a-74e7d9a0d22c")
 	)
 	(wire
 		(pts
@@ -2421,6 +2559,16 @@
 	)
 	(wire
 		(pts
+			(xy 481.33 106.68) (xy 481.33 109.22)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "0aef2847-928c-466d-b65a-8075bbaacea8")
+	)
+	(wire
+		(pts
 			(xy 312.42 215.9) (xy 306.07 215.9)
 		)
 		(stroke
@@ -2431,6 +2579,16 @@
 	)
 	(wire
 		(pts
+			(xy 422.91 92.71) (xy 426.72 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0badbe58-fe39-4b99-b73b-7e1afb6116ce")
+	)
+	(wire
+		(pts
 			(xy 260.35 66.04) (xy 260.35 60.96)
 		)
 		(stroke
@@ -2438,6 +2596,16 @@
 			(type solid)
 		)
 		(uuid "0cfb2292-4db2-43c7-9cac-490037ef21a9")
+	)
+	(wire
+		(pts
+			(xy 328.93 71.12) (xy 339.09 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0d36d988-6222-4915-bb22-7b344447ab5f")
 	)
 	(wire
 		(pts
@@ -2481,6 +2649,16 @@
 	)
 	(wire
 		(pts
+			(xy 516.89 93.98) (xy 534.67 93.98)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "10db6ad3-8700-485a-a507-55c10e8430d8")
+	)
+	(wire
+		(pts
 			(xy 166.37 198.12) (xy 166.37 182.88)
 		)
 		(stroke
@@ -2508,6 +2686,16 @@
 			(type default)
 		)
 		(uuid "12d68797-6aae-47cf-abec-1424fcff9197")
+	)
+	(wire
+		(pts
+			(xy 516.89 88.9) (xy 527.05 88.9)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "13c42755-24c6-44aa-8a76-ed7e4530185f")
 	)
 	(wire
 		(pts
@@ -2541,6 +2729,26 @@
 	)
 	(wire
 		(pts
+			(xy 477.52 88.9) (xy 491.49 88.9)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "1cf51647-4a34-49f6-b26c-d2f142ead4e7")
+	)
+	(wire
+		(pts
+			(xy 537.21 93.98) (xy 534.67 93.98)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "1cf5782c-bcc6-49fb-9983-a80504cfb924")
+	)
+	(wire
+		(pts
 			(xy 262.89 139.7) (xy 262.89 142.24)
 		)
 		(stroke
@@ -2548,6 +2756,16 @@
 			(type solid)
 		)
 		(uuid "1ee02870-7428-4452-9555-4d3883336cde")
+	)
+	(wire
+		(pts
+			(xy 516.89 91.44) (xy 534.67 91.44)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "1f61f950-ea36-44ba-90e7-5ef9f93ccb30")
 	)
 	(wire
 		(pts
@@ -2581,6 +2799,26 @@
 	)
 	(wire
 		(pts
+			(xy 534.67 93.98) (xy 534.67 96.52)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "2a8f0607-65b6-402c-9edf-478f2ac0ce34")
+	)
+	(wire
+		(pts
+			(xy 363.22 99.06) (xy 361.95 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2b5d2b29-f00c-49bf-a114-ae9665da4982")
+	)
+	(wire
+		(pts
 			(xy 64.77 45.72) (xy 88.9 45.72)
 		)
 		(stroke
@@ -2588,6 +2826,16 @@
 			(type default)
 		)
 		(uuid "2b9bd041-a94c-480f-8fc2-251cd8b1a452")
+	)
+	(wire
+		(pts
+			(xy 481.33 93.98) (xy 481.33 96.52)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "2c0a61c3-2520-4794-9a4e-815a38608a57")
 	)
 	(wire
 		(pts
@@ -2701,6 +2949,16 @@
 	)
 	(wire
 		(pts
+			(xy 408.94 92.71) (xy 408.94 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3b659221-3bd0-447c-ba10-ce6a64913ed6")
+	)
+	(wire
+		(pts
 			(xy 137.16 205.74) (xy 152.4 205.74)
 		)
 		(stroke
@@ -2771,6 +3029,36 @@
 	)
 	(wire
 		(pts
+			(xy 408.94 104.14) (xy 411.48 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "45577ddb-6c3b-428e-8f67-c458543c7e71")
+	)
+	(wire
+		(pts
+			(xy 534.67 86.36) (xy 534.67 83.82)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "4576f5f1-8d23-4068-9962-1c0f90b84c3f")
+	)
+	(wire
+		(pts
+			(xy 426.72 92.71) (xy 426.72 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "457d853c-047f-44b7-9974-1511b563001b")
+	)
+	(wire
+		(pts
 			(xy 255.27 125.73) (xy 255.27 134.62)
 		)
 		(stroke
@@ -2798,6 +3086,16 @@
 			(type default)
 		)
 		(uuid "4cbffeed-6ac9-41d9-b214-baebb42e33f1")
+	)
+	(wire
+		(pts
+			(xy 527.05 78.74) (xy 527.05 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4d2d8744-7e42-4785-8c31-16214f834d9d")
 	)
 	(wire
 		(pts
@@ -2931,6 +3229,16 @@
 	)
 	(wire
 		(pts
+			(xy 477.52 91.44) (xy 491.49 91.44)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "5f4e85c8-e6ad-41f8-9516-6b6c1fbd2326")
+	)
+	(wire
+		(pts
 			(xy 168.91 207.01) (xy 168.91 215.9)
 		)
 		(stroke
@@ -2998,6 +3306,16 @@
 			(type default)
 		)
 		(uuid "69a3e602-99f9-4849-9273-e39308ac1969")
+	)
+	(wire
+		(pts
+			(xy 339.09 71.12) (xy 363.22 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "69bdebfd-a4c2-4d12-8f81-1e0f1f01a58c")
 	)
 	(wire
 		(pts
@@ -3081,6 +3399,16 @@
 	)
 	(wire
 		(pts
+			(xy 408.94 92.71) (xy 408.94 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "77564574-674d-401b-8eac-e1945468ac46")
+	)
+	(wire
+		(pts
 			(xy 229.87 193.04) (xy 229.87 210.82)
 		)
 		(stroke
@@ -3151,7 +3479,17 @@
 	)
 	(wire
 		(pts
-			(xy 332.74 64.77) (xy 332.74 73.66)
+			(xy 534.67 91.44) (xy 534.67 86.36)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "8047528a-2751-4881-8207-150962bab81c")
+	)
+	(wire
+		(pts
+			(xy 294.64 309.88) (xy 294.64 318.77)
 		)
 		(stroke
 			(width 0)
@@ -3261,6 +3599,16 @@
 	)
 	(wire
 		(pts
+			(xy 491.49 93.98) (xy 481.33 93.98)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "882bcabd-b171-4c16-8579-dec5994fffbb")
+	)
+	(wire
+		(pts
 			(xy 58.42 187.96) (xy 68.58 187.96)
 		)
 		(stroke
@@ -3288,6 +3636,16 @@
 			(type solid)
 		)
 		(uuid "8c7efc32-9b71-4d7c-9d03-d8bd4b5ee3f0")
+	)
+	(wire
+		(pts
+			(xy 356.87 111.76) (xy 361.95 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8c9fd6ab-779b-4298-a186-de4c346bb5de")
 	)
 	(wire
 		(pts
@@ -3328,6 +3686,16 @@
 			(type default)
 		)
 		(uuid "9025e82a-fdd4-4e9e-8558-4f26a4fbbd8a")
+	)
+	(wire
+		(pts
+			(xy 537.21 86.36) (xy 534.67 86.36)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "931de846-1a3d-4818-90aa-549f66320898")
 	)
 	(wire
 		(pts
@@ -3471,6 +3839,16 @@
 	)
 	(wire
 		(pts
+			(xy 350.52 110.49) (xy 350.52 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b12b32fe-798c-4906-baab-538f739c16a8")
+	)
+	(wire
+		(pts
 			(xy 242.57 63.5) (xy 252.73 63.5)
 		)
 		(stroke
@@ -3498,6 +3876,16 @@
 			(type default)
 		)
 		(uuid "b64fea7d-cc52-4f2b-8b41-d1758e5e4f84")
+	)
+	(wire
+		(pts
+			(xy 361.95 99.06) (xy 350.52 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b742d984-249e-407b-add5-645185c3d34c")
 	)
 	(wire
 		(pts
@@ -3571,6 +3959,16 @@
 	)
 	(wire
 		(pts
+			(xy 328.93 78.74) (xy 339.09 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c86023d2-fe6e-40f9-8ef0-0f493fc4f9ca")
+	)
+	(wire
+		(pts
 			(xy 229.87 210.82) (xy 229.87 215.9)
 		)
 		(stroke
@@ -3588,6 +3986,16 @@
 			(type default)
 		)
 		(uuid "ca02983a-bcab-4dfc-a023-2336fc82afc3")
+	)
+	(wire
+		(pts
+			(xy 411.48 104.14) (xy 411.48 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca6a79f0-c008-4943-b18f-6408e84179e7")
 	)
 	(wire
 		(pts
@@ -3641,6 +4049,16 @@
 	)
 	(wire
 		(pts
+			(xy 361.95 99.06) (xy 361.95 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd923109-5d2e-4dda-b07b-cd6643d0baf9")
+	)
+	(wire
+		(pts
 			(xy 212.09 187.96) (xy 212.09 193.04)
 		)
 		(stroke
@@ -3691,6 +4109,16 @@
 	)
 	(wire
 		(pts
+			(xy 412.75 92.71) (xy 408.94 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d8c51562-08fe-4e41-bd8b-1a44a3f3874c")
+	)
+	(wire
+		(pts
 			(xy 134.62 144.78) (xy 134.62 142.24)
 		)
 		(stroke
@@ -3731,6 +4159,16 @@
 	)
 	(wire
 		(pts
+			(xy 477.52 88.9) (xy 477.52 87.63)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "dccc8097-60b8-4af5-9900-56dd02f86ed3")
+	)
+	(wire
+		(pts
 			(xy 219.71 137.16) (xy 204.47 137.16)
 		)
 		(stroke
@@ -3758,6 +4196,16 @@
 			(type default)
 		)
 		(uuid "ded5f124-f26e-436e-84e1-54c1b9baf8fb")
+	)
+	(wire
+		(pts
+			(xy 350.52 99.06) (xy 350.52 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "def4b169-d2e9-4efb-abfd-1b241c730cd0")
 	)
 	(wire
 		(pts
@@ -3881,7 +4329,7 @@
 	)
 	(wire
 		(pts
-			(xy 311.15 64.77) (xy 311.15 73.66)
+			(xy 273.05 309.88) (xy 273.05 318.77)
 		)
 		(stroke
 			(width 0)
@@ -4009,6 +4457,16 @@
 		)
 		(uuid "fda2e505-e308-44a9-a32e-269d202df05b")
 	)
+	(wire
+		(pts
+			(xy 323.85 71.12) (xy 328.93 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ff9254d3-a245-4ef3-8586-b736fcf08756")
+	)
 	(label "SCL"
 		(at 212.09 134.62 0)
 		(effects
@@ -4018,6 +4476,16 @@
 			(justify left bottom)
 		)
 		(uuid "28f6177f-97be-448a-a3a4-efb5e3240967")
+	)
+	(label "A0"
+		(at 483.87 93.98 0)
+		(effects
+			(font
+				(size 1.2446 1.2446)
+			)
+			(justify left bottom)
+		)
+		(uuid "2bd03e4f-9201-417e-ab79-0c09e8a729d1")
 	)
 	(label "SDA"
 		(at 209.55 66.04 0)
@@ -4059,6 +4527,16 @@
 		)
 		(uuid "482d6487-9f8c-4016-aa81-f6c972b5c7fc")
 	)
+	(label "SDA"
+		(at 483.87 91.44 0)
+		(effects
+			(font
+				(size 1.2446 1.2446)
+			)
+			(justify left bottom)
+		)
+		(uuid "6892ac6e-ad09-4660-b313-e68281ec0fb6")
+	)
 	(label "A0"
 		(at 209.55 68.58 0)
 		(effects
@@ -4068,6 +4546,26 @@
 			(justify left bottom)
 		)
 		(uuid "79c647d9-05dc-46a1-81e8-eecb662f8802")
+	)
+	(label "SCL"
+		(at 483.87 88.9 0)
+		(effects
+			(font
+				(size 1.2446 1.2446)
+			)
+			(justify left bottom)
+		)
+		(uuid "9d44ace8-3bf9-47a8-83df-a816243e1f95")
+	)
+	(label "VOUT"
+		(at 519.43 88.9 0)
+		(effects
+			(font
+				(size 1.2446 1.2446)
+			)
+			(justify left bottom)
+		)
+		(uuid "a72ea035-f004-40cb-ac43-a48e34c0207b")
 	)
 	(label "VOUT"
 		(at 247.65 134.62 0)
@@ -4088,6 +4586,50 @@
 			(justify left bottom)
 		)
 		(uuid "df983dac-c8e7-4e34-ac77-b1a0f66854d5")
+	)
+	(global_label "Motor 3 Out 2"
+		(shape input)
+		(at 408.94 73.66 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0b09443a-2fe2-4388-a15d-2bf37f60a91b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 425.7135 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SCL"
+		(shape input)
+		(at 477.52 87.63 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0c6f4d1d-888a-41a2-a352-8dd2788dc66e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 471.0272 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "SCL"
 		(shape input)
@@ -4155,6 +4697,28 @@
 			)
 		)
 	)
+	(global_label "DAC3 Out"
+		(shape input)
+		(at 353.06 93.98 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "20e71b58-b4b7-42af-aace-4ede046a0180")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 341.0639 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SDA"
 		(shape input)
 		(at 134.62 60.96 0)
@@ -4177,6 +4741,28 @@
 			)
 		)
 	)
+	(global_label "DAC3 Out"
+		(shape input)
+		(at 527.05 78.74 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "23975a46-1925-4b7f-a98c-4d3f7d93a7e2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 539.0461 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "VIN"
 		(shape input)
 		(at 88.9 200.66 180)
@@ -4190,6 +4776,50 @@
 		(uuid "2504cf99-a090-4659-b643-4220f87adea2")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 82.8909 200.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "Motor 3 Out 1"
+		(shape input)
+		(at 408.94 71.12 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2b190316-aae1-4166-8e40-c68d92256345")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 425.7135 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SDA"
+		(shape input)
+		(at 477.52 91.44 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2c70c50c-a42a-4f4b-9cc4-c92306e10604")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 470.9667 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4234,6 +4864,28 @@
 		(uuid "32801103-2389-4412-90bb-4983480eae1a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 156.9576 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SDA"
+		(shape input)
+		(at 408.94 86.36 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3ae799dd-9a8b-4efe-a6f8-017f8c056e17")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 415.4933 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4441,6 +5093,28 @@
 			)
 		)
 	)
+	(global_label "12V In"
+		(shape input)
+		(at 323.85 71.12 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5cc8dca9-913f-4e71-9154-bec0e049185c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 314.6358 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "VIN"
 		(shape input)
 		(at 242.57 200.66 180)
@@ -4551,9 +5225,31 @@
 			)
 		)
 	)
+	(global_label "3.3V"
+		(shape input)
+		(at 353.06 88.9 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6ea1d556-1d90-407d-8535-f4db21fed952")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 345.9624 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SDA"
 		(shape input)
-		(at 332.74 69.85 180)
+		(at 294.64 314.96 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4563,7 +5259,7 @@
 		)
 		(uuid "77a49f73-aaa9-46a2-b291-e34f6d0ef266")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 326.1867 69.85 0)
+			(at 288.0867 314.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4575,7 +5271,7 @@
 	)
 	(global_label "3.3V"
 		(shape input)
-		(at 311.15 54.61 90)
+		(at 273.05 299.72 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4585,7 +5281,29 @@
 		)
 		(uuid "937127fb-ac65-4210-a403-9099351dfa79")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 311.15 47.5124 90)
+			(at 273.05 292.6224 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SCL"
+		(shape input)
+		(at 408.94 83.82 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9827cfde-6bb2-4cf5-a9b6-db851d2bf3cf")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 415.4328 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4663,7 +5381,7 @@
 	)
 	(global_label "3.3V"
 		(shape input)
-		(at 332.74 54.61 90)
+		(at 294.64 299.72 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4673,7 +5391,7 @@
 		)
 		(uuid "bb8f2c4b-8d7f-408b-b767-0473a5f627da")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 332.74 47.5124 90)
+			(at 294.64 292.6224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4795,7 +5513,7 @@
 	)
 	(global_label "SCL"
 		(shape input)
-		(at 311.15 69.85 180)
+		(at 273.05 314.96 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4805,7 +5523,7 @@
 		)
 		(uuid "ef299a0d-eb7a-4fc6-9fde-725e4b6bc154")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 304.6572 69.85 0)
+			(at 266.5572 314.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4878,6 +5596,163 @@
 				)
 				(justify right)
 				(hide yes)
+			)
+		)
+	)
+	(global_label "3.3V"
+		(shape input)
+		(at 534.67 83.82 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ff41dfc0-3ca6-466a-9638-7740575d52b8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 541.7676 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MCP4725 Original-eagle-import:GND")
+		(at 481.33 111.76 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "014871a1-5a4f-4f2e-993a-eff610da0171")
+		(property "Reference" "#U$011"
+			(at 481.33 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 479.806 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.0795)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 481.33 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 481.33 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 481.33 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9a8f971e-977c-41bc-b25d-4ae623946f9c")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "#U$011")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MCP4725 Original-eagle-import:RESISTOR0805")
+		(at 481.33 101.6 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "051bd401-da2f-4437-bc30-74e5d37b48f8")
+		(property "Reference" "R9"
+			(at 479.298 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "10K"
+			(at 484.505 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "Adafruit MCP4725 Original:0805"
+			(at 481.33 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 481.33 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 481.33 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ce7d1a83-288c-450b-98c4-eaba1e43253c")
+		)
+		(pin "2"
+			(uuid "8da5062c-4d70-4d88-a5d0-0831415b2aff")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "R9")
+					(unit 1)
+				)
 			)
 		)
 	)
@@ -4957,6 +5832,72 @@
 			(project "MotorDriverBreakout"
 				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
 					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MCP4725 Original-eagle-import:GND")
+		(at 534.67 99.06 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0b4d93f9-e791-49fa-8d7c-a3c298d5c5e4")
+		(property "Reference" "#U$012"
+			(at 534.67 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 533.146 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.0795)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 534.67 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 534.67 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 534.67 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1ff2841d-40b7-4b02-a846-6246666cb12a")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "#U$012")
 					(unit 1)
 				)
 			)
@@ -5162,6 +6103,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:RESISTOR_0603_NOOUT")
+		(at 358.14 93.98 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1a286f48-9efe-478f-9090-7875f75d15c3")
+		(property "Reference" "R5"
+			(at 358.14 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 358.14 93.98 0)
+			(effects
+				(font
+					(size 1.016 1.016)
+					(thickness 0.2032)
+					(bold yes)
+				)
+			)
+		)
+		(property "Footprint" "Adafruit MPM3610:0603-NO"
+			(at 358.14 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 358.14 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 358.14 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "98486f62-637c-4230-bce6-3dd4496bebd5")
+		)
+		(pin "2"
+			(uuid "edae1c3d-c948-4a10-8527-d5d76c066c4c")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "R5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "2025-12-19_19-45-19:DRV8234RTER")
 		(at 88.9 45.72 0)
 		(unit 1)
@@ -5278,6 +6288,75 @@
 	)
 	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:RESISTOR_0603_NOOUT")
+		(at 358.14 88.9 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1acab0cc-c7a2-4484-89c4-427c005f1fe8")
+		(property "Reference" "R4"
+			(at 358.14 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 358.14 88.9 0)
+			(effects
+				(font
+					(size 1.016 1.016)
+					(thickness 0.2032)
+					(bold yes)
+				)
+			)
+		)
+		(property "Footprint" "Adafruit MPM3610:0603-NO"
+			(at 358.14 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 358.14 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 358.14 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3b0a2044-da8e-47cf-a771-42d37b80a8fa")
+		)
+		(pin "2"
+			(uuid "075c09c2-beeb-45e3-a8a7-91fbb1096760")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:RESISTOR_0603_NOOUT")
 		(at 143.51 67.31 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5340,6 +6419,87 @@
 			(project "MotorDriverBreakout"
 				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
 					(reference "R25")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MCP4725 Original-eagle-import:DAC_MCP4725")
+		(at 504.19 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1bb9fe30-c342-408c-abda-168ab14701e4")
+		(property "Reference" "U6"
+			(at 494.03 76.2 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "MCP4725A1T-E/CH"
+			(at 494.03 106.68 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "Adafruit MCP4725 Original:SOT23-6"
+			(at 504.19 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 504.19 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 504.19 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "3d26b822-6558-4af8-8e6e-b5f876dff866")
+		)
+		(pin "4"
+			(uuid "c9add8ed-c7f2-4376-abba-99b02ed2674c")
+		)
+		(pin "6"
+			(uuid "955161f4-c226-4e8c-b530-238544904a96")
+		)
+		(pin "1"
+			(uuid "4e96d32e-393e-4817-85e1-a748da261f51")
+		)
+		(pin "3"
+			(uuid "a660fd04-eede-41ef-9aeb-9e534f1b8d60")
+		)
+		(pin "2"
+			(uuid "ffc0f723-0c5c-4d64-bb25-6aa6b5261d9f")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "U6")
 					(unit 1)
 				)
 			)
@@ -5684,6 +6844,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:RESISTOR_0603_NOOUT")
+		(at 417.83 92.71 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "24088ce7-8a85-4512-ada1-cde1e3130489")
+		(property "Reference" "R8"
+			(at 417.83 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 417.83 92.71 0)
+			(effects
+				(font
+					(size 1.016 1.016)
+					(thickness 0.2032)
+					(bold yes)
+				)
+			)
+		)
+		(property "Footprint" "Adafruit MPM3610:0603-NO"
+			(at 417.83 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 417.83 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 417.83 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4beac7ee-b07e-4e99-92c9-98912ea74070")
+		)
+		(pin "2"
+			(uuid "4059bcb3-2da4-4645-933b-2ea2d72032a6")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "R8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:CAP_CERAMIC0805-NOOUTLINE")
 		(at 58.42 198.12 0)
 		(unit 1)
@@ -5752,7 +6981,7 @@
 	)
 	(symbol
 		(lib_id "Adafruit MCP4725 Original-eagle-import:GND")
-		(at 332.74 76.2 0)
+		(at 294.64 321.31 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5760,7 +6989,7 @@
 		(dnp no)
 		(uuid "2ecc3d43-3261-490d-93b1-39e0e52e8344")
 		(property "Reference" "#U$02"
-			(at 332.74 76.2 0)
+			(at 294.64 321.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5769,7 +6998,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 331.216 78.74 0)
+			(at 293.116 323.85 0)
 			(effects
 				(font
 					(size 1.27 1.0795)
@@ -5778,7 +7007,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 332.74 76.2 0)
+			(at 294.64 321.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5787,7 +7016,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 332.74 76.2 0)
+			(at 294.64 321.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5796,7 +7025,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 332.74 76.2 0)
+			(at 294.64 321.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6115,6 +7344,72 @@
 		)
 	)
 	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:GND")
+		(at 426.72 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3c9eef80-48a3-45d6-96f4-a26fbbb7951f")
+		(property "Reference" "#U$09"
+			(at 426.72 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 425.196 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.0795)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 426.72 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 426.72 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 426.72 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2f6de2a8-f647-41dc-8563-42d463d3b11b")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "#U$09")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:CAP_CERAMIC0805-NOOUTLINE")
 		(at 64.77 124.46 0)
 		(unit 1)
@@ -6245,6 +7540,73 @@
 			(project "MotorDriverBreakout"
 				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
 					(reference "R24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:CAP_CERAMIC0805-NOOUTLINE")
+		(at 328.93 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4b890805-83d0-4cde-8924-851533a25d30")
+		(property "Reference" "C3"
+			(at 326.64 74.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330uF"
+			(at 331.23 74.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Adafruit MPM3610:0805-NO"
+			(at 328.93 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 328.93 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 328.93 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d35214e5-7c93-42db-b247-73d927f7722b")
+		)
+		(pin "2"
+			(uuid "8e289928-51bd-4748-aec3-5c568b17f3e4")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "C3")
 					(unit 1)
 				)
 			)
@@ -6392,6 +7754,75 @@
 			(project "MotorDriverBreakout"
 				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
 					(reference "#U$3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:RESISTOR_0603_NOOUT")
+		(at 361.95 106.68 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4ea90519-d350-45b0-bc06-619140335c51")
+		(property "Reference" "R7"
+			(at 364.49 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7k"
+			(at 361.95 106.68 0)
+			(effects
+				(font
+					(size 1.016 1.016)
+					(thickness 0.2032)
+					(bold yes)
+				)
+			)
+		)
+		(property "Footprint" "Adafruit MPM3610:0603-NO"
+			(at 361.95 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 361.95 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 361.95 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5778d91b-96a3-459f-9f1f-6991f777634b")
+		)
+		(pin "2"
+			(uuid "19812f65-2ab0-48b4-bc32-aad606f33e76")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -6768,7 +8199,7 @@
 	)
 	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:RESISTOR_0603_NOOUT")
-		(at 311.15 59.69 90)
+		(at 273.05 304.8 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6776,7 +8207,7 @@
 		(dnp no)
 		(uuid "576a1f32-9b57-4f3c-a56c-a97cb0aeddac")
 		(property "Reference" "R1"
-			(at 308.61 59.69 0)
+			(at 270.51 304.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6784,7 +8215,7 @@
 			)
 		)
 		(property "Value" "2.2k"
-			(at 311.15 59.69 0)
+			(at 273.05 304.8 0)
 			(effects
 				(font
 					(size 1.016 1.016)
@@ -6794,7 +8225,7 @@
 			)
 		)
 		(property "Footprint" "Adafruit MPM3610:0603-NO"
-			(at 311.15 59.69 0)
+			(at 273.05 304.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6803,7 +8234,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 311.15 59.69 0)
+			(at 273.05 304.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6812,7 +8243,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 311.15 59.69 0)
+			(at 273.05 304.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6906,7 +8337,7 @@
 	)
 	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:RESISTOR_0603_NOOUT")
-		(at 332.74 59.69 90)
+		(at 294.64 304.8 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6914,7 +8345,7 @@
 		(dnp no)
 		(uuid "63b68483-1619-45c0-a389-efc512a685d4")
 		(property "Reference" "R2"
-			(at 330.2 59.69 0)
+			(at 292.1 304.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6922,7 +8353,7 @@
 			)
 		)
 		(property "Value" "2.2k"
-			(at 332.74 59.69 0)
+			(at 294.64 304.8 0)
 			(effects
 				(font
 					(size 1.016 1.016)
@@ -6932,7 +8363,7 @@
 			)
 		)
 		(property "Footprint" "Adafruit MPM3610:0603-NO"
-			(at 332.74 59.69 0)
+			(at 294.64 304.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6941,7 +8372,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 332.74 59.69 0)
+			(at 294.64 304.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6950,7 +8381,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 332.74 59.69 0)
+			(at 294.64 304.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7898,6 +9329,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Adafruit MCP4725 Original-eagle-import:CAP_CERAMIC0805")
+		(at 537.21 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "986d0365-90ec-4424-a9ab-994e4dc5f525")
+		(property "Reference" "C6"
+			(at 539.75 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "1.0µF"
+			(at 539.75 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "Adafruit MCP4725 Original:0805"
+			(at 537.21 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 537.21 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 537.21 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5afa03d1-1e77-4c37-b0b3-0ae9a1e0a976")
+		)
+		(pin "2"
+			(uuid "891a633c-4da3-4b7a-bc1b-e5b77ea74b84")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "C6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:CAP_CERAMIC0805-NOOUTLINE")
 		(at 476.25 204.47 0)
 		(unit 1)
@@ -7966,7 +9466,7 @@
 	)
 	(symbol
 		(lib_id "Adafruit MCP4725 Original-eagle-import:GND")
-		(at 311.15 76.2 0)
+		(at 273.05 321.31 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7974,7 +9474,7 @@
 		(dnp no)
 		(uuid "9985ed03-8ddb-46e9-939a-21f733f604c3")
 		(property "Reference" "#U$01"
-			(at 311.15 76.2 0)
+			(at 273.05 321.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7983,7 +9483,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 309.626 78.74 0)
+			(at 271.526 323.85 0)
 			(effects
 				(font
 					(size 1.27 1.0795)
@@ -7992,7 +9492,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 311.15 76.2 0)
+			(at 273.05 321.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8001,7 +9501,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 311.15 76.2 0)
+			(at 273.05 321.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8010,7 +9510,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 311.15 76.2 0)
+			(at 273.05 321.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8368,6 +9868,72 @@
 		)
 	)
 	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:GND")
+		(at 411.48 109.22 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a979c2e9-9eb5-497a-a996-acaac1c3fa75")
+		(property "Reference" "#U$07"
+			(at 411.48 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 409.956 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.0795)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 411.48 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 411.48 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 411.48 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e06e1f4e-d2ad-4568-8e20-33335e262fcc")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "#U$07")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:RESISTOR_0603_NOOUT")
 		(at 306.07 210.82 270)
 		(unit 1)
@@ -8707,6 +10273,73 @@
 	)
 	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:CAP_CERAMIC0805-NOOUTLINE")
+		(at 339.09 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ab54bb2f-bae1-4b00-b249-8879c43f7e94")
+		(property "Reference" "C4"
+			(at 336.8 74.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0.1uF"
+			(at 341.39 74.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Adafruit MPM3610:0805-NO"
+			(at 339.09 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 339.09 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 339.09 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ce808229-9d75-4a0e-8128-34292f35b829")
+		)
+		(pin "2"
+			(uuid "c84e15d7-9d8e-4bbf-9487-31e63f3d69c5")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "C4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:CAP_CERAMIC0805-NOOUTLINE")
 		(at 54.61 124.46 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -8834,6 +10467,187 @@
 			(project "MotorDriverBreakout"
 				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
 					(reference "C17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "2025-12-19_19-45-19:DRV8234RTER")
+		(at 363.22 71.12 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b50fa55d-1198-43bc-8e4b-cd349ed8b343")
+		(property "Reference" "U4"
+			(at 386.08 60.96 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "DRV8234RTER"
+			(at 386.08 63.5 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Footprint" "RTE0016C-IPC_A"
+			(at 363.22 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/gpn/drv8234"
+			(at 363.22 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 363.22 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "b18c4e59-e55b-4dab-b899-65a7b840b722")
+		)
+		(pin "9"
+			(uuid "63054174-9ca0-444a-99ad-d0667b9c0837")
+		)
+		(pin "10"
+			(uuid "a9b9b42a-fdc0-471b-91ce-97d936b5108a")
+		)
+		(pin "14"
+			(uuid "93b7575d-1015-4526-8b42-ab306393b7e3")
+		)
+		(pin "15"
+			(uuid "f9946984-c7c4-478e-8781-8e88b64dd5f9")
+		)
+		(pin "16"
+			(uuid "ec7842e5-8592-4ab7-900b-bc0e16a105d5")
+		)
+		(pin "1"
+			(uuid "8f0bf4da-4869-41f1-8d9c-4077b3bf106b")
+		)
+		(pin "6"
+			(uuid "590a9ecd-5db9-44b8-b5ed-853f56a93870")
+		)
+		(pin "8"
+			(uuid "68b40a95-8f5b-43da-8385-5aa2475c0026")
+		)
+		(pin "4"
+			(uuid "c26eee0e-1aac-4157-b663-24f3f8a120c0")
+		)
+		(pin "7"
+			(uuid "aa43c3be-9c3f-4916-9786-e158e7a8c8bc")
+		)
+		(pin "17"
+			(uuid "b792e8a6-a0f8-4380-a36a-23141521d54b")
+		)
+		(pin "2"
+			(uuid "d0c6dfc5-fca8-4fe9-9cf5-7a4daaa1e7d0")
+		)
+		(pin "5"
+			(uuid "7f5323a6-a6cf-4a30-ac5b-c05c538719c8")
+		)
+		(pin "13"
+			(uuid "911d473e-ba93-4559-ac8d-b73ed6e4ee65")
+		)
+		(pin "12"
+			(uuid "3451d8c6-39eb-45c9-ad50-92bab85bb9f6")
+		)
+		(pin "11"
+			(uuid "b53bfc96-ef1b-4ac8-a882-f43e05fa7238")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "U4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:GND")
+		(at 356.87 114.3 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b88186fa-b1eb-4073-a39e-11eb51794138")
+		(property "Reference" "#U$05"
+			(at 356.87 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 355.346 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.0795)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 356.87 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 356.87 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 356.87 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f2262947-5976-4fb6-a45e-b9fadf957a05")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "#U$05")
 					(unit 1)
 				)
 			)
@@ -9177,6 +10991,73 @@
 		)
 	)
 	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:CAP_CERAMIC0805-NOOUTLINE")
+		(at 350.52 107.95 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c36fc6a3-8e31-4c59-9ad3-98045ac57ef2")
+		(property "Reference" "C5"
+			(at 348.23 106.7 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0.1uF"
+			(at 352.82 106.7 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Adafruit MPM3610:0805-NO"
+			(at 350.52 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 350.52 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 350.52 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3f391761-c24d-48ce-aabf-db44ac09aa3e")
+		)
+		(pin "2"
+			(uuid "54d7b44e-c128-4e80-bde3-2d26cd9d6bc2")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "C5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Adafruit MPM3610-eagle-import:GND")
 		(at 383.54 226.06 0)
 		(unit 1)
@@ -9237,6 +11118,72 @@
 			(project "MotorDriverBreakout"
 				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
 					(reference "#U$028")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Adafruit MPM3610-eagle-import:GND")
+		(at 339.09 81.28 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c594731c-961b-46ab-a59f-fc0004baa9b0")
+		(property "Reference" "#U$04"
+			(at 339.09 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 337.566 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.0795)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 339.09 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 339.09 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 339.09 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "134dcae3-63a6-4a05-93ec-44c16a48430b")
+		)
+		(instances
+			(project "MotorDriverBreakout"
+				(path "/8c7fbb5f-9bb2-4d3a-9fa8-9df6e610b209"
+					(reference "#U$04")
 					(unit 1)
 				)
 			)
