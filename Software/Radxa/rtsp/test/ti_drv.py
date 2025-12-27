@@ -241,7 +241,7 @@ def move_counts(dev: DRV8234, target: int, forward: bool):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--bus", type=int, default=5, help="Linux I2C bus number (default: 5 => /dev/i2c-5)")
-    ap.add_argument("--addr", type=lambda x: int(x, 0), default=0x30, help="7-bit I2C address (default: 0x30)")
+    ap.add_argument("--addr", type=lambda x: int(x, 0), default=0x31, help="7-bit I2C address (default: 0x30)")
     args = ap.parse_args()
 
     print("\n=== DRV8234 Serial Move-by-Counts (Ripple) [Radxa/Linux] ===")
