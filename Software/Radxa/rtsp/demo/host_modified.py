@@ -81,8 +81,8 @@ BTN_PRESSURE_UP  = 3   # Y button → pressure +0.05
 BTN_PRESSURE_DN  = 1   # X button → pressure -0.05
 
 # These two axes used to control servos; now they command the Radxa 2Dac2Motor motors.
-AXIS_M1 = 1            # left stick vertical   → motor1 (incremental counts)
-AXIS_M2 = 0            # left stick horizontal → motor2 (incremental counts)
+AXIS_M1 = 0            # left stick horizontal   → motor1 (incremental counts)
+AXIS_M2 = 1            # left stick vertical → motor2 (incremental counts)
 
 BTN_LED_ON  = 4        # LB → LED ON
 BTN_LED_OFF = 5        # RB → LED OFF
@@ -213,7 +213,11 @@ def joy_cb(msg: Joy):
             print("[motor] BRAKE")
 
         # Store axes for incremental motor control (deadzone)
-        a1 = msg.axes[AXIS_M1] if 0 <= AXIS_M1 < len(msg.axes) else 0.0
+        # a1 = msg.axes[AXIS_M1] if 0 <= AXIS_M1 < len(msg.axes) else 0.0
+
+        # buttons[7] -> increase, buttons[6] -> decrease (keeps existing sign behavior in servo_integrator_loop)
+        a1 = (1.0 if msg.buttons[6] else 0.0) - (1.0 if msg.buttons[7] else 0.0)
+        
         a2 = msg.axes[AXIS_M2] if 0 <= AXIS_M2 < len(msg.axes) else 0.0
         state["ax_m1"] = 0.0 if abs(a1) < MOTOR_DEADZONE else a1
         state["ax_m2"] = 0.0 if abs(a2) < MOTOR_DEADZONE else a2
@@ -311,6 +315,44 @@ def motor_http_loop():
             _send_motor_counts(m1, m2)
 
         time.sleep(0.01)
+
+# ------------------ Terminal command loop ------------------
+def terminal_cmd_loop():
+    print("\n[terminal] Ready. Type motor server commands, e.g.:")
+    print("  ilimit1 0.35   | ilimit2 0.25")
+    print("  istall1 0.80   | istall2 0.60")
+    print("  brakeall       | health")
+    print("  quit / exit\n")
+
+    while not rospy.is_shutdown():
+        try:
+            line = input("[motor-cmd] > ").strip()
+        except (EOFError, KeyboardInterrupt):
+            rospy.signal_shutdown("terminal exit")
+            return
+
+        if not line:
+            continue
+
+        cmd = line.lower()
+        if cmd in ("q", "quit", "exit"):
+            rospy.signal_shutdown("user requested exit")
+            return
+
+        if cmd in ("health", "status"):
+            try:
+                r = _session.get(HEALTH_URL, timeout=HTTP_TIMEOUT)
+                print(f"[health] {r.status_code}: {r.text}")
+            except Exception as e:
+                print("[health] failed:", e)
+            continue
+
+        # Forward everything else to POST /cmd
+        try:
+            r = _session.post(CMD_URL, json={"cmd": line}, timeout=HTTP_TIMEOUT)
+            print(f"[cmd] {r.status_code}: {r.text}")
+        except Exception as e:
+            print("[cmd] failed:", e)
 
 def health_poll_loop():
     """Poll /health periodically for on-screen diagnostics."""
@@ -443,6 +485,7 @@ def main():
     threading.Thread(target=motor_integrator_loop, daemon=True).start()
     threading.Thread(target=motor_http_loop, daemon=True).start()
     threading.Thread(target=health_poll_loop, daemon=True).start()
+    threading.Thread(target=terminal_cmd_loop, daemon=True).start()
 
     # Video loop blocks until quit (Q)
     try:
