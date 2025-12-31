@@ -10,76 +10,37 @@ from gi.repository import Gst, GstRtspServer, GLib
 
 Gst.init(None)
 
-def detect_v4l2_format(device: str) -> str | None:
-    """
-    Returns a V4L2 fourcc like 'NV12', 'UYVY', 'YUYV' if v4l2-ctl is available.
-    If it fails, return None and we fall back to NV12 request.
-    """
-    try:
-        out = subprocess.check_output(
-            ["v4l2-ctl", "-d", device, "--get-fmt-video"],
-            text=True, stderr=subprocess.STDOUT
-        )
-        # Example line: "Pixel Format      : 'UYVY'"
-        for line in out.splitlines():
-            if "Pixel Format" in line and "'" in line:
-                return line.split("'")[1]
-    except Exception:
-        return None
-    return None
+# def detect_v4l2_format(device: str) -> str | None:
+#     """
+#     Returns a V4L2 fourcc like 'NV12', 'UYVY', 'YUYV' if v4l2-ctl is available.
+#     If it fails, return None and we fall back to NV12 request.
+#     """
+#     try:
+#         out = subprocess.check_output(
+#             ["v4l2-ctl", "-d", device, "--get-fmt-video"],
+#             text=True, stderr=subprocess.STDOUT
+#         )
+#         # Example line: "Pixel Format      : 'UYVY'"
+#         for line in out.splitlines():
+#             if "Pixel Format" in line and "'" in line:
+#                 return line.split("'")[1]
+#     except Exception:
+#         return None
+#     return None
 
-
-def build_launch(device, w, h, fps, bps):
-    caps_src = f"video/x-raw,format=UYVY,width={w},height={h},framerate={fps}/1"
-    caps_enc = f"video/x-raw,format=NV12,width={w},height={h}"
-
-    if Gst.ElementFactory.find('v4l2h264enc'):
-        enc = f'v4l2h264enc extra-controls="encode,video_bitrate={bps}" ! h264parse config-interval=1'
-        print("v4l2h264enc")
-    elif Gst.ElementFactory.find('mpph264enc'):
-        enc = f"mpph264enc rc-mode=cbr bps={bps} gop={fps} ! h264parse config-interval=1"
-        print("mpph264enc")
-    else:
-        # software fallback
-        caps_enc = f"video/x-raw,format=I420,width={w},height={h}"
-        enc = (
-            f"x264enc tune=zerolatency speed-preset=ultrafast bitrate={bps//1000} "
-            f"key-int-max={fps} vbv-buf-capacity=1 threads=2 "
-            f"! h264parse config-interval=1 aggregate-mode=zero-latency"
-        )
-        print("x264enc")
-
-    # IMPORTANT: avoid rkvideoconvert/mppvideoconvert (RGA errors)
-    convert = f"videoconvert ! {caps_enc}"
-
-    pipeline = (
-        f"v4l2src device={device} io-mode=mmap do-timestamp=true ! {caps_src} "
-        f"! queue max-size-buffers=1 max-size-bytes=0 max-size-time=0 leaky=downstream "
-        f"! {convert} "
-        f"! queue max-size-buffers=1 max-size-bytes=0 max-size-time=0 leaky=downstream "
-        f"! {enc} "
-        f"! rtph264pay name=pay0 pt=96 config-interval=1"
-    )
-    return pipeline
 
 # def build_launch(device, w, h, fps, bps):
-#     # Source requests EXACTLY 1280x720 @ 20 fps NV12
-#     caps_src = f"video/x-raw,format=NV12,width={w},height={h},framerate={fps}/1"
+#     caps_src = f"video/x-raw,format=UYVY,width={w},height={h},framerate={fps}/1"
 #     caps_enc = f"video/x-raw,format=NV12,width={w},height={h}"
 
-#     # Pick encoder (HW → MPP → software)
 #     if Gst.ElementFactory.find('v4l2h264enc'):
-#         enc = (
-#             f'v4l2h264enc extra-controls="encode,video_bitrate={bps}" '
-#             f'! h264parse config-interval=1'
-#         )
+#         enc = f'v4l2h264enc extra-controls="encode,video_bitrate={bps}" ! h264parse config-interval=1'
 #         print("v4l2h264enc")
 #     elif Gst.ElementFactory.find('mpph264enc'):
-#         # Low-latency CBR, GOP ≈ fps
 #         enc = f"mpph264enc rc-mode=cbr bps={bps} gop={fps} ! h264parse config-interval=1"
 #         print("mpph264enc")
 #     else:
-#         # Software fallback – true low-latency
+#         # software fallback
 #         caps_enc = f"video/x-raw,format=I420,width={w},height={h}"
 #         enc = (
 #             f"x264enc tune=zerolatency speed-preset=ultrafast bitrate={bps//1000} "
@@ -88,15 +49,9 @@ def build_launch(device, w, h, fps, bps):
 #         )
 #         print("x264enc")
 
-#     # Converter (prefer rk/mpp, else generic)
-#     if Gst.ElementFactory.find('rkvideoconvert'):
-#         convert = f"rkvideoconvert ! {caps_enc}"
-#     elif Gst.ElementFactory.find('mppvideoconvert'):
-#         convert = f"mppvideoconvert ! {caps_enc}"
-#     else:
-#         convert = f"videoconvert ! {caps_enc}"
+#     # IMPORTANT: avoid rkvideoconvert/mppvideoconvert (RGA errors)
+#     convert = f"videoconvert ! {caps_enc}"
 
-#     # Leaky queues keep latency tiny (drop old frames)
 #     pipeline = (
 #         f"v4l2src device={device} io-mode=mmap do-timestamp=true ! {caps_src} "
 #         f"! queue max-size-buffers=1 max-size-bytes=0 max-size-time=0 leaky=downstream "
@@ -106,6 +61,51 @@ def build_launch(device, w, h, fps, bps):
 #         f"! rtph264pay name=pay0 pt=96 config-interval=1"
 #     )
 #     return pipeline
+
+def build_launch(device, w, h, fps, bps):
+    # Source requests EXACTLY 1280x720 @ 20 fps NV12
+    caps_src = f"video/x-raw,format=NV12,width={w},height={h},framerate={fps}/1"
+    caps_enc = f"video/x-raw,format=NV12,width={w},height={h}"
+
+    # Pick encoder (HW → MPP → software)
+    if Gst.ElementFactory.find('v4l2h264enc'):
+        enc = (
+            f'v4l2h264enc extra-controls="encode,video_bitrate={bps}" '
+            f'! h264parse config-interval=1'
+        )
+        print("v4l2h264enc")
+    elif Gst.ElementFactory.find('mpph264enc'):
+        # Low-latency CBR, GOP ≈ fps
+        enc = f"mpph264enc rc-mode=cbr bps={bps} gop={fps} ! h264parse config-interval=1"
+        print("mpph264enc")
+    else:
+        # Software fallback – true low-latency
+        caps_enc = f"video/x-raw,format=I420,width={w},height={h}"
+        enc = (
+            f"x264enc tune=zerolatency speed-preset=ultrafast bitrate={bps//1000} "
+            f"key-int-max={fps} vbv-buf-capacity=1 threads=2 "
+            f"! h264parse config-interval=1 aggregate-mode=zero-latency"
+        )
+        print("x264enc")
+
+    # Converter (prefer rk/mpp, else generic)
+    if Gst.ElementFactory.find('rkvideoconvert'):
+        convert = f"rkvideoconvert ! {caps_enc}"
+    elif Gst.ElementFactory.find('mppvideoconvert'):
+        convert = f"mppvideoconvert ! {caps_enc}"
+    else:
+        convert = f"videoconvert ! {caps_enc}"
+
+    # Leaky queues keep latency tiny (drop old frames)
+    pipeline = (
+        f"v4l2src device={device} io-mode=mmap do-timestamp=true ! {caps_src} "
+        f"! queue max-size-buffers=1 max-size-bytes=0 max-size-time=0 leaky=downstream "
+        f"! {convert} "
+        f"! queue max-size-buffers=1 max-size-bytes=0 max-size-time=0 leaky=downstream "
+        f"! {enc} "
+        f"! rtph264pay name=pay0 pt=96 config-interval=1"
+    )
+    return pipeline
 
 class Server(GstRtspServer.RTSPServer):
     def __init__(self, device, w, h, fps, bps, port, mount="/stream"):
@@ -134,7 +134,7 @@ def get_local_ip():
 if __name__ == "__main__":
     DEVICE = "/dev/video0"
     WIDTH, HEIGHT = 1280, 720
-    FPS = 15                 # <- requested 20 fps
+    FPS = 20                 # <- requested 20 fps
     BITRATE = 4_000_000      # 4 Mbps (tune up/down as needed)
     PORT = 8554
     MOUNT = "/stream"
