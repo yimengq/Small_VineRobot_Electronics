@@ -30,20 +30,18 @@ def detect_v4l2_format(device: str) -> str | None:
 
 
 def build_launch(device, w, h, fps, bps):
-    cam_fmt = detect_v4l2_format(device) or "NV12"
-    src_fmt = cam_fmt
+    caps_src = f"video/x-raw,format=UYVY,width={w},height={h},framerate={fps}/1"
+    caps_enc = f"video/x-raw,format=NV12,width={w},height={h}"
 
-    # Encoder selection
-    if Gst.ElementFactory.find("v4l2h264enc"):
-        enc_in_fmt = "NV12"
+    if Gst.ElementFactory.find('v4l2h264enc'):
         enc = f'v4l2h264enc extra-controls="encode,video_bitrate={bps}" ! h264parse config-interval=1'
         print("v4l2h264enc")
-    elif Gst.ElementFactory.find("mpph264enc"):
-        enc_in_fmt = "NV12"
+    elif Gst.ElementFactory.find('mpph264enc'):
         enc = f"mpph264enc rc-mode=cbr bps={bps} gop={fps} ! h264parse config-interval=1"
         print("mpph264enc")
     else:
-        enc_in_fmt = "I420"
+        # software fallback
+        caps_enc = f"video/x-raw,format=I420,width={w},height={h}"
         enc = (
             f"x264enc tune=zerolatency speed-preset=ultrafast bitrate={bps//1000} "
             f"key-int-max={fps} vbv-buf-capacity=1 threads=2 "
@@ -51,21 +49,13 @@ def build_launch(device, w, h, fps, bps):
         )
         print("x264enc")
 
-    caps_src = f"video/x-raw,format={src_fmt},width={w},height={h},framerate={fps}/1"
-    caps_enc = f"video/x-raw,format={enc_in_fmt},width={w},height={h}"
+    # IMPORTANT: avoid rkvideoconvert/mppvideoconvert (RGA errors)
+    convert = f"videoconvert ! {caps_enc}"
 
-    # Convert only if needed; otherwise just capsfilter (no-op) to keep syntax valid
-    if src_fmt == enc_in_fmt:
-        mid = f"! {caps_enc}"                      # capsfilter only
-    else:
-        mid = f"! videoconvert ! {caps_enc}"       # single conversion
-
-    # Start with mmap for stability; dmabuf can be tried later
     pipeline = (
-        f"v4l2src device={device} io-mode=mmap do-timestamp=true "
-        f"! {caps_src} "
+        f"v4l2src device={device} io-mode=mmap do-timestamp=true ! {caps_src} "
         f"! queue max-size-buffers=1 max-size-bytes=0 max-size-time=0 leaky=downstream "
-        f"{mid} "
+        f"! {convert} "
         f"! queue max-size-buffers=1 max-size-bytes=0 max-size-time=0 leaky=downstream "
         f"! {enc} "
         f"! rtph264pay name=pay0 pt=96 config-interval=1"
