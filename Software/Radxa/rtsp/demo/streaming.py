@@ -35,7 +35,7 @@ Servo_Params_Serial = {
 }
 
 # Radxa endpoints (video + HTTP control)
-RADXA_IP       = "192.168.1.49"
+RADXA_IP       = "192.168.1.66"
 RTSP_PORT      = 8554
 RTSP_PATH      = "/stream"
 SERVO_HTTP_PT  = 80

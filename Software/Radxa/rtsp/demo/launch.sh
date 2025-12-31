@@ -36,11 +36,16 @@ gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && rosrun joy joy_n
 # echo "[INFO] Starting host_combined.py..."
 # gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 host_combined.py; exec bash"
 
-echo "[INFO] Starting streaming.py..."
-gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 streaming.py; exec bash"
+# # Start base_station.py in a new terminal
+echo "[INFO] Starting host_modified.py..."
+gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 host_modified.py; exec bash"
 
-echo "[INFO] Starting base.py..."
-gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 base.py; exec bash"
+
+# echo "[INFO] Starting streaming.py..."
+# gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 streaming.py; exec bash"
+
+# echo "[INFO] Starting base.py..."
+# gnome-terminal -- bash -c "source /opt/ros/noetic/setup.bash && cd \"$SCRIPT_DIR\" && python3 base.py; exec bash"
 
 sleep 5
 wait $ROSCORE_PID
