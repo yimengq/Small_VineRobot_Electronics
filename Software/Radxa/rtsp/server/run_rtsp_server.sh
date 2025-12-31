@@ -50,7 +50,7 @@ sudo python3 rtsp_server.py --device /dev/video0 --width 1920 --height 1080 --fp
 # sudo python3 temp_server.py &
 # sudo python3 IMU_server.py &
 # sudo python3 cam2_server.py &
-sudo python3 led_server_bit_bang.py &
+# sudo python3 led_server_bit_bang.py &
 # sudo python3 servo_server.py &
 sudo python3 2Dac2Motor_network.py &
 # sudo python3 IMU_server.py
