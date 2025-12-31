@@ -55,7 +55,7 @@ Servo_Params_Serial = {
 }
 
 # Radxa endpoints (video + HTTP control)
-RADXA_IP  = "192.168.1.49"
+RADXA_IP  = "192.168.1.66"
 RTSP_PORT = 8554
 RTSP_PATH = "/stream"
 
@@ -456,11 +456,11 @@ def main():
 
     # Open pressure UART
     uart = None
-    try:
-        uart = serial.Serial(PRESSURE_UART_PATH, PRESSURE_BAUD, timeout=1)
-        print("[pressure] opened", uart.port)
-    except Exception as e:
-        print("[pressure] open failed:", e)
+    # try:
+    #     uart = serial.Serial(PRESSURE_UART_PATH, PRESSURE_BAUD, timeout=1)
+    #     print("[pressure] opened", uart.port)
+    # except Exception as e:
+    #     print("[pressure] open failed:", e)
 
     # Local TMotor
     motor = TMotorManager(

@@ -3,3 +3,6 @@
 /Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build
 /Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build
 /Software/Espressif/ESP32-PoE_Eth_to_AP_v4.4/build
+
+# Logs
+Software/Radxa/rtsp/demo/*.csv
