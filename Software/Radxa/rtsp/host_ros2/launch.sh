@@ -14,8 +14,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 HOST_SCRIPT="$SCRIPT_DIR/host_modified_ros2.py"
 
-# Source ROS 2
+# --- Source ROS 2 Humble safely even under `set -u` ---
+# Some ROS 2 setup scripts reference AMENT_TRACE_SETUP_FILES; if it's unset and
+# nounset is enabled, sourcing can fail. Predefine it and temporarily disable nounset.
+export AMENT_TRACE_SETUP_FILES="${AMENT_TRACE_SETUP_FILES:-}"
+set +u
 source /opt/ros/humble/setup.bash
+set -u
 
 # Optional: source a colcon workspace if present
 if [ -f "$SCRIPT_DIR/../install/setup.bash" ]; then

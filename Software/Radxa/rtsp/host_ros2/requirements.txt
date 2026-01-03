@@ -1,0 +1,27 @@
+# Python (pip) dependencies for host_modified_ros2.py
+# Install with:
+#   python3 -m pip install -r requirements.txt
+#
+# ROS 2 dependencies are NOT pip packages. Install via apt instead:
+#   sudo apt update
+#   sudo apt install ros-humble-joy ros-humble-sensor-msgs
+# (rclpy ships with ROS 2; you typically already have it if Humble is installed.)
+
+# HTTP client
+requests>=2.31.0
+
+# Serial port (pressure UART + optional motor UART helpers)
+pyserial>=3.5
+
+# OpenCV for RTSP display (on ARM, you may prefer apt: `sudo apt install python3-opencv`)
+# If you use apt OpenCV, you can omit this line.
+opencv-python>=4.8.0
+
+# Common numeric dependency (often already pulled in by OpenCV / motor libs)
+numpy>=1.24.0
+
+# TMotor serial control
+# Your script imports: `from tmotor_serial_control.servo_serial import TMotorManager`
+# If you don't already have `tmotor_serial_control` as a local module in your repo,
+# the closest upstream package on PyPI is TMotorCANControl:
+TMotorCANControl>=1.1.4
