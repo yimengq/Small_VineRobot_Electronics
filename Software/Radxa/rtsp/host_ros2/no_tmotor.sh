@@ -7,7 +7,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-HOST_SCRIPT="$SCRIPT_DIR/host_no_tmotor.py"
+HOST_SCRIPT="$SCRIPT_DIR/host_no_t_vel.py"
 
 # Source ROS 2 Humble safely even under `set -u`
 export AMENT_TRACE_SETUP_FILES="${AMENT_TRACE_SETUP_FILES:-}"
@@ -18,7 +18,7 @@ set -u
 echo "[INFO] Killing existing processes (best-effort)..."
 pkill -f "ros2 run joy joy_node" 2>/dev/null || true
 pkill -f "host_no_tmotor.py" 2>/dev/null || true
-pkill -f "python3 .*host_no_tmotor.py" 2>/dev/null || true
+pkill -f "python3 .*host_no_t_vel.py" 2>/dev/null || true
 sleep 1
 
 JOY_CMD="source /opt/ros/humble/setup.bash; ros2 run joy joy_node"
