@@ -52,6 +52,8 @@ sudo python3 rtsp_server.py & #--device /dev/video0 --width 1280 --height 720 --
 # sudo python3 cam2_server.py &
 # sudo python3 led_server_bit_bang.py &
 # sudo python3 servo_server.py &
-sudo python3 2Dac2Motor_network.py --server --host 0.0.0.0 --port 8000 
+# sudo python3 2Dac2Motor_network.py --server --host 0.0.0.0 --port 8000 
+
+sudo python3 udp_stream.py --host 192.168.1.142 --port 5000 --fps 20
 # sudo python3 IMU_server.py
 
