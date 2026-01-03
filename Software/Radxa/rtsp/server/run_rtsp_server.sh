@@ -38,22 +38,25 @@
 #!/bin/bash
 
 # Kill anything using ports 80, 8080, 8554
-sudo fuser -k 80/tcp   2>/dev/null
+sudo fuser -k 8000/tcp   2>/dev/null
 sudo fuser -k 8080/tcp 2>/dev/null
-sudo fuser -k 8554/tcp 2>/dev/null
+sudo fuser -k 5000/tcp 2>/dev/null
 sudo fuser -k 8181/tcp 2>/dev/null
 
 # Small pause to ensure processes are released
 sleep 1
 
-sudo python3 rtsp_server.py & #--device /dev/video0 --width 1280 --height 720 --fps 20 --bitrate 20000000 &
+# sudo python3 rtsp_server.py & #--device /dev/video0 --width 1280 --height 720 --fps 20 --bitrate 20000000 &
 # sudo python3 temp_server.py &
 # sudo python3 IMU_server.py &
 # sudo python3 cam2_server.py &
 # sudo python3 led_server_bit_bang.py &
 # sudo python3 servo_server.py &
-# sudo python3 2Dac2Motor_network.py --server --host 0.0.0.0 --port 8000 
+sudo python3 udp_server.py --host 192.168.1.142 --port 5000 --fps 20 &
 
-sudo python3 udp_stream.py --host 192.168.1.142 --port 5000 --fps 20
+# sudo python3 2Dac2Motor_network.py --server --host 0.0.0.0 --port 8000 
+sudo python3 motor_velocity.py --server --host 0.0.0.0 --port 8000 
+
+
 # sudo python3 IMU_server.py
 
