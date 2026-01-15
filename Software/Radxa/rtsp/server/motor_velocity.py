@@ -586,8 +586,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--bus", type=int, default=5)
 
-    ap.add_argument("--addr1", type=lambda x: int(x, 0), default=0x31, help="Motor1 DRV8234 addr")
-    ap.add_argument("--addr2", type=lambda x: int(x, 0), default=0x34, help="Motor2 DRV8234 addr")
+    ap.add_argument("--addr1", type=lambda x: int(x, 0), default=0x30, help="Motor1 DRV8234 addr")
+    ap.add_argument("--addr2", type=lambda x: int(x, 0), default=0x32, help="Motor2 DRV8234 addr")
 
     ap.add_argument("--dac1-addr", dest="dac1_addr", type=lambda x: int(x, 0), default=0x62, help="DAC1 addr (motor1 VREF)")
     ap.add_argument("--dac2-addr", dest="dac2_addr", type=lambda x: int(x, 0), default=0x63, help="DAC2 addr (motor2 VREF)")

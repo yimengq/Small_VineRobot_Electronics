@@ -50,9 +50,9 @@ sleep 1
 # sudo python3 temp_server.py &
 # sudo python3 IMU_server.py &
 # sudo python3 cam2_server.py &
-# sudo python3 led_server_bit_bang.py &
+sudo python3 led_server.py &
 # sudo python3 servo_server.py &
-sudo python3 udp_server.py --host 192.168.1.142 --port 5000 --fps 20 &
+sudo python3 udp_dual.py --host 192.168.1.142 --port 5000 --fps0 20 --fps10 5 --dev10_mode yuy2 &
 
 # sudo python3 2Dac2Motor_network.py --server --host 0.0.0.0 --port 8000 
 sudo python3 motor_velocity.py --server --host 0.0.0.0 --port 8000 
