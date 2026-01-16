@@ -499,7 +499,7 @@ from sensor_msgs.msg import Joy
 PRESSURE_UART_PATH = "/dev/serial/by-id/usb-Silicon_Labs_CP2104_USB_to_UART_Bridge_Controller_02857388-if00-port0"
 PRESSURE_BAUD = 115200
 
-RADXA_IP  = "192.168.1.56"
+RADXA_IP  = "192.168.1.59"
 RTSP_PORT = 8554
 RTSP_PATH = "/stream"
 
