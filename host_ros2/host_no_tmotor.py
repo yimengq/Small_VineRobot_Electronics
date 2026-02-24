@@ -39,7 +39,7 @@ PRESSURE_UART_PATH = "/dev/serial/by-id/usb-Silicon_Labs_CP2104_USB_to_UART_Brid
 PRESSURE_BAUD = 115200
 
 # Radxa endpoints (video + HTTP control)
-RADXA_IP  = "192.168.1.59"
+RADXA_IP  = "192.168.8.232"
 RTSP_PORT = 8554
 RTSP_PATH = "/stream"
 

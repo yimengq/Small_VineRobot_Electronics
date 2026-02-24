@@ -63,7 +63,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-HOST_SCRIPT="$SCRIPT_DIR/host_udp.py"
+HOST_SCRIPT="$SCRIPT_DIR/host_esp_base.py"
 IMU_SCRIPT="$SCRIPT_DIR/IMU_host.py"   # <-- adjust if your file is elsewhere
 
 # Source ROS 2 Humble safely even under `set -u`
@@ -74,7 +74,7 @@ set -u
 
 echo "[INFO] Killing existing processes (best-effort)..."
 pkill -f "ros2 run joy joy_node" 2>/dev/null || true
-pkill -f "host_no_tmotor.py" 2>/dev/null || true
+pkill -f "host_esp_base.py" 2>/dev/null || true
 pkill -f "python3 .*host_udp.py" 2>/dev/null || true
 pkill -f "python3 .*IMU_host.py" 2>/dev/null || true   # <-- added
 sleep 1
@@ -103,8 +103,8 @@ JOY_PID=$(run_in_terminal_or_bg "joy_node" "$JOY_CMD") || true
 echo "[INFO] Starting joystick+stream app..."
 HOST_PID=$(run_in_terminal_or_bg "joy_stream" "$HOST_CMD") || true
 
-echo "[INFO] Starting IMU host visualizer..."
-IMU_PID=$(run_in_terminal_or_bg "imu_host" "$IMU_CMD") || true
+# echo "[INFO] Starting IMU host visualizer..."
+# IMU_PID=$(run_in_terminal_or_bg "imu_host" "$IMU_CMD") || true
 
 if ! command -v gnome-terminal >/dev/null 2>&1; then
   echo "[INFO] Background PIDs: joy=${JOY_PID:-n/a} host=${HOST_PID:-n/a} imu=${IMU_PID:-n/a}"

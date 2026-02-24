@@ -9,7 +9,7 @@ from vtkmodules.vtkCommonTransforms import vtkTransform
 # -----------------------------
 # Config
 # -----------------------------
-HOST = "192.168.1.59"
+HOST = "192.168.8.232"
 PORT = 6020
 TEST = False
 

@@ -627,7 +627,7 @@ from sensor_msgs.msg import Joy
 PRESSURE_UART_PATH = "/dev/serial/by-id/usb-Silicon_Labs_CP2104_USB_to_UART_Bridge_Controller_02857388-if00-port0"
 PRESSURE_BAUD = 115200
 
-RADXA_IP  = "192.168.1.59"
+RADXA_IP  = "192.168.8.232"
 
 # -------- UDP VIDEO (RTP/H264) --------
 # Radxa sender should do: ... ! rtph264pay pt=96 ... ! udpsink host=<BASE_IP> port=5000 sync=false
@@ -635,7 +635,7 @@ UDP_PORT = 5000
 UDP_BIND = "0.0.0.0"  # informational (we don't set udpsrc address; it binds locally)
 RTP_CAPS = "application/x-rtp,media=video,encoding-name=H264,payload=96,clock-rate=90000"
 
-MOTOR_HTTP_PT = 8000
+MOTOR_HTTP_PT = 8005
 LED_HTTP_PT   = 8080
 VIDEO_SWITCH_PT = 8081  # Radxa camera switch server port
 
@@ -1072,12 +1072,20 @@ def video_loop():
         print(f"[video] cannot open UDP stream on {UDP_BIND}:{UDP_PORT}")
         return
 
+    win = "UDP + Joystick Base Station (ROS2)"
+    cv2.namedWindow(win, cv2.WINDOW_NORMAL)   # allow resizing
+    cv2.resizeWindow(win, 1280, 720)          # pick what you want (e.g., 800x600, 1920x1080)
+
     last_ts = time.time()
     frames = 0
     fps = 0.0
 
     while rclpy.ok():
         ok, frame = cap.read()
+        # Contrast/brightness: new = alpha*img + beta
+        alpha = 2.0   # contrast (1.0 = no change). Try 1.2–2.0
+        beta  = 50    # brightness (-50..50). Try 5 or 10 if too dark
+        frame = cv2.convertScaleAbs(frame, alpha=alpha, beta=beta)
         if not ok or frame is None:
             print("[video] read failed, reconnecting...")
             cap.release()
@@ -1122,7 +1130,7 @@ def video_loop():
         _put_text(frame, "LB: LED ON  RB: LED OFF  A: BRAKE  X: CAM SW  (Q to quit video)", (10, 168))
         _put_text(frame, f"JOY: {'OK' if joy_ok else 'WAITING'}", (10, 192))
 
-        cv2.imshow("UDP + Joystick Base Station (ROS2)", frame)
+        cv2.imshow(win, frame)
         if (cv2.waitKey(1) & 0xFF) == ord('q'):
             break
 

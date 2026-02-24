@@ -1,21 +1,37 @@
 #!/usr/bin/env python3
-"""host_no_tmotor.py  (VELOCITY-ONLY + UART STREAM)
+"""host_no_tmotor.py  (VELOCITY-ONLY + UDP VIDEO + RESPONSIVE MOTOR HTTP + UART OUT)
 
 ROS 2 Humble base-station host.
 
 What it does:
-- Subscribes to /joy (sensor_msgs/msg/Joy) published by ROS2 joy_node
-- Streams RTSP video from the Radxa (OpenCV)
-- Sends *velocity* commands to the Radxa 2Dac2Motor HTTP server
-- ALSO streams joystick motor commands over UART to an ESP32 (optional)
+- Subscribes to /joy (sensor_msgs/msg/Joy)
+- Receives *UDP RTP/H264* video (OpenCV + GStreamer)
+- Sends *velocity* commands to the Radxa 2Dac2Motor HTTP server WITHOUT queueing
+  (single sender thread, latest-only)
 
-UART motor format (to ESP32):
-  "m1,m2\n" where each is int in [-255..255]
-  Example: "-120,45\n"
+NEW (Axis split):
+- UART motor uses /joy.axes[1]  -> sends -255..255 over /dev/ttyUSB0 (newline-terminated)
+- HTTP Motor2 (M2) uses /joy.axes[4]
+
+Radxa 2Dac2Motor HTTP API:
+  GET  /health
+  POST /motor {"m1": 0.25, "m2": -0.10}
+  POST /brake {}
+  POST /cmd   {"cmd":"ilimit1 0.35"}
+
+NEW:
+- Press X button to toggle Radxa camera stream between /dev/video0 and /dev/video10
+  (requires Radxa camera-switch server on port 8081 with POST /cam/0 and /cam/10)
+
+NOTE:
+- Your original code used X (button index 1) for pressure down. That conflicts with camera switching.
+  This version moves pressure-down to button index 2 (commonly "B").
 """
 
 import threading
 import time
+import queue
+from concurrent.futures import ThreadPoolExecutor
 
 import cv2
 import requests
@@ -31,66 +47,73 @@ from sensor_msgs.msg import Joy
 PRESSURE_UART_PATH = "/dev/serial/by-id/usb-Silicon_Labs_CP2104_USB_to_UART_Bridge_Controller_02857388-if00-port0"
 PRESSURE_BAUD = 115200
 
-# --- Motor UART (ESP32 joystick -> DRV control) ---
-# Set this to your ESP32/CP210x device path (or leave "" to disable)
-MOTOR_UART_PATH = ""  # e.g. "/dev/serial/by-id/usb-Silicon_Labs_CP210x_USB_to_UART_Bridge_Controller_XXXX-if00-port0"
-MOTOR_UART_BAUD = 115200
+RADXA_IP = "192.168.8.232"
 
-RADXA_IP  = "192.168.1.59"
-RTSP_PORT = 8554
-RTSP_PATH = "/stream"
+# -------- UDP VIDEO (RTP/H264) --------
+# Radxa sender should do: ... ! rtph264pay pt=96 ... ! udpsink host=<BASE_IP> port=5000 sync=false
+UDP_PORT = 5000
+UDP_BIND = "0.0.0.0"  # informational (we don't set udpsrc address; it binds locally)
+RTP_CAPS = "application/x-rtp,media=video,encoding-name=H264,payload=96,clock-rate=90000"
 
-MOTOR_HTTP_PT = 8000
-LED_HTTP_PT   = 8080
+MOTOR_HTTP_PT = 8005
+LED_HTTP_PT = 8080
+VIDEO_SWITCH_PT = 8081  # Radxa camera switch server port
 
-RTSP_URL        = f"rtsp://{RADXA_IP}:{RTSP_PORT}{RTSP_PATH}"
-MOTOR_HEALTH    = f"http://{RADXA_IP}:{MOTOR_HTTP_PT}/health"
-MOTOR_CMD_URL   = f"http://{RADXA_IP}:{MOTOR_HTTP_PT}/cmd"
-MOTOR_JSON_URL  = f"http://{RADXA_IP}:{MOTOR_HTTP_PT}/motor"
+MOTOR_HEALTH = f"http://{RADXA_IP}:{MOTOR_HTTP_PT}/health"
+MOTOR_CMD_URL = f"http://{RADXA_IP}:{MOTOR_HTTP_PT}/cmd"
+MOTOR_JSON_URL = f"http://{RADXA_IP}:{MOTOR_HTTP_PT}/motor"
 MOTOR_BRAKE_URL = f"http://{RADXA_IP}:{MOTOR_HTTP_PT}/brake"
 
-LED_ON_URL  = f"http://{RADXA_IP}:{LED_HTTP_PT}/on"
+LED_ON_URL = f"http://{RADXA_IP}:{LED_HTTP_PT}/on"
 LED_OFF_URL = f"http://{RADXA_IP}:{LED_HTTP_PT}/off"
 
-HTTP_TIMEOUT = (0.5, 5.0)   # (connect, read)
+# Camera switch endpoints on Radxa
+CAM0_URL = f"http://{RADXA_IP}:{VIDEO_SWITCH_PT}/cam/0"
+CAM10_URL = f"http://{RADXA_IP}:{VIDEO_SWITCH_PT}/cam/10"
+
+# Default HTTP timeouts for non-motor endpoints (health/cmd/led/cam-switch)
+HTTP_TIMEOUT = (0.5, 5.0)  # (connect, read)
 RECONNECT_DELAY_S = 1.5
 
+# -------- UART motor output (Axis UART -> -255..255) --------
+M2_UART_PATH = "/dev/ttyUSB0"
+M2_UART_BAUD = 115200
+M2_UART_RATE_HZ = 50.0  # 50 Hz feels responsive
+M2_UART_EPS = 1  # resend only if change >= 1 count
+
 # ------------------ Joystick mapping ------------------
-BTN_PRESSURE_UP  = 3   # Y button → pressure +0.05
-BTN_PRESSURE_DN  = 1   # X button → pressure -0.05
+BTN_PRESSURE_UP = 3  # Y button → pressure +0.05
+BTN_PRESSURE_DN = 2  # (changed) B button → pressure -0.05  (X is used for cam switch)
 
-AXIS_M2 = 1
+# Axis split:
+AXIS_UART = 1  # UART motor uses axes[1]
+AXIS_M2 = 4    # HTTP Motor 2 uses axes[4]
 
-# Common ROS/Linux mappings for Xbox-like controllers:
-AXIS_M1_FWD = 5   # "forward" trigger (e.g., RT)
-AXIS_M1_REV = 2   # "reverse" trigger (e.g., LT)
+# Triggers (common)
+AXIS_M1_FWD = 5  # RT
+AXIS_M1_REV = 2  # LT
 
-# Fallback digital buttons (old mapping)
+# Fallback digital buttons
 BTN_M1_FWD = 6
 BTN_M1_REV = 7
 
-BTN_LED_ON  = 4        # LB → LED ON
-BTN_LED_OFF = 5        # RB → LED OFF
+BTN_LED_ON = 4        # LB → LED ON
+BTN_LED_OFF = 5       # RB → LED OFF
 
-BTN_BRAKE_ALL = 0      # A → brake both motors (POST /brake {})
+BTN_BRAKE_ALL = 0     # A → brake both motors
+
+# Camera toggle on X button
+BTN_CAM_SWITCH = 1    # X button → toggle /dev/video0 <-> /dev/video10
+CAM_SWITCH_DEBOUNCE_S = 0.35
 
 # ------------------ Velocity control ------------------
 MOTOR_DEADZONE = 0.12
+HTTP_VEL_INTERVAL = 0.05  # 20 Hz "compute" loop
 
-# How often to POST velocities to /motor
-HTTP_VEL_INTERVAL = 0.05   # 20 Hz
+VEL_EPS = 0.02
+VEL_KEEPALIVE_S = 0.25
 
-# Don’t spam if unchanged (but still keepalive periodically)
-VEL_EPS = 0.02             # minimum change to trigger a send
-VEL_KEEPALIVE_S = 0.25     # send even if unchanged this long
-
-# If /joy stops updating, send 0 velocity (deadman)
 JOY_DEADMAN_S = 0.35
-
-# ------------------ UART motor streaming ------------------
-UART_VEL_INTERVAL = 0.05   # 20 Hz
-UART_EPS = 3               # integer delta threshold in [-255..255]
-UART_KEEPALIVE_S = 0.25
 
 # ------------------ Pressure range ------------------
 PRESSURE_MIN = 0.0
@@ -106,55 +129,42 @@ def trigger_to_01(x: float, seen_negative: bool) -> float:
 
     Two common conventions:
       A) [0..1]  rest=0, pressed=1
-      B) [-1..1] rest=1, pressed=-1  (so pressed decreases)
-
-    We auto-detect convention B if we ever see a negative value.
+      B) [-1..1] rest=1, pressed=-1  (pressed decreases)
     """
     if seen_negative:
-        # map 1 -> 0, -1 -> 1
         return clamp((1.0 - x) * 0.5, 0.0, 1.0)
-    else:
-        # assume already [0..1]
-        return clamp(x, 0.0, 1.0)
-
-def vel_to_int255(v: float) -> int:
-    v = clamp(float(v), -1.0, 1.0)
-    return int(round(v * 255.0))
+    return clamp(x, 0.0, 1.0)
 
 lock = threading.Lock()
 state = {
     "pressure": 0.0,
 
-    # joystick axes (after deadzone)
     "ax_m1": 0.0,
-    "ax_m2": 0.0,
+    "ax_m2": 0.0,        # HTTP motor2 axis (axes[4])
+    "ax_uart": 0.0,      # UART motor axis (axes[1])
 
-    # For trigger normalization auto-detect
     "m1_fwd_seen_negative": False,
     "m1_rev_seen_negative": False,
 
-    # timing / last values
     "last_joy_ts": 0.0,
-    "last_vel_post_ts": 0.0,
-    "last_vel_sent": (0.0, 0.0),
+    "last_vel_post_ts": 0.0,      # (compute loop timing)
+    "last_vel_sent": (0.0, 0.0),  # what we *requested* last (not necessarily delivered)
     "last_keepalive_ts": 0.0,
-
-    # UART motor bookkeeping
-    "last_uart_ts": 0.0,
-    "last_uart_sent": (0, 0),
-    "last_uart_keepalive": 0.0,
 
     "joy_alive": False,
     "led_on": False,
     "prev_buttons": [],
 
-    # health polling
+    "active_cam": 0,              # 0 => /dev/video0, 10 => /dev/video10
+    "last_cam_switch_ts": 0.0,
+
     "health_ok": None,
     "health_summary": "",
 }
 
-# ------------------ HTTP helpers ------------------
+# ------------------ HTTP helpers (bounded threads) ------------------
 _session = requests.Session()
+_http_exec = ThreadPoolExecutor(max_workers=6)  # prevents infinite thread growth
 
 def _post_async(url, json=None, timeout=HTTP_TIMEOUT):
     def _do():
@@ -162,22 +172,107 @@ def _post_async(url, json=None, timeout=HTTP_TIMEOUT):
             _session.post(url, json=json, timeout=timeout)
         except Exception as e:
             print(f"[http] POST {url} failed: {e}")
-    threading.Thread(target=_do, daemon=True).start()
+    _http_exec.submit(_do)
 
 def _get_json(url, timeout=HTTP_TIMEOUT):
     r = _session.get(url, timeout=timeout)
     r.raise_for_status()
     return r.json()
 
-# ------------------ Video helpers ------------------
-def _open_rtsp(url: str):
-    cap = cv2.VideoCapture(url)
-    if cap.isOpened():
-        return cap
-    cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
-    if cap.isOpened():
-        return cap
-    gst = f"rtspsrc location={url} latency=0 ! rtph264depay ! avdec_h264 ! videoconvert ! appsink"
+# ------------------ Motor TX (latest-only; no command queueing) ------------------
+_motor_lock = threading.Lock()
+_motor_latest = {"m1": 0.0, "m2": 0.0, "dirty": False}
+_motor_event = threading.Event()
+_motor_ctrl_q: "queue.SimpleQueue[tuple[str, object]]" = queue.SimpleQueue()
+
+# Fast motor timeouts to stay responsive under load
+MOTOR_POST_TIMEOUT = (0.2, 0.2)  # (connect, read)
+MOTOR_KEEPALIVE_S = 0.25
+
+def motor_set_velocity(v1: float, v2: float):
+    with _motor_lock:
+        _motor_latest["m1"] = float(v1)
+        _motor_latest["m2"] = float(v2)
+        _motor_latest["dirty"] = True
+    _motor_event.set()
+
+def motor_request_brake():
+    _motor_ctrl_q.put(("brake", None))
+    _motor_event.set()
+
+def motor_sender_loop():
+    """
+    Single thread responsible for ALL motor transmissions.
+    - Never queues old velocities: sends newest only.
+    - Brake has priority.
+    """
+    last_sent = (None, None)
+    last_send_ts = 0.0
+
+    while rclpy.ok():
+        _motor_event.wait(timeout=0.05)
+
+        # 1) Drain control queue (priority actions)
+        while True:
+            try:
+                cmd, _payload = _motor_ctrl_q.get_nowait()
+            except Exception:
+                break
+
+            if cmd == "brake":
+                try:
+                    _session.post(MOTOR_BRAKE_URL, json={}, timeout=MOTOR_POST_TIMEOUT)
+                    print("[motor] BRAKE (sent)")
+                except Exception as e:
+                    print(f"[motor-http] POST /brake failed: {e}")
+
+                with _motor_lock:
+                    _motor_latest["m1"] = 0.0
+                    _motor_latest["m2"] = 0.0
+                    _motor_latest["dirty"] = False
+
+                last_sent = (0.0, 0.0)
+                last_send_ts = time.time()
+
+        # 2) Latest velocity send
+        now = time.time()
+        with _motor_lock:
+            m1 = _motor_latest["m1"]
+            m2 = _motor_latest["m2"]
+            dirty = _motor_latest["dirty"]
+            if dirty:
+                _motor_latest["dirty"] = False
+
+        keepalive = (now - last_send_ts) >= MOTOR_KEEPALIVE_S
+        changed = (
+            last_sent[0] is None
+            or abs(m1 - last_sent[0]) >= VEL_EPS
+            or abs(m2 - last_sent[1]) >= VEL_EPS
+        )
+
+        if dirty or (keepalive and changed):
+            try:
+                _session.post(MOTOR_JSON_URL, json={"m1": m1, "m2": m2}, timeout=MOTOR_POST_TIMEOUT)
+                last_sent = (m1, m2)
+                last_send_ts = now
+            except Exception as e:
+                print(f"[motor-http] POST /motor failed: {e}")
+
+        _motor_event.clear()
+
+# ------------------ Video helpers (UDP RTP/H264) ------------------
+def _open_udp():
+    """
+    Requires OpenCV built with GStreamer support.
+    Use capsfilter form (more reliable with OpenCV).
+    """
+    gst = (
+    f"udpsrc port={UDP_PORT} reuse=true ! "
+    f"{RTP_CAPS} ! "
+    "rtpjitterbuffer latency=50 drop-on-late=true ! "
+    "rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! "
+    "appsink drop=true sync=false max-buffers=1"
+    )
     cap = cv2.VideoCapture(gst, cv2.CAP_GSTREAMER)
     if cap.isOpened():
         return cap
@@ -200,6 +295,16 @@ def joy_cb(msg: Joy):
         if not state["prev_buttons"]:
             state["prev_buttons"] = [0] * len(msg.buttons)
 
+        # Camera switch on X (edge-triggered, debounced)
+        if 0 <= BTN_CAM_SWITCH < len(msg.buttons) and _edge(state["prev_buttons"][BTN_CAM_SWITCH], msg.buttons[BTN_CAM_SWITCH]):
+            if (now - float(state.get("last_cam_switch_ts", 0.0))) >= CAM_SWITCH_DEBOUNCE_S:
+                next_cam = 10 if state.get("active_cam", 0) == 0 else 0
+                url = CAM10_URL if next_cam == 10 else CAM0_URL
+                _post_async(url, timeout=HTTP_TIMEOUT)
+                state["active_cam"] = next_cam
+                state["last_cam_switch_ts"] = now
+                print(f"[video] switch requested -> /dev/video{next_cam}")
+
         # Pressure bumps (edge-triggered)
         if 0 <= BTN_PRESSURE_UP < len(msg.buttons) and _edge(state["prev_buttons"][BTN_PRESSURE_UP], msg.buttons[BTN_PRESSURE_UP]):
             state["pressure"] = clamp(state["pressure"] + 0.05, PRESSURE_MIN, PRESSURE_MAX)
@@ -216,21 +321,19 @@ def joy_cb(msg: Joy):
             state["led_on"] = False
             print("[LED] OFF")
 
-        # Brake both Radxa motors
+        # Brake motors (priority)
         if 0 <= BTN_BRAKE_ALL < len(msg.buttons) and _edge(state["prev_buttons"][BTN_BRAKE_ALL], msg.buttons[BTN_BRAKE_ALL]):
-            _post_async(MOTOR_BRAKE_URL, json={})
+            motor_request_brake()
             state["last_vel_sent"] = (0.0, 0.0)
-            state["last_uart_sent"] = (0, 0)
-            print("[motor] BRAKE")
+            print("[motor] BRAKE (requested)")
 
-        # ---------------- Motor 1 (variable) ----------------
+        # Motor 1 (variable/level-controlled)
         have_m1_axes = (0 <= AXIS_M1_FWD < len(msg.axes)) and (0 <= AXIS_M1_REV < len(msg.axes))
 
         if have_m1_axes:
             raw_fwd = float(msg.axes[AXIS_M1_FWD])
             raw_rev = float(msg.axes[AXIS_M1_REV])
 
-            # auto-detect [-1..1] style triggers if we ever see negative
             if raw_fwd < -0.05:
                 state["m1_fwd_seen_negative"] = True
             if raw_rev < -0.05:
@@ -238,21 +341,22 @@ def joy_cb(msg: Joy):
 
             fwd = trigger_to_01(raw_fwd, state["m1_fwd_seen_negative"])
             rev = trigger_to_01(raw_rev, state["m1_rev_seen_negative"])
-
-            # signed command in [-1..1]
             a1 = fwd - rev
         else:
-            # Fallback: digital buttons
             b_fwd = msg.buttons[BTN_M1_FWD] if len(msg.buttons) > BTN_M1_FWD else 0
             b_rev = msg.buttons[BTN_M1_REV] if len(msg.buttons) > BTN_M1_REV else 0
             a1 = (1.0 if b_fwd else 0.0) - (1.0 if b_rev else 0.0)
 
-        # Motor 2: axis
+        # HTTP Motor 2 axis (axes[4])
         a2 = msg.axes[AXIS_M2] if 0 <= AXIS_M2 < len(msg.axes) else 0.0
+
+        # UART axis (axes[1])
+        au = msg.axes[AXIS_UART] if 0 <= AXIS_UART < len(msg.axes) else 0.0
 
         # deadzone
         state["ax_m1"] = 0.0 if abs(a1) < MOTOR_DEADZONE else a1
         state["ax_m2"] = 0.0 if abs(a2) < MOTOR_DEADZONE else a2
+        state["ax_uart"] = 0.0 if abs(au) < MOTOR_DEADZONE else au
 
         state["prev_buttons"] = list(msg.buttons)
 
@@ -273,35 +377,35 @@ def pressure_loop(uart: serial.Serial):
         time.sleep(dt)
 
 def _send_motor_velocity(v1: float, v2: float):
-    _post_async(MOTOR_JSON_URL, json={"m1": float(v1), "m2": float(v2)})
+    # Latest-only: hand off to motor sender thread
+    motor_set_velocity(v1, v2)
 
 def motor_http_loop():
-    """POST current joystick velocities to the Radxa at a limited rate."""
+    """Compute joystick velocities and publish them to motor sender (rate-limited + deadman)."""
     while rclpy.ok():
         now = time.time()
 
         with lock:
             a1 = float(state["ax_m1"])
-            a2 = float(state["ax_m2"])
+            a2 = float(state["ax_m2"])  # HTTP motor2 comes from axes[4]
             last_joy = float(state["last_joy_ts"])
             last_sent_v1, last_sent_v2 = state["last_vel_sent"]
             last_post = float(state["last_vel_post_ts"])
             last_keepalive = float(state["last_keepalive_ts"])
 
-        # Match your previous sign convention:
+        # sign convention
         v1 = clamp(-a1, -1.0, 1.0)
-        v2 = clamp( a2, -1.0, 1.0)
+        v2 = clamp(a2, -1.0, 1.0)
 
-        # deadman if /joy stops
+        # deadman
         if last_joy == 0.0 or (now - last_joy) > JOY_DEADMAN_S:
             v1, v2 = 0.0, 0.0
 
-        # rate limit
+        # rate limit compute loop
         if (now - last_post) < HTTP_VEL_INTERVAL:
             time.sleep(0.01)
             continue
 
-        # only send if changed enough OR keepalive timer elapsed
         changed = (abs(v1 - last_sent_v1) >= VEL_EPS) or (abs(v2 - last_sent_v2) >= VEL_EPS)
         keepalive = (now - last_keepalive) >= VEL_KEEPALIVE_S
 
@@ -318,55 +422,37 @@ def motor_http_loop():
 
         time.sleep(0.01)
 
-def motor_uart_loop(uart: serial.Serial):
-    """Stream joystick velocities as int commands over UART to ESP32."""
+# ----- UART output (axes[1] -> -255..255 on /dev/ttyUSB0) -----
+def axis_to_pwm255(a: float) -> int:
+    a = clamp(float(a), -1.0, 1.0)
+    return int(round(a * 255.0))
+
+def uart_m2_loop(uart: serial.Serial):
+    dt = 1.0 / float(M2_UART_RATE_HZ)
+    last_sent = None
+
     while rclpy.ok():
         now = time.time()
-
         with lock:
-            a1 = float(state["ax_m1"])
-            a2 = float(state["ax_m2"])
+            au = float(state["ax_uart"])  # UART comes from axes[1]
             last_joy = float(state["last_joy_ts"])
-            last_sent_m1, last_sent_m2 = state["last_uart_sent"]
-            last_uart_ts = float(state["last_uart_ts"])
-            last_keepalive = float(state["last_uart_keepalive"])
 
-        # Same sign convention as HTTP loop:
-        v1 = clamp(-a1, -1.0, 1.0)
-        v2 = clamp( a2, -1.0, 1.0)
-
-        # deadman if /joy stops
+        # deadman: joystick stale => command 0
         if last_joy == 0.0 or (now - last_joy) > JOY_DEADMAN_S:
-            v1, v2 = 0.0, 0.0
-
-        m1_i = vel_to_int255(v1)
-        m2_i = vel_to_int255(v2)
-
-        # rate limit
-        if (now - last_uart_ts) < UART_VEL_INTERVAL:
-            time.sleep(0.01)
-            continue
-
-        changed = (abs(m1_i - last_sent_m1) >= UART_EPS) or (abs(m2_i - last_sent_m2) >= UART_EPS)
-        keepalive = (now - last_keepalive) >= UART_KEEPALIVE_S
-
-        if changed or keepalive:
-            try:
-                uart.write(f"{m1_i},{m2_i}\n".encode())
-                with lock:
-                    state["last_uart_sent"] = (m1_i, m2_i)
-                    state["last_uart_ts"] = now
-                    if keepalive:
-                        state["last_uart_keepalive"] = now
-            except Exception as e:
-                print("[motor-uart] write failed:", e)
-                print("[motor-uart] stopping motor_uart_loop.")
-                return
+            val = 0
         else:
-            with lock:
-                state["last_uart_ts"] = now
+            # If you want sign flipped, change to axis_to_pwm255(-au)
+            val = axis_to_pwm255(au)
 
-        time.sleep(0.01)
+        if last_sent is None or abs(val - last_sent) >= M2_UART_EPS:
+            try:
+                uart.write(f"{val}\n".encode())
+                last_sent = val
+            except Exception as e:
+                print("[m2-uart] write failed:", e)
+                time.sleep(0.5)
+
+        time.sleep(dt)
 
 # ------------------ Terminal command loop ------------------
 def terminal_cmd_loop():
@@ -406,11 +492,8 @@ def terminal_cmd_loop():
             continue
 
         if cmd in ("brakeall", "brake"):
-            try:
-                r = _session.post(MOTOR_BRAKE_URL, json={}, timeout=HTTP_TIMEOUT)
-                print(f"[brake] {r.status_code}: {r.text}")
-            except Exception as e:
-                print("[brake] failed:", e)
+            motor_request_brake()
+            print("[brake] requested")
             continue
 
         # Forward everything else to POST /cmd
@@ -421,14 +504,12 @@ def terminal_cmd_loop():
             print("[cmd] failed:", e)
 
 def health_poll_loop():
-    """Poll /health periodically for on-screen diagnostics."""
     while rclpy.ok():
         ok = None
         summary = ""
         try:
             js = _get_json(MOTOR_HEALTH)
             ok = True
-
             if isinstance(js, dict) and "motors" in js:
                 m = js.get("motors", {})
                 m1 = m.get("m1", {})
@@ -450,20 +531,32 @@ def health_poll_loop():
         time.sleep(0.5)
 
 def video_loop():
-    print("[video] Opening:", RTSP_URL)
-    cap = _open_rtsp(RTSP_URL)
+    print(f"[video] Opening UDP stream on {UDP_BIND}:{UDP_PORT} (listening on port {UDP_PORT})")
+    cap = _open_udp()
     if cap is None or not cap.isOpened():
-        print(f"[video] cannot open {RTSP_URL}")
+        print(f"[video] cannot open UDP stream on {UDP_BIND}:{UDP_PORT}")
         return
 
-    last_ts = time.time(); frames = 0; fps = 0.0
+    win = "UDP + Joystick Base Station (ROS2)"
+    cv2.namedWindow(win, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(win, 1280, 720)
+
+    last_ts = time.time()
+    frames = 0
+    fps = 0.0
+
     while rclpy.ok():
         ok, frame = cap.read()
-        if not ok or frame is None:
+        alpha = 1.0
+        beta = 0
+        if ok and frame is not None:
+            frame = cv2.convertScaleAbs(frame, alpha=alpha, beta=beta)
+
+        if not ok or frame is None:     
             print("[video] read failed, reconnecting...")
             cap.release()
             time.sleep(RECONNECT_DELAY_S)
-            cap = _open_rtsp(RTSP_URL)
+            cap = _open_udp()
             if cap is None or not cap.isOpened():
                 print("[video] reconnect failed, retrying...")
                 continue
@@ -484,25 +577,27 @@ def video_loop():
             v1s, v2s = state["last_vel_sent"]
             h_ok = state["health_ok"]
             h_sum = state["health_summary"]
+            cam = state.get("active_cam", 0)
             joy_age = (now - state["last_joy_ts"]) if state["last_joy_ts"] else 999.0
 
         _put_text(frame, f"FPS: {fps:4.1f}", (10, 24))
         _put_text(frame, f"Pressure: {p:.2f} bar", (10, 48))
-        _put_text(frame, f"Last sent vel:  m1 {v1s:+.2f}  m2 {v2s:+.2f}", (10, 72))
+        _put_text(frame, f"Last vel req:  m1 {v1s:+.2f}  m2 {v2s:+.2f}", (10, 72))
         _put_text(frame, f"LED: {'ON' if led_on else 'OFF'}   Joy age: {joy_age:.2f}s", (10, 96))
+        _put_text(frame, f"Cam: /dev/video{cam}   (X toggles cam)", (10, 120))
 
         if h_ok is None:
-            _put_text(frame, "Radxa /health: (no data yet)", (10, 120))
+            _put_text(frame, "Radxa /health: (no data yet)", (10, 144))
         elif h_ok:
-            _put_text(frame, f"Radxa /health: OK {h_sum}", (10, 120))
+            _put_text(frame, f"Radxa /health: OK {h_sum}", (10, 144))
         else:
-            _put_text(frame, f"Radxa /health: ERR {h_sum}", (10, 120))
+            _put_text(frame, f"Radxa /health: ERR {h_sum}", (10, 144))
 
-        _put_text(frame, "LB: LED ON  RB: LED OFF  A: BRAKE  (Q to quit video)", (10, 144))
-        _put_text(frame, f"JOY: {'OK' if joy_ok else 'WAITING'}", (10, 168))
+        _put_text(frame, "LB: LED ON  RB: LED OFF  A: BRAKE  X: CAM SW  (Q to quit video)", (10, 168))
+        _put_text(frame, f"JOY: {'OK' if joy_ok else 'WAITING'}", (10, 192))
 
-        cv2.imshow("RTSP + Joystick Base Station (ROS2)", frame)
-        if (cv2.waitKey(1) & 0xFF) == ord('q'):
+        cv2.imshow(win, frame)
+        if (cv2.waitKey(1) & 0xFF) == ord("q"):
             break
 
     cap.release()
@@ -531,45 +626,43 @@ def main():
     if uart:
         threading.Thread(target=pressure_loop, args=(uart,), daemon=True).start()
 
-    # Open motor UART (optional)
-    motor_uart = None
-    if MOTOR_UART_PATH:
-        try:
-            motor_uart = serial.Serial(MOTOR_UART_PATH, MOTOR_UART_BAUD, timeout=1)
-            print("[motor-uart] opened", motor_uart.port)
-        except Exception as e:
-            print("[motor-uart] open failed:", e)
+    # Open UART motor output (axes[1] -> -255..255)
+    m2_uart = None
+    try:
+        m2_uart = serial.Serial(M2_UART_PATH, M2_UART_BAUD, timeout=0)
+        print("[m2-uart] opened", m2_uart.port)
+    except Exception as e:
+        print("[m2-uart] open failed:", e)
 
-    # Start loops
+    if m2_uart:
+        threading.Thread(target=uart_m2_loop, args=(m2_uart,), daemon=True).start()
+
+    # Motor threads (IMPORTANT: sender must exist)
+    threading.Thread(target=motor_sender_loop, daemon=True).start()
     threading.Thread(target=motor_http_loop, daemon=True).start()
-    if motor_uart:
-        threading.Thread(target=motor_uart_loop, args=(motor_uart,), daemon=True).start()
+
     threading.Thread(target=health_poll_loop, daemon=True).start()
     threading.Thread(target=terminal_cmd_loop, daemon=True).start()
 
     try:
         video_loop()
     finally:
-        # Brake Radxa motors on exit
+        # Brake on exit (best effort)
         try:
-            _session.post(MOTOR_BRAKE_URL, json={}, timeout=HTTP_TIMEOUT)
+            motor_request_brake()
+            time.sleep(0.05)
         except Exception:
             pass
-
-        if motor_uart:
-            try:
-                # send a final stop to ESP32
-                motor_uart.write(b"0,0\n")
-            except Exception:
-                pass
-            try:
-                motor_uart.close()
-            except Exception:
-                pass
 
         if uart:
             try:
                 uart.close()
+            except Exception:
+                pass
+
+        if m2_uart:
+            try:
+                m2_uart.close()
             except Exception:
                 pass
 
@@ -583,6 +676,11 @@ def main():
             pass
         try:
             rclpy.shutdown()
+        except Exception:
+            pass
+
+        try:
+            _http_exec.shutdown(wait=False, cancel_futures=True)
         except Exception:
             pass
 
