@@ -367,8 +367,15 @@ def main():
             app = make_app(mgr)  # or make_app(switcher)
             runner = web.AppRunner(app)
             await runner.setup()
-            site = web.TCPSite(runner, "0.0.0.0", args.http_port)
-            await site.start()
+            try:
+                site = web.TCPSite(runner, "0.0.0.0", args.http_port, reuse_address=True)
+                await site.start()
+            except OSError as e:
+                print(f"[HTTP] Failed to bind 0.0.0.0:{args.http_port}: {e}")
+                shutdown_event.set()
+                GLib.idle_add(loop.quit)
+                await runner.cleanup()
+                return
             try:
                 await asyncio.to_thread(shutdown_event.wait)
             finally:
@@ -388,7 +395,7 @@ def main():
     finally:
         shutdown_event.set()
         mgr._teardown()
-        http_thread.join(timeout=5)
+        http_thread.join()
     return 0
 
 if __name__ == "__main__":
