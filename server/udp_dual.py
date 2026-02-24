@@ -3,6 +3,7 @@ import argparse
 import gi
 import threading
 import signal
+import os
 
 gi.require_version("Gst", "1.0")
 from gi.repository import Gst, GLib
@@ -351,6 +352,9 @@ def main():
     def _request_shutdown(signum, _frame):
         nonlocal shutting_down
         if shutting_down:
+            sig_name = signal.Signals(signum).name
+            print(f"[SIGNAL] {sig_name} received again, forcing exit...")
+            os._exit(130)
             return
         shutting_down = True
         sig_name = signal.Signals(signum).name
@@ -384,7 +388,7 @@ def main():
         asyncio.run(_main())
 
 
-    http_thread = threading.Thread(target=run_http, daemon=False)
+    http_thread = threading.Thread(target=run_http, daemon=True)
     http_thread.start()
 
     print(f"[UDP] RTP/H264 -> {args.host}:{args.port}")
@@ -395,7 +399,9 @@ def main():
     finally:
         shutdown_event.set()
         mgr._teardown()
-        http_thread.join()
+        http_thread.join(timeout=3)
+        if http_thread.is_alive():
+            print("[HTTP] Shutdown timed out; exiting process and letting OS reclaim socket.")
     return 0
 
 if __name__ == "__main__":
