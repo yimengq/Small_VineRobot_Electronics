@@ -345,6 +345,22 @@ def main():
     mgr = StreamManager(args, loop)
     mgr.start()
 
+    shutting_down = False
+    shutdown_event = threading.Event()
+
+    def _request_shutdown(signum, _frame):
+        nonlocal shutting_down
+        if shutting_down:
+            return
+        shutting_down = True
+        sig_name = signal.Signals(signum).name
+        print(f"[SIGNAL] {sig_name} received, shutting down...")
+        shutdown_event.set()
+        GLib.idle_add(loop.quit)
+
+    signal.signal(signal.SIGINT, _request_shutdown)
+    signal.signal(signal.SIGTERM, _request_shutdown)
+
     def run_http():
         import asyncio
         async def _main():
@@ -353,23 +369,26 @@ def main():
             await runner.setup()
             site = web.TCPSite(runner, "0.0.0.0", args.http_port)
             await site.start()
-            while True:
-                await asyncio.sleep(3600)
+            try:
+                await asyncio.to_thread(shutdown_event.wait)
+            finally:
+                await runner.cleanup()
 
         asyncio.run(_main())
 
 
-    threading.Thread(target=run_http, daemon=True).start()
+    http_thread = threading.Thread(target=run_http, daemon=False)
+    http_thread.start()
 
     print(f"[UDP] RTP/H264 -> {args.host}:{args.port}")
     print(f"[HTTP] POST /cam/0 or /cam/10, GET /status on port {args.http_port}")
 
     try:
         loop.run()
-    except KeyboardInterrupt:
-        pass
     finally:
+        shutdown_event.set()
         mgr._teardown()
+        http_thread.join(timeout=5)
     return 0
 
 if __name__ == "__main__":
