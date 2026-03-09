@@ -501,7 +501,7 @@
       "idf": "",
       "netlist": "",
       "plot": "Gerbers/",
-      "pos_files": "",
+      "pos_files": "Component Placement/",
       "specctra_dsn": "",
       "step": "",
       "svg": "",
